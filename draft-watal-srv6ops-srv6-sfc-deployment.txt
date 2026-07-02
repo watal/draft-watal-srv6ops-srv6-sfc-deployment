@@ -237,8 +237,8 @@ Table of Contents
    Multiple edge data centers connected to the production backbone were
    used to host service functions.
 
-   Four geographically distributed edge data centers (Okinawa, Kanagawa,
-   Chiba, and Sapporo) were selected for the deployment in order to
+   Three geographically distributed edge data centers (Okinawa,
+   Kanagawa, and Sapporo) were selected for the deployment in order to
    evaluate service chaining across a wide-area network.
 
    Each edge data center provides computing resources connected to the
@@ -658,8 +658,8 @@ Table of Contents
 
    The deployment utilized the SINET production IPv6 backbone and
    OpenStack-based edge data centers distributed across Okinawa,
-   Kanagawa, Chiba, and Sapporo.  Each site provided NFVI resources
-   managed by a VIM.
+   Kanagawa, and Sapporo.  Each site provided NFVI resources managed by
+   a VIM.
 
 7.2.  Architecture Deployment
 
