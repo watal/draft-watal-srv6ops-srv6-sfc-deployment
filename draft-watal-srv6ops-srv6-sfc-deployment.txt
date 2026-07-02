@@ -657,9 +657,8 @@ Table of Contents
 7.1.  Infrastructure Deployment
 
    The deployment utilized the SINET production IPv6 backbone and
-   OpenStack-based edge data centers distributed across Okinawa,
-   Kanagawa, and Sapporo.  Each site provided NFVI resources managed by
-   a VIM.
+   distributed OpenStack-based edge data centers described in
+   Section 4.2.
 
 7.2.  Architecture Deployment
 
