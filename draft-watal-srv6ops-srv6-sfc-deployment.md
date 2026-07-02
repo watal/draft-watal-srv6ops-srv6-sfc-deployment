@@ -188,7 +188,7 @@ The forwarding plane is responsible for packet forwarding and service function e
 
 The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
 
-Topology information collected through BGP-LS is stored in the Traffic Engineering Database (TED).
+Topology information collected through BGP-LS is used to populate the Traffic Engineering Database (TED).
 Based on service requests and the current network topology, the Path Computation Element (PCE) computes service paths and provisions the corresponding SR Policies.
 
 The deployed implementation uses Pola PCE, an open-source PCE implementation, for TED management, path computation, and SR Policy provisioning.
