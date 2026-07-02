@@ -1,0 +1,7 @@
+<note title="Discussion Venues" removeInRFC="true">
+<t>Discussion of this document takes place on the
+    SRv6 Operations Working Group mailing list (srv6ops@ietf.org),
+    which is archived at <eref target="https://mailarchive.ietf.org/arch/browse/srv6ops/"/>.</t>
+<t>Source for this draft and an issue tracker can be found at
+    <eref target="https://github.com/watal/draft-watal-srv6ops-srv6-sfc-deployment"/>.</t>
+</note>
