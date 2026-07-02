@@ -87,9 +87,6 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Environment
 
-The deployment described in this document was conducted on the SINET production academic IPv6 backbone.
-OpenStack-based virtualized infrastructures were deployed at geographically distributed edge data centers.
-
 Figure 1 illustrates the physical deployment environment used throughout this document.
 
 
@@ -121,7 +118,7 @@ The SRv6 SFC deployment was designed to operate without requiring modifications 
 
 Multiple edge data centers connected to the production backbone were used to host service functions.
 
-Four geographically distributed edge data centers (Okinawa, Kanagawa, Chiba, and Sapporo) were selected for the deployment in order to evaluate service chaining across a wide-area network.
+Three geographically distributed edge data centers (Okinawa, Kanagawa, and Sapporo) were selected for the deployment in order to evaluate service chaining across a wide-area network.
 
 Each edge data center provides computing resources connected to the backbone through native IPv6 connectivity.
 
@@ -404,21 +401,21 @@ Service updates are performed while maintaining consistency between the forwardi
 
 This section describes the deployment experience obtained from implementing the SRv6 SFC architecture on a production academic IPv6 backbone network.
 
+The deployment was performed using the infrastructure described in Section 4.
+
 The deployment was carried out as part of a public demonstration at Interop Tokyo 2026 during which the proposed architecture was applied to a remote video production service requiring dynamic deployment of distributed service functions.
 
 The following subsections describe the deployed infrastructure, the deployed architecture, the demonstrated service, and the operational observations obtained from the deployment.
 
 ## Infrastructure Deployment
 
-The deployment used the SINET production IPv6 backbone together with OpenStack-based infrastructures hosting SR-aware service functions at four geographically distributed edge data centers.
-
-The four edge data centers were located in Okinawa, Kanagawa, Chiba, and Sapporo. Each site operated an OpenStack-based virtualized infrastructure acting as the VIM, providing native IPv6 connectivity to the production backbone.
-
-The deployment required no modification to the existing backbone forwarding infrastructure, allowing SRv6 SFC services to be introduced incrementally.
+The deployment utilized the SINET production IPv6 backbone and distributed OpenStack-based edge data centers described in Section 4.2.
 
 ## Architecture Deployment
 
 The deployed system implemented the four-plane architecture described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+
+The application, control, management, and forwarding planes were realized as follows.
 
 The application plane was implemented as a web-based management interface through which operators requested service deployments.
 
