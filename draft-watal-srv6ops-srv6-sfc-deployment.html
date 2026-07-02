@@ -1545,7 +1545,7 @@ Service functions implement the End.AN behavior as defined in <span>[<a href="#I
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-control-plane" class="section-name selfRef">Control Plane</a>
         </h3>
 <p id="section-5.3-1">The control plane is responsible for topology collection, path computation, and SR Policy provisioning.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">Topology information collected through BGP-LS is stored in the Traffic Engineering Database (TED).
+<p id="section-5.3-2">Topology information collected through BGP-LS is used to populate the Traffic Engineering Database (TED).
 Based on service requests and the current network topology, the Path Computation Element (PCE) computes service paths and provisions the corresponding SR Policies.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <p id="section-5.3-3">The deployed implementation uses Pola PCE, an open-source PCE implementation, for TED management, path computation, and SR Policy provisioning.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 <p id="section-5.3-4">GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and SRv6 Service Segment information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
