@@ -72,6 +72,7 @@ The following terms are used in this document as defined in the related RFCs and
 * SFC, Service Function, and Service Function Chain defined in {{!RFC7665}}.
 * Path Computation Client (PCC), Path Computation Element (PCE), and Traffic Engineering Database (TED) defined in {{!RFC5440}}.
 * BGP Flow Specification defined in {{!RFC8955}}.
+* NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
 * SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
@@ -128,7 +129,7 @@ Each edge data center provides computing resources connected to the backbone thr
 
 A virtualized infrastructure was deployed at each selected edge data center to host SR-aware service functions.
 
-Each site operates an OpenStack-based infrastructure for virtual machine lifecycle management and hosting SR-aware service functions.
+Each site operates an OpenStack deployment acting as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, controlling and managing the compute, storage, and network resources of the NFV Infrastructure (NFVI) used to host SR-aware service functions. The VNF Manager (VNFM) issues life-cycle management requests, such as instantiation and scaling, to the VIM, which provisions the required NFVI resources.
 
 Service function instances are instantiated on demand.
 
@@ -201,7 +202,12 @@ GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisemen
 
 The management plane is responsible for deploying, configuring, and managing the lifecycle of SR-aware service functions.
 
-Service functions are instantiated on OpenStack-based virtualized infrastructures. After deployment, the management plane configures SRv6 endpoint behaviors, Service SIDs, and other service-specific parameters required for traffic processing.
+Consistent with the roles defined in {{!RFC8568}}, the management plane comprises two logically distinct functions:
+
+* VNF Manager (VNFM): responsible for the life-cycle management of service function instances, including issuing instantiation, scaling, and termination requests.
+* Virtualized Infrastructure Manager (VIM): responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
+
+Service functions are instantiated on OpenStack-based virtualized infrastructures acting as the VIM. After a service function instance becomes operational, the management plane configures SRv6 endpoint behaviors, Service SIDs, and other service-specific parameters required for traffic processing.
 
 The management plane supports reconfiguration and removal of service function instances throughout their operational lifecycle.
 
@@ -220,64 +226,85 @@ These functions are logically separated from the control and management planes a
 # Operational Workflow
 
 This section describes the operational workflow for deploying and activating an SRv6 service function chain.
-The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions. Figure 3 summarizes the overall workflow.
+The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions.
 
-~~~ drawing
-                                               Service
-                                               Function
-Operator  Application  VIM       VNF Manager   Manager       VM/VNF     Controller   Headend    Tailend
-    |         |         |             |           |             |           |           |          |
-    | Service |         |             |           |             |           |           |          |
-    | Request |         |             |           |             |           |           |          |
-    |-------->|         |             |           |             |           |           |          |
-    |         | Deploy  |             |           |             |           |           |          |
-    |         | NF      |             |           |             |           |           |          |
-    |         |-------->|             |           |             |           |           |          |
-    |         |         | Instantiate |           |             |           |           |          |
-    |         |         |------------------------>|             |           |           |          |
-    |         |         |             |           | Instantiate |           |           |          |
-    |         |         |             |           |------------>|           |           |          |
-    |         |         |                Instance |             |           |           |          |
-    |         |         |                      OK |             |           |           |          |
-    |         |         |<------------------------|             |           |           |          |
-    |         | Deploy  |             |           |             |           |           |          |
-    |         | Service |             |           |             |           |           |          |
-    |         | Segment |             |           |             |           |           |          |
-    |         |---------------------->|           |             |           |           |          |
-    |         |         |             | Configure |             |           |           |          |
-    |         |         |             | Service   |             |           |           |          |
-    |         |         |             | SID       |             |           |           |          |
-    |         |         |             |------------------------>|           |           |          |
-    |         |         |             |           |             | Advertise |           |          |
-    |         |         |             |           |             | Service   |           |          |
-    |         |         |             |           |             | Segment   |           |          |
-    |         |         |             |           |             |---------->|           |          |
-    |         |         |             |           |             |           | Update    |          |
-    |         |         |             |           |             |           | TED       |          |
-    |         | Request |             |           |             |           |           |          |
-    |         | SFC     |             |           |             |           |           |          |
-    |         |------------------------------------------------------------>|           |          |
-    |         |         |             |           |             |           | Compute   |          |
-    |         |         |             |           |             |           | Path      |          |
-    |         |         |             |           |             |           |           |          |
-    |         |         |             |           |             |           | Provision |          |
-    |         |         |             |           |             |           | SR Policy |          |
-    |         |         |             |           |             |           |---------->|          |
-    |         | Install |             |           |             |           |           |          |
-    |         | Flow    |             |           |             |           |           |          |
-    |         | Rule    |             |           |             |           |           |          |
-    |         |------------------------------------------------------------>|           |          |
-    |         |         |             |           |             |           | FlowSpec  |          |
-    |         |         |             |           |             |           |---------->|          |
-    |         |         |             |           |             |           |           | SFC      |
-    |         |         |             |           |             |           |           | Traffic  |
-    |         |         |             |           |             |           |           | Steering |
-    |         |         |             |           |             |           |           |--------->|
-    |         |         |             |           |             |           |           |          |
-    |         |<-------------------------------- Monitoring Status ------------------------------->|
+To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering. The Service Function Manager (SFM) shown in Figure 3b is defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}. The following abbreviations are used:
 
 ~~~
-{: #fig-wf title="Operational Workflow"}
+Op   = Operator            SFM  = Service Function Manager
+App  = Application         VM   = VM/VNF
+VNFM = VNF Manager         Ctrl = Controller
+VIM  = Virtualized         HE   = Headend
+       Infrastructure      TE   = Tailend
+       Manager
+~~~
+{: #fig-wf-legend title="Abbreviations Used in Figures 3a-3c"}
+
+Figure 3a shows the instantiation of a service function instance. Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.
+
+~~~ drawing
+ Op           App         VNFM          VIM          VM
+  |            |            |            |            |
+  |  Service   |            |            |            |
+  |  Request   |            |            |            |
+  |----------->|            |            |            |
+  |            |  Deploy    |            |            |
+  |            |    NF      |            |            |
+  |            |----------->|            |            |
+  |            |            |Instantiate |            |
+  |            |            |----------->|            |
+  |            |            |            |Instantiate |
+  |            |            |            |----------->|
+  |            |            |Instance OK |            |
+  |            |            |<-----------|            |
+  |            |            |            |            |
+~~~
+{: #fig-wf-3a title="Figure 3a: NF Instantiation"}
+
+Figure 3b shows the configuration of SRv6-specific service parameters after the service function instance becomes operational, and the subsequent advertisement of the corresponding Service Segment.
+
+~~~ drawing
+ App               SFM               VM               Ctrl
+  |                 |                 |                 |
+  |     Deploy      |                 |                 |
+  |     Segment     |                 |                 |
+  |---------------->|                 |                 |
+  |                 |    Configure    |                 |
+  |                 |   Service SID   |                 |
+  |                 |---------------->|                 |
+  |                 |                 |    Advertise    |
+  |                 |                 |     Segment     |
+  |                 |                 |---------------->|
+  |                 |                 |                 | Update TED
+  |                 |                 |                 |
+~~~
+{: #fig-wf-3b title="Figure 3b: Service Segment Configuration"}
+
+Figure 3c shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, traffic steering, and monitoring.
+
+~~~ drawing
+ App              Ctrl               HE                TE
+  |                 |                 |                 |
+  |   Request SFC   |                 |                 |
+  |---------------->|                 |                 |
+  |                 | Compute Path    |                 |
+  |                 |    Provision    |                 |
+  |                 |    SR Policy    |                 |
+  |                 |---------------->|                 |
+  |     Install     |                 |                 |
+  |    Flow Rule    |                 |                 |
+  |---------------->|                 |                 |
+  |                 |    FlowSpec     |                 |
+  |                 |---------------->|                 |
+  |                 |                 |   SFC Traffic   |
+  |                 |                 |    Steering     |
+  |                 |                 |---------------->|
+  |                 |   Monitoring    |                 |
+  |                 |     Status      |                 |
+  |<----------------------------------------------------|
+  |                 |                 |                 |
+~~~
+{: #fig-wf-3c title="Figure 3c: SFC Activation and Traffic Steering"}
 
 
 ## Service Request
@@ -299,7 +326,7 @@ If one or more requested service functions are not currently available, new serv
 
 Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.
 
-The management plane requests the OpenStack infrastructure to instantiate the required virtual machines or virtual network functions (VNFs). The deployment phase completes after the service function instances become operational.
+The VNF Manager requests the VIM to allocate the necessary compute, storage, and network resources and to instantiate the required virtual machines or virtual network functions (VNFs). The VIM provisions the corresponding NFVI resources and returns the instantiation result to the VNF Manager. The deployment phase completes after the service function instances become operational.
 
 ## Service SID Allocation
 
@@ -385,7 +412,7 @@ The following subsections describe the deployed infrastructure, the deployed arc
 
 The deployment used the SINET production IPv6 backbone together with OpenStack-based infrastructures hosting SR-aware service functions at four geographically distributed edge data centers.
 
-The four edge data centers were located in Okinawa, Kanagawa, Chiba, and Sapporo. Each site operated an OpenStack-based virtualized infrastructure for virtual machine lifecycle management and provided native IPv6 connectivity to the production backbone.
+The four edge data centers were located in Okinawa, Kanagawa, Chiba, and Sapporo. Each site operated an OpenStack-based virtualized infrastructure acting as the VIM, providing native IPv6 connectivity to the production backbone.
 
 The deployment required no modification to the existing backbone forwarding infrastructure, allowing SRv6 SFC services to be introduced incrementally.
 
@@ -397,7 +424,7 @@ The application plane was implemented as a web-based management interface throug
 
 The control plane consisted of Pola PCE for topology management, path computation, and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
 
-The management plane used OpenStack for VNF lifecycle management and Ansible for automatic deployment of SRv6 endpoint behaviors, including End.AN, Service SIDs, and service-specific configuration.
+Within the management plane, a VNF Manager component issued life-cycle requests to OpenStack, which served as the VIM responsible for allocating compute, storage, and network resources. Ansible was used for the automatic configuration of SRv6 endpoint behaviors after instantiation, including End.AN, Service SIDs, and other service-specific parameters.
 
 The forwarding plane consisted of the production IPv6 backbone and SR-aware service functions deployed at the distributed edge data centers.
 
@@ -438,7 +465,7 @@ During the deployment of the SRv6 SFC system over a production IPv6 backbone, se
 
 A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service function instances.
 
-In the implemented system, the Management Plane (M-Plane) interacts with the Control Plane (C-Plane) by referencing the Traffic Engineering Database (TED) to identify available function identifier space before assigning Service SIDs.
+In the implemented system, the management plane interacts with the control plane by referencing the Traffic Engineering Database (TED) to identify available function identifier space before assigning Service SIDs.
 
 This approach ensured uniqueness of Service SIDs within the SR domain and reduced the risk of inconsistent state across distributed sites.
 
@@ -462,7 +489,7 @@ In this deployment, placement decisions were performed manually. However, it is 
 
 Monitoring of SRv6 SFC services required integration of both network-level and cloud-level telemetry.
 
-Network telemetry included SR Policy status, BGP session state, and SRv6 forwarding behavior, while cloud telemetry included virtual machine status and resource utilization across multiple OpenStack domains.
+Network telemetry included SR Policy status, BGP session state, and SRv6 forwarding behavior, while cloud telemetry included virtual machine status and resource utilization across multiple OpenStack (VIM) domains.
 
 A unified observability framework is recommended to correlate service-level behavior with underlying infrastructure state.
 
@@ -472,7 +499,7 @@ A unified observability framework is recommended to correlate service-level beha
 
 Service SID allocation MUST ensure uniqueness within the SR domain.
 
-A centralized allocation mechanism SHOULD be used, where the Management Plane coordinates with the Control Plane (TED) to identify available SID space prior to assignment.
+A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment.
 
 This prevents address collisions and simplifies multi-site service deployment.
 
@@ -481,7 +508,7 @@ This prevents address collisions and simplifies multi-site service deployment.
 Controller placement and architecture have significant impact on system performance and scalability due to frequent interactions between:
 
 * Application Plane and Management Plane
-* Management Plane and Virtualized Infrastructure Manager (VIM)
+* VNF Manager and Virtualized Infrastructure Manager (VIM) within the Management Plane
 * Control Plane and SR Headend nodes
 
 To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.
@@ -517,7 +544,7 @@ Failure recovery follows the mechanisms defined in {{I-D.draft-watal-spring-srv6
 
 When a network function becomes unavailable, its associated SID is removed from the forwarding plane.
 
-If an Anycast SID is used, traffic MAY be redirected to alternative service instances. If no alternative exists, packets are dropped and an ICMPv6 Destination Unreachable message is generated.
+If an Anycast SID {{!RFC8402}} is used, traffic MAY be redirected to alternative service instances. If no alternative exists, packets are dropped and an ICMPv6 Destination Unreachable message is generated.
 
 Fast reroute mechanisms operate at the forwarding plane and MAY maintain connectivity; however, service state consistency is not guaranteed during rerouting events.
 
