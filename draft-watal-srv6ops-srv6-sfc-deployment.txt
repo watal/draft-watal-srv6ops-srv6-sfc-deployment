@@ -200,11 +200,6 @@ Table of Contents
 
 4.  Deployment Environment
 
-   The deployment described in this document was conducted on the SINET
-   production academic IPv6 backbone.  OpenStack-based virtualized
-   infrastructures were deployed at geographically distributed edge data
-   centers.
-
    Figure 1 illustrates the physical deployment environment used
    throughout this document.
 
@@ -647,6 +642,9 @@ Table of Contents
    implementing the SRv6 SFC architecture on a production academic IPv6
    backbone network.
 
+   The deployment was performed using the infrastructure described in
+   Section 4.
+
    The deployment was carried out as part of a public demonstration at
    Interop Tokyo 2026 during which the proposed architecture was applied
    to a remote video production service requiring dynamic deployment of
@@ -658,23 +656,18 @@ Table of Contents
 
 7.1.  Infrastructure Deployment
 
-   The deployment used the SINET production IPv6 backbone together with
-   OpenStack-based infrastructures hosting SR-aware service functions at
-   four geographically distributed edge data centers.
-
-   The four edge data centers were located in Okinawa, Kanagawa, Chiba,
-   and Sapporo.  Each site operated an OpenStack-based virtualized
-   infrastructure acting as the VIM, providing native IPv6 connectivity
-   to the production backbone.
-
-   The deployment required no modification to the existing backbone
-   forwarding infrastructure, allowing SRv6 SFC services to be
-   introduced incrementally.
+   The deployment utilized the SINET production IPv6 backbone and
+   OpenStack-based edge data centers distributed across Okinawa,
+   Kanagawa, Chiba, and Sapporo.  Each site provided NFVI resources
+   managed by a VIM.
 
 7.2.  Architecture Deployment
 
    The deployed system implemented the four-plane architecture described
    in [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
+
+   The application, control, management, and forwarding planes were
+   realized as follows.
 
    The application plane was implemented as a web-based management
    interface through which operators requested service deployments.
