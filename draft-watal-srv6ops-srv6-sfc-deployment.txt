@@ -497,11 +497,6 @@ Table of Contents
    automatically based on operational policies, such as resource
    utilization or closed-loop service management.
 
-   The instantiation procedure follows the VNFM/VIM interaction
-   described in Section 5.4 and illustrated in Figure 3a.  The
-   deployment phase completes after the service functions become
-   operational.
-
 6.3.  Service SID Allocation
 
    After service function deployment, a Service SID is assigned to each
@@ -519,15 +514,12 @@ Table of Contents
 
    After a deployed service function is configured with an End.AN
    behavior and has completed all required initialization and health
-   verification procedures, the corresponding node advertises its
-   Service SID information via BGP-LS.
+   verification procedures, it advertises its Service SID information
+   via BGP-LS.
 
-   This ensures that only operationally ready service functions are
-   included in topology dissemination and path computation.
-
-   The control plane updates the TED accordingly, allowing newly
-   deployed service functions to be considered during subsequent path
-   computations.
+   Until this advertisement is received, the service function is not
+   included in the TED and is therefore not considered during path
+   computation.
 
 6.5.  Path Computation
 
@@ -535,9 +527,6 @@ Table of Contents
    Policy satisfying the requested service chain based on the current
    network topology and the available service functions stored in the
    TED.
-
-   Path computation considers both network topology and the locations of
-   deployed service functions.
 
 6.6.  SR Policy Provisioning
 
@@ -564,9 +553,6 @@ Table of Contents
    rules have been installed, the SR source node begins steering
    matching traffic through the selected sequence of service functions.
 
-   Traffic traverses each service function according to the SRv6 segment
-   list until reaching the final destination.
-
 6.9.  Monitoring
 
    Operational status is continuously monitored throughout the service
@@ -591,8 +577,6 @@ Table of Contents
    lifecycle.
 
    Typical operations include:
-
-   *  adding service functions to an existing service chain
 
    *  modifying service chains
 

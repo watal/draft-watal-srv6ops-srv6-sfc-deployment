@@ -1721,7 +1721,6 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
         </h3>
 <p id="section-6.2-1">If one or more requested service functions are not currently available, new service functions are deployed.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">The instantiation procedure follows the VNFM/VIM interaction described in Section 5.4 and illustrated in Figure 3a. The deployment phase completes after the service functions become operational.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-sid-allocation">
@@ -1740,9 +1739,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-topology-collection" class="section-name selfRef">Topology Collection</a>
         </h3>
 <p id="section-6.4-1">Topology information is continuously collected via BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
-<p id="section-6.4-3">This ensures that only operationally ready service functions are included in topology dissemination and path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
-<p id="section-6.4-4">The control plane updates the TED accordingly, allowing newly deployed service functions to be considered during subsequent path computations.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, it advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-3">Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-computation">
@@ -1751,7 +1749,6 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-path-computation" class="section-name selfRef">Path Computation</a>
         </h3>
 <p id="section-6.5-1">When a service request is received, the control plane computes an SR Policy satisfying the requested service chain based on the current network topology and the available service functions stored in the TED.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
-<p id="section-6.5-2">Path computation considers both network topology and the locations of deployed service functions.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sr-policy-provisioning">
@@ -1779,7 +1776,6 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-traffic-steering" class="section-name selfRef">Traffic Steering</a>
         </h3>
 <p id="section-6.8-1">Once both the SR Policy and the corresponding Flow Specification rules have been installed, the SR source node begins steering matching traffic through the selected sequence of service functions.<a href="#section-6.8-1" class="pilcrow">¶</a></p>
-<p id="section-6.8-2">Traffic traverses each service function according to the SRv6 segment list until reaching the final destination.<a href="#section-6.8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="monitoring">
@@ -1815,19 +1811,16 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <p id="section-6.10-2">Typical operations include:<a href="#section-6.10-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.10-3.1">
-            <p id="section-6.10-3.1.1">adding service functions to an existing service chain<a href="#section-6.10-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.10-3.1.1">modifying service chains<a href="#section-6.10-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.10-3.2">
-            <p id="section-6.10-3.2.1">modifying service chains<a href="#section-6.10-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.10-3.2.1">removing service chains<a href="#section-6.10-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.10-3.3">
-            <p id="section-6.10-3.3.1">removing service chains<a href="#section-6.10-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.10-3.3.1">redeploying failed service functions<a href="#section-6.10-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.10-3.4">
-            <p id="section-6.10-3.4.1">redeploying failed service functions<a href="#section-6.10-3.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.10-3.5">
-            <p id="section-6.10-3.5.1">removing service functions<a href="#section-6.10-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-6.10-3.4.1">removing service functions<a href="#section-6.10-3.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.10-4">Service updates are performed while maintaining consistency between the forwarding, control, management, and application planes.<a href="#section-6.10-4" class="pilcrow">¶</a></p>
