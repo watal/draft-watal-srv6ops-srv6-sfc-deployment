@@ -203,11 +203,11 @@ Table of Contents
    Figure 1 illustrates the physical deployment environment used
    throughout this document.
 
-                               IPv6 Backbone
+                            SINET IPv6 Backbone
           +-----------------+-----------------+-----------------+
           |                 |                 |                 |
     +------------+    +------------+    +------------+         ...
-    |  Edge DC   |    |  Edge DC   |    |  Edge DC   |
+    |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
     +------------+    +------------+    +------------+
           |                 |                 |
     +------------+    +------------+    +------------+
@@ -243,21 +243,20 @@ Table of Contents
    Sapporo) were selected to evaluate service chaining across a wide-
    area network.
 
-   Each data center provides computing resources connected to the
-   backbone.
+   Each data center provides computing resources with native IPv6
+   connectivity to the backbone.
 
 4.3.  Virtualized Network Function Infrastructure
 
    A virtualized infrastructure was deployed at each selected data
    center to host SR-aware service functions.
 
-   Each site operates an OpenStack deployment acting as the Virtualized
-   Infrastructure Manager (VIM) [RFC8568], controlling and managing the
-   compute, storage, and network resources of the NFV Infrastructure
-   (NFVI) used to host SR-aware service functions.  The VNF Manager
-   (VNFM) issues life-cycle management requests, such as instantiation
-   and scaling, to the VIM, which provisions the required NFVI
-   resources.
+   Each site operates OpenStack as the Virtualized Infrastructure
+   Manager (VIM) [RFC8568], which controls and manages the compute,
+   storage, and network resources of the NFV Infrastructure (NFVI) used
+   to host SR-aware service functions.  The VNF Manager (VNFM) issues
+   life-cycle management requests, such as instantiation and scaling, to
+   the VIM, which provisions the required NFVI resources.
 
    Service function instances are instantiated on demand.
 
@@ -370,11 +369,11 @@ Table of Contents
       network resources, and for fulfilling the life-cycle requests
       issued by the VNF Manager.
 
-   Service functions are instantiated on OpenStack-based virtualized
-   infrastructures acting as the VIM.  After a service function instance
-   becomes operational, the management plane configures SRv6 endpoint
-   behaviors, Service SIDs, and other service-specific parameters
-   required for traffic processing.
+   Service functions are instantiated on virtualized infrastructures
+   managed by OpenStack, which acts as the VIM.  After a service
+   function instance becomes operational, the management plane
+   configures SRv6 endpoint behaviors, Service SIDs, and other service-
+   specific parameters required for traffic processing.
 
    The management plane supports reconfiguration and removal of service
    function instances throughout their operational lifecycle.
@@ -421,10 +420,9 @@ Table of Contents
 
                Figure 3: Abbreviations Used in Figures 3a-3c
 
-   Figure 3a shows the instantiation of a service function instance.
-   Consistent with [RFC8568], the VNF Manager issues the life-cycle
-   request and the VIM allocates and provisions the underlying NFVI
-   resources.
+   Figure 3a shows service function instantiation.  Consistent with
+   [RFC8568], the VNF Manager issues the life-cycle request and the VIM
+   allocates and provisions the underlying NFVI resources.
 
     Op           App         VNFM          VIM          VM
      |            |            |            |            |
@@ -628,15 +626,15 @@ Table of Contents
 
    *  updating SR Policies
 
-   *  removing service chains.
+   *  removing service chains
 
    Service updates are performed while maintaining consistency between
    the forwarding, control, management, and application planes.
 
 7.  Deployment Experience
 
-   This section describes the deployment and evaluation of the SRv6 SFC
-   architecture on the backbone.
+   This section describes the deployment and operational experience of
+   the SRv6 SFC architecture on the backbone.
 
    The deployment used the infrastructure described in Section 4 to
    support a remote video production service requiring dynamic
@@ -647,8 +645,8 @@ Table of Contents
 
 7.1.  Infrastructure Deployment
 
-   The deployment utilized the backbone and distributed OpenStack-based
-   data centers described in Sections 4.1 and 4.2.
+   The deployment utilized the backbone described in Section 4.1 and the
+   distributed OpenStack-based data centers described in Section 4.2.
 
 7.2.  Architecture Deployment
 
@@ -692,10 +690,9 @@ Table of Contents
    Service chains were created through the web-based management
    interface without requiring manual router configuration.
 
-   The deployment confirmed that distributed service functions could be
-   instantiated, their Service SID information advertised via BGP-LS,
-   and subsequently incorporated into service chains without manual
-   configuration of the backbone routers.
+   Distributed service functions were instantiated, and their Service
+   SID information was advertised via BGP-LS and incorporated into
+   service chains without manual configuration of backbone routers.
 
 7.4.  Operational Benefits
 
@@ -718,17 +715,16 @@ Table of Contents
 
 7.5.  Scalability Considerations
 
-   The deployment confirmed that additional service function nodes can
-   be incorporated by connecting new OpenStack sites to the backbone.
+   Additional service function nodes were added by connecting new
+   OpenStack sites to the backbone.
 
-   Because Service SID information is distributed via BGP-LS, newly
-   deployed service functions become available for path computation
-   without manual controller reconfiguration.
+   Service SID information is distributed via BGP-LS, enabling newly
+   deployed service functions to be used in path computation without
+   manual controller reconfiguration.
 
-   The deployment demonstrated that the architecture can be extended by
-   increasing the number of service function nodes and data centers
-   while maintaining centralized path computation and service
-   orchestration.
+   The architecture supported scaling by increasing the number of
+   service function nodes and data centers while maintaining centralized
+   path computation and service orchestration.
 
 8.  Lessons Learned
 
@@ -801,7 +797,7 @@ Table of Contents
 
 9.2.  Controller Considerations
 
-   Controller placement and architecture have significant impact on
+   Controller placement and architecture have a significant impact on
    system performance and scalability due to frequent interactions
    between:
 
@@ -847,8 +843,9 @@ Table of Contents
    Failure recovery follows the mechanisms defined in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   When a network function becomes unavailable, its associated SID is
-   removed from the forwarding plane.
+   When a network function becomes unavailable, its associated Service
+   SID is withdrawn from topology information so that it is no longer
+   considered during subsequent path computation.
 
    If an Anycast SID [RFC8402] is used, traffic MAY be redirected to
    alternative service instances.  If no alternative exists, packets are
@@ -986,10 +983,10 @@ Table of Contents
 
 Acknowledgments
 
-   The authors would like to acknowledge the review and inputs from
+   The authors would like to acknowledge the reviews and input from
    Mitsuru Maruyama, Katsuhiro Sebayashi, Taisei Tanabe, Ryuta Futami,
-   and Takashi Kurimoto.  We partially obtained the research results
-   from JST's CRONOS No.JPMJCS24N9.
+   and Takashi Kurimoto.  This work was partially supported by JST
+   CRONOS No.  JPMJCS24N9.
 
 Authors' Addresses
 
