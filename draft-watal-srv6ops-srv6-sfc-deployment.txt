@@ -112,11 +112,9 @@ Table of Contents
      9.1.  Service SID Allocation
      9.2.  Controller Considerations
      9.3.  Flow Classification and SR Policy Synchronization
-     9.4.  Observability
-     9.5.  Failure Recovery
-     9.6.  Infrastructure and Addressing Considerations
-     9.7.  Monitoring
-     9.8.  Operational Sequencing
+     9.4.  Failure Recovery
+     9.5.  Observability
+     9.6.  Operational Sequencing
    10. Security Considerations
    11. IANA Considerations
    12. Normative References
@@ -840,8 +838,8 @@ Table of Contents
 
 9.3.  Flow Classification and SR Policy Synchronization
 
-   Flow classification and SR Policy provisioning are operationally
-   coupled.
+   Flow classification and SR Policy provisioning are tightly coupled in
+   operational behavior.
 
    Inconsistent timing between FlowSpec installation and SR Policy
    activation MAY result in transient traffic misclassification or
@@ -852,23 +850,7 @@ Table of Contents
    such that traffic steering is only enabled after both components are
    fully operational.
 
-9.4.  Observability
-
-   A multi-layer observability framework is required, covering:
-
-   *  SRv6 topology and SR Policy state
-
-   *  Flow classification and traffic steering behavior
-
-   *  Service function health and availability
-
-   *  Virtual infrastructure resource utilization
-
-   In service scenarios involving content modification (e.g., video
-   processing), application-layer verification MAY also be required to
-   compare input and output streams.
-
-9.5.  Failure Recovery
+9.4.  Failure Recovery
 
    Failure recovery follows the mechanisms defined in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
@@ -888,26 +870,29 @@ Table of Contents
    potential state inconsistencies, such as buffering, re-
    synchronization, or idempotent processing.
 
-9.6.  Infrastructure and Addressing Considerations
+9.5.  Observability
 
-   Service functions SHOULD be deployed across multiple geographically
-   distributed edge sites to improve resilience and scalability.
+   A multi-layer observability framework SHOULD include:
 
-   A structured Service SID allocation plan SHOULD be defined prior to
-   deployment.
+   *  SRv6 topology and SR Policy state
 
-   Hierarchical or partitioned SID spaces SHOULD be considered to
-   simplify multi-site scaling and reduce coordination overhead.
+   *  Flow classification and traffic steering behavior
 
-9.7.  Monitoring
+   *  Service function health and availability
 
-   A unified telemetry framework SHOULD be deployed across both network
-   and cloud domains.
+   *  Virtual infrastructure resource utilization
+
+   This SHOULD be supported by a unified telemetry framework across both
+   network and cloud domains to ensure consistency.
 
    Correlation between SR Policy state, flow classification, and service
    function health is essential for rapid fault detection and diagnosis.
 
-9.8.  Operational Sequencing
+   In service scenarios involving content modification (e.g., video
+   processing), application-layer verification MAY also be required to
+   compare input and output streams.
+
+9.6.  Operational Sequencing
 
    Automated orchestration SHOULD ensure correct sequencing of:
 

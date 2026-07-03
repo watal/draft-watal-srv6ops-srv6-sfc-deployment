@@ -1286,19 +1286,13 @@ svg {
                 <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-flow-classification-and-sr-" class="internal xref">Flow Classification and SR Policy Synchronization</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
-                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-observability" class="internal xref">Observability</a></p>
+                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-failure-recovery" class="internal xref">Failure Recovery</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.5">
-                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-failure-recovery" class="internal xref">Failure Recovery</a></p>
+                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-observability" class="internal xref">Observability</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
-                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-infrastructure-and-addressi" class="internal xref">Infrastructure and Addressing Considerations</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.7">
-                <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="auto internal xref">9.7</a>.  <a href="#name-monitoring-2" class="internal xref">Monitoring</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.8">
-                <p id="section-toc.1-1.9.2.8.1"><a href="#section-9.8" class="auto internal xref">9.8</a>.  <a href="#name-operational-sequencing" class="internal xref">Operational Sequencing</a></p>
+                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-operational-sequencing" class="internal xref">Operational Sequencing</a></p>
 </li>
             </ul>
 </li>
@@ -1997,90 +1991,73 @@ Achieving this requires integration of both network-level and cloud-level teleme
         <h3 id="name-flow-classification-and-sr-">
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-flow-classification-and-sr-" class="section-name selfRef">Flow Classification and SR Policy Synchronization</a>
         </h3>
-<p id="section-9.3-1">Flow classification and SR Policy provisioning are operationally coupled.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">Flow classification and SR Policy provisioning are tightly coupled in operational behavior.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 <p id="section-9.3-2">Inconsistent timing between FlowSpec installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
 <p id="section-9.3-3">Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="observability">
+<div id="failure-recovery">
 <section id="section-9.4">
-        <h3 id="name-observability">
-<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-observability" class="section-name selfRef">Observability</a>
+        <h3 id="name-failure-recovery">
+<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-failure-recovery" class="section-name selfRef">Failure Recovery</a>
         </h3>
-<p id="section-9.4-1">A multi-layer observability framework is required, covering:<a href="#section-9.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.4-1">Failure recovery follows the mechanisms defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.4-2">When a network function becomes unavailable, its associated SID is removed from the forwarding plane.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
+<p id="section-9.4-3">If an Anycast SID <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span> is used, traffic MAY be redirected to alternative service instances. If no alternative exists, packets are dropped and an ICMPv6 Destination Unreachable message is generated.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
+<p id="section-9.4-4">Fast reroute mechanisms operate at the forwarding plane and MAY maintain connectivity; however, service state consistency is not guaranteed during rerouting events.<a href="#section-9.4-4" class="pilcrow">¶</a></p>
+<p id="section-9.4-5">Therefore, service functions MUST implement mechanisms to handle potential state inconsistencies, such as buffering, re-synchronization, or idempotent processing.<a href="#section-9.4-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="observability">
+<section id="section-9.5">
+        <h3 id="name-observability">
+<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-observability" class="section-name selfRef">Observability</a>
+        </h3>
+<p id="section-9.5-1">A multi-layer observability framework SHOULD include:<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.4-2.1">
-            <p id="section-9.4-2.1.1">SRv6 topology and SR Policy state<a href="#section-9.4-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-9.5-2.1">
+            <p id="section-9.5-2.1.1">SRv6 topology and SR Policy state<a href="#section-9.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-9.4-2.2">
-            <p id="section-9.4-2.2.1">Flow classification and traffic steering behavior<a href="#section-9.4-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-9.5-2.2">
+            <p id="section-9.5-2.2.1">Flow classification and traffic steering behavior<a href="#section-9.5-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-9.4-2.3">
-            <p id="section-9.4-2.3.1">Service function health and availability<a href="#section-9.4-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-9.5-2.3">
+            <p id="section-9.5-2.3.1">Service function health and availability<a href="#section-9.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-9.4-2.4">
-            <p id="section-9.4-2.4.1">Virtual infrastructure resource utilization<a href="#section-9.4-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-9.5-2.4">
+            <p id="section-9.5-2.4.1">Virtual infrastructure resource utilization<a href="#section-9.5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-9.4-3">In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="failure-recovery">
-<section id="section-9.5">
-        <h3 id="name-failure-recovery">
-<a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-failure-recovery" class="section-name selfRef">Failure Recovery</a>
-        </h3>
-<p id="section-9.5-1">Failure recovery follows the mechanisms defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
-<p id="section-9.5-2">When a network function becomes unavailable, its associated SID is removed from the forwarding plane.<a href="#section-9.5-2" class="pilcrow">¶</a></p>
-<p id="section-9.5-3">If an Anycast SID <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span> is used, traffic MAY be redirected to alternative service instances. If no alternative exists, packets are dropped and an ICMPv6 Destination Unreachable message is generated.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
-<p id="section-9.5-4">Fast reroute mechanisms operate at the forwarding plane and MAY maintain connectivity; however, service state consistency is not guaranteed during rerouting events.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
-<p id="section-9.5-5">Therefore, service functions MUST implement mechanisms to handle potential state inconsistencies, such as buffering, re-synchronization, or idempotent processing.<a href="#section-9.5-5" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="infrastructure-and-addressing-considerations">
-<section id="section-9.6">
-        <h3 id="name-infrastructure-and-addressi">
-<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-infrastructure-and-addressi" class="section-name selfRef">Infrastructure and Addressing Considerations</a>
-        </h3>
-<p id="section-9.6-1">Service functions SHOULD be deployed across multiple geographically distributed edge sites to improve resilience and scalability.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
-<p id="section-9.6-2">A structured Service SID allocation plan SHOULD be defined prior to deployment.<a href="#section-9.6-2" class="pilcrow">¶</a></p>
-<p id="section-9.6-3">Hierarchical or partitioned SID spaces SHOULD be considered to simplify multi-site scaling and reduce coordination overhead.<a href="#section-9.6-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="monitoring-1">
-<section id="section-9.7">
-        <h3 id="name-monitoring-2">
-<a href="#section-9.7" class="section-number selfRef">9.7. </a><a href="#name-monitoring-2" class="section-name selfRef">Monitoring</a>
-        </h3>
-<p id="section-9.7-1">A unified telemetry framework SHOULD be deployed across both network and cloud domains.<a href="#section-9.7-1" class="pilcrow">¶</a></p>
-<p id="section-9.7-2">Correlation between SR Policy state, flow classification, and service function health is essential for rapid fault detection and diagnosis.<a href="#section-9.7-2" class="pilcrow">¶</a></p>
+<p id="section-9.5-3">This SHOULD be supported by a unified telemetry framework across both network and cloud domains to ensure consistency.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
+<p id="section-9.5-4">Correlation between SR Policy state, flow classification, and service function health is essential for rapid fault detection and diagnosis.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
+<p id="section-9.5-5">In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.<a href="#section-9.5-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-sequencing">
-<section id="section-9.8">
+<section id="section-9.6">
         <h3 id="name-operational-sequencing">
-<a href="#section-9.8" class="section-number selfRef">9.8. </a><a href="#name-operational-sequencing" class="section-name selfRef">Operational Sequencing</a>
+<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-operational-sequencing" class="section-name selfRef">Operational Sequencing</a>
         </h3>
-<p id="section-9.8-1">Automated orchestration SHOULD ensure correct sequencing of:<a href="#section-9.8-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-9.8-2">
-<li id="section-9.8-2.1">
-            <p id="section-9.8-2.1.1">Service function instantiation<a href="#section-9.8-2.1.1" class="pilcrow">¶</a></p>
+<p id="section-9.6-1">Automated orchestration SHOULD ensure correct sequencing of:<a href="#section-9.6-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-9.6-2">
+<li id="section-9.6-2.1">
+            <p id="section-9.6-2.1.1">Service function instantiation<a href="#section-9.6-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-9.8-2.2">
-            <p id="section-9.8-2.2.1">Service SID assignment<a href="#section-9.8-2.2.1" class="pilcrow">¶</a></p>
+          <li id="section-9.6-2.2">
+            <p id="section-9.6-2.2.1">Service SID assignment<a href="#section-9.6-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-9.8-2.3">
-            <p id="section-9.8-2.3.1">BGP-LS advertisement (after service readiness verification)<a href="#section-9.8-2.3.1" class="pilcrow">¶</a></p>
+          <li id="section-9.6-2.3">
+            <p id="section-9.6-2.3.1">BGP-LS advertisement (after service readiness verification)<a href="#section-9.6-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-9.8-2.4">
-            <p id="section-9.8-2.4.1">SR Policy provisioning<a href="#section-9.8-2.4.1" class="pilcrow">¶</a></p>
+          <li id="section-9.6-2.4">
+            <p id="section-9.6-2.4.1">SR Policy provisioning<a href="#section-9.6-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-9.8-2.5">
-            <p id="section-9.8-2.5.1">Flow Specification installation<a href="#section-9.8-2.5.1" class="pilcrow">¶</a></p>
+          <li id="section-9.6-2.5">
+            <p id="section-9.6-2.5.1">Flow Specification installation<a href="#section-9.6-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-9.8-3">Out-of-order execution MAY result in transient traffic disruption.<a href="#section-9.8-3" class="pilcrow">¶</a></p>
-<p id="section-9.8-4">Operators SHOULD implement consistency checks and readiness verification before enabling traffic steering.<a href="#section-9.8-4" class="pilcrow">¶</a></p>
+<p id="section-9.6-3">Out-of-order execution MAY result in transient traffic disruption.<a href="#section-9.6-3" class="pilcrow">¶</a></p>
+<p id="section-9.6-4">Operators SHOULD implement consistency checks and readiness verification before enabling traffic steering.<a href="#section-9.6-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
