@@ -105,9 +105,8 @@ Table of Contents
      7.4.  Operational Benefits
      7.5.  Scalability Considerations
    8.  Lessons Learned
-     8.1.  Service SID Allocation and Address Space Management
-     8.2.  Service Verification and Observability
-     8.3.  Latency-Aware Service Function Placement
+     8.1.  Service Verification and Observability
+     8.2.  Latency-Aware Service Function Placement
    9.  Operational Considerations
      9.1.  Service SID Allocation
      9.2.  Controller Considerations
@@ -139,15 +138,12 @@ Table of Contents
    Instead, it describes the deployment and operational experience of
    the architecture on an academic network.
 
-   The deployment integrates SRv6 forwarding, service function lifecycle
-   management, topology collection, path computation, and flow
-   classification to enable on-demand instantiation of service function
-   chains based on operator requests.
-
-   Based on this deployment experience, this document summarizes the
-   deployment architecture, operational workflow, deployment experience,
-   lessons learned, and operational considerations, and provides
-   operational guidance for operators deploying SRv6 SFC services.
+   On-demand instantiation of service function chains requires
+   forwarding, control, management, and application functions to operate
+   as a single coordinated system rather than in isolation.  This
+   document reports on a deployment that integrated these functions on a
+   production academic backbone, and summarizes the resulting
+   operational experience.
 
 2.  Terminology
 
@@ -232,11 +228,9 @@ Table of Contents
    and research institutions across Japan.
 
    The backbone provides native IPv6 connectivity among geographically
-   distributed sites.
-
-   The SRv6 SFC deployment was designed to operate without requiring
-   modifications to the existing backbone forwarding infrastructure,
-   enabling incremental deployment alongside academic network services.
+   distributed sites, allowing the SRv6 SFC deployment described in this
+   document to be introduced incrementally alongside existing academic
+   network services (see Section 5.2).
 
 4.2.  Data Centers
 
@@ -256,16 +250,12 @@ Table of Contents
    center to host SR-aware service functions.
 
    Each site operates OpenStack as the Virtualized Infrastructure
-   Manager (VIM) [RFC8568], which manages compute, storage, and network
-   resources of the NFV Infrastructure (NFVI) used to host SR-aware
-   service functions.  The VNF Manager (VNFM) issues life-cycle
-   management requests, such as instantiation and scaling, to the VIM,
-   which provisions the required NFVI resources.
+   Manager (VIM) [RFC8568], providing the NFV Infrastructure (NFVI)
+   resources used to host SR-aware service functions.
 
-   Service functions are instantiated on demand.
-
-   After instance creation, SRv6 endpoint behaviors and service-specific
-   parameters are configured automatically.
+   The roles of the VNF Manager (VNFM) and VIM, and the procedure used
+   to instantiate and configure service functions, are described in
+   Section 5.4.
 
 5.  Deployment Architecture
 
@@ -357,7 +347,7 @@ Table of Contents
    managing the lifecycle of SR-aware service functions.
 
    Consistent with the roles defined in [RFC8568], the management plane
-   comprises two logically distinct functions:
+   comprises the following two logically distinct functions:
 
    *  VNF Manager (VNFM): responsible for the life-cycle management of
       service functions, including issuing instantiation, scaling, and
@@ -368,11 +358,17 @@ Table of Contents
       network resources, and for fulfilling the life-cycle requests
       issued by the VNF Manager.
 
+   In addition, the management plane includes the Service Function
+   Manager (SFM), defined in
+   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], which is
+   responsible for SRv6-specific service configuration performed after a
+   service function instance becomes operational, including Service SID
+   assignment and endpoint behavior configuration, as illustrated in
+   Figure 3b.
+
    Service functions are instantiated on virtualized infrastructure
-   acting as the VIM.  After a service function instance becomes
-   operational, the management plane configures SRv6 endpoint behaviors,
-   Service SIDs, and other service-specific parameters required for
-   traffic processing.
+   acting as the VIM, as illustrated in Figure 3a.  SRv6-specific
+   configuration by the SFM then follows, as illustrated in Figure 3b.
 
    The management plane supports reconfiguration and removal of service
    functions throughout their operational lifecycle.
@@ -494,13 +490,13 @@ Table of Contents
 
    A service request typically includes:
 
-   *  ingress and egress nodes;
+   *  ingress and egress nodes
 
-   *  optional traffic classification rules;
+   *  optional traffic classification rules
 
-   *  the required sequence of service functions; and
+   *  the required sequence of service functions
 
-   *  optional service constraints, such as latency requirements.
+   *  optional service constraints, such as latency requirements
 
    The application plane translates these service requirements into
    deployment requests for the control and management planes.
@@ -514,12 +510,10 @@ Table of Contents
    automatically based on operational policies, such as resource
    utilization or closed-loop service management.
 
-   The VNF Manager requests the VIM to allocate the necessary compute,
-   storage, and network resources and to instantiate the required
-   virtual machines or virtual network functions (VNFs).  The VIM
-   provisions the corresponding NFVI resources and returns the
-   instantiation result to the VNF Manager.  The deployment phase
-   completes after the service functions become operational.
+   The instantiation procedure follows the VNFM/VIM interaction
+   described in Section 5.4 and illustrated in Figure 3a.  The
+   deployment phase completes after the service functions become
+   operational.
 
 6.3.  Service SID Allocation
 
@@ -529,10 +523,7 @@ Table of Contents
    Service SID allocation MAY be performed dynamically by the management
    plane or explicitly specified by the application.
 
-   When Service SIDs are allocated dynamically, the management plane
-   MUST ensure that allocated Service SIDs are unique within the SR
-   domain.  The TED is referenced to identify available SID space and
-   avoid address conflicts.
+   See Section 9.1 for operational considerations.
 
 6.4.  Topology Collection
 
@@ -658,8 +649,8 @@ Table of Contents
    distribution.
 
    The management plane was implemented using a VNF Manager, OpenStack
-   as the VIM, and Ansible for post-instantiation configuration of SRv6
-   service functions.
+   as the VIM, and Ansible acting as the SFM to perform post-
+   instantiation configuration of SRv6 service functions.
 
    The forwarding plane consists of the underlying backbone network and
    SR-aware service functions deployed in distributed data centers.
@@ -679,11 +670,10 @@ Table of Contents
    production system.
 
    Service chains were created through the web-based management
-   interface without requiring manual router configuration.
-
-   Distributed service functions were instantiated, and their Service
-   SID information was advertised via BGP-LS and incorporated into
-   service chains without manual configuration of backbone routers.
+   interface.  Distributed service functions were instantiated, their
+   Service SID information was advertised via BGP-LS, and the resulting
+   chains were incorporated into forwarding without any manual
+   configuration of backbone routers.
 
 7.4.  Operational Benefits
 
@@ -709,9 +699,9 @@ Table of Contents
    Additional service function nodes were added by connecting new
    OpenStack sites to the backbone.
 
-   Service SID information is distributed via BGP-LS, enabling newly
-   deployed service functions to be used in path computation without
-   manual controller reconfiguration.
+   Because Service SID advertisement follows the mechanism described in
+   Section 6.4, newly deployed service function nodes required no manual
+   controller reconfiguration to become usable in path computation.
 
    The architecture supported scaling by increasing the number of
    service function nodes and data centers while maintaining centralized
@@ -724,44 +714,19 @@ Table of Contents
    section summarizes key observations obtained from real-world
    operation.
 
-8.1.  Service SID Allocation and Address Space Management
+8.1.  Service Verification and Observability
 
-   A centralized Service SID allocation mechanism was required to avoid
-   address conflicts across distributed service functions.
+   Verifying that video streams traversed the expected sequence of
+   service functions required correlating SR Policy status with service
+   function instance status across multiple VIM domains.  Because these
+   were monitored through separate tools during the deployment,
+   diagnosing failures required manual cross-referencing between
+   network-layer and cloud-layer telemetry.
 
-   In the implemented system, the management plane interacts with the
-   control plane by referencing the TED to identify available SID space
-   before assigning Service SIDs.
+   This experience motivated the unified observability approach
+   discussed in Section 9.5.
 
-   This approach ensured uniqueness of Service SIDs within the SR domain
-   and reduced the risk of inconsistent state across distributed sites.
-
-8.2.  Service Verification and Observability
-
-   Operators require end-to-end visibility to verify that SRv6 SFC
-   services are deployed and operating as intended.
-
-   SRv6 Path Tracing and on-path telemetry (e.g., flow-based or in-band
-   telemetry) can be used to confirm that traffic traverses the expected
-   sequence of service functions according to the installed SRv6
-   policies.
-
-   In addition to verifying that traffic follows the expected path,
-   service-level verification is necessary to confirm that service
-   functions process traffic as intended.  Achieving this requires
-   integration of both network-level and cloud-level telemetry.
-
-   Network telemetry includes SR Policy status, BGP session state, and
-   SRv6 forwarding behavior, while cloud telemetry includes service
-   function instance status and resource utilization across multiple VIM
-   domains.
-
-   A unified observability framework is RECOMMENDED to correlate
-   service-level behavior with the underlying network and infrastructure
-   state, enabling rapid fault identification and end-to-end service
-   verification.
-
-8.3.  Latency-Aware Service Function Placement
+8.2.  Latency-Aware Service Function Placement
 
    Because data centers are geographically distributed, inter-site
    latency has a significant impact on service performance.
@@ -776,6 +741,10 @@ Table of Contents
    this process.
 
 9.  Operational Considerations
+
+   SRv6 SFC deployments require tight coordination across control,
+   management, and application planes to ensure consistent service
+   lifecycle behavior.
 
 9.1.  Service SID Allocation
 
@@ -794,8 +763,8 @@ Table of Contents
 
    *  application plane and management plane
 
-   *  VNF Manager and Virtualized Infrastructure Manager (VIM) within
-      the management plane
+   *  VNF Manager, Virtualized Infrastructure Manager (VIM), and Service
+      Function Manager (SFM) within the management plane
 
    *  control plane and SR Headend nodes
 
@@ -834,21 +803,13 @@ Table of Contents
    Failure recovery follows the mechanisms defined in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   When a network function becomes unavailable, its associated Service
-   SID is withdrawn from topology information so that it is no longer
-   considered during subsequent path computation.
+   In operational deployments, fast reroute at the forwarding plane may
+   maintain connectivity, but service-level state consistency is not
+   guaranteed during failover events.
 
-   If an Anycast SID [RFC8402] is used, traffic MAY be redirected to
-   alternative service instances.  If no alternative exists, packets are
-   dropped and an ICMPv6 Destination Unreachable message is generated.
-
-   Fast reroute mechanisms operate at the forwarding plane and MAY
-   maintain connectivity; however, service state consistency is not
-   guaranteed during rerouting events.
-
-   Therefore, service functions MUST implement mechanisms to handle
-   potential state inconsistencies, such as buffering, re-
-   synchronization, or idempotent processing.
+   Therefore, service functions MUST be designed to handle potential
+   state inconsistencies (e.g., buffering, re-synchronization, or
+   idempotent processing).
 
 9.5.  Observability
 
