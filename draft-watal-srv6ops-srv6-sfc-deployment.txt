@@ -126,8 +126,7 @@ Table of Contents
    through a set of instructions called a segment list.
 
    Service Function Chaining (SFC) [RFC7665] can be implemented using
-   SRv6 by steering traffic through a sequence of SR-aware service
-   functions.
+   SRv6 to steer traffic through SR-aware service functions.
 
    The architecture of SRv6 SFC with SR-aware functions is described in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
@@ -140,9 +139,10 @@ Table of Contents
 
    On-demand instantiation of service function chains requires
    forwarding, control, management, and application functions to operate
-   as a single coordinated system rather than in isolation.  This
-   document reports on a deployment that integrated these functions on a
-   production academic backbone, and summarizes the resulting
+   as a single coordinated system rather than in isolation.
+
+   This document reports on a deployment integrating these functions on
+   an academic backbone network, and summarizes the resulting
    operational experience.
 
 2.  Terminology
