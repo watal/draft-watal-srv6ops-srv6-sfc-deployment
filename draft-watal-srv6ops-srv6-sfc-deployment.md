@@ -128,31 +128,27 @@ Each data center provides computing resources with native IPv6 connectivity to t
 ## Virtualized Network Function Infrastructure
 
 A virtualized infrastructure was deployed at each selected data center to host SR-aware service functions.
-
-Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, providing the NFV Infrastructure (NFVI) resources used to host SR-aware service functions.
-
-The roles of the VNF Manager (VNFM) and VIM, and the procedure used to instantiate and configure service functions, are described in Section 5.4.
+Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM).
 
 # Deployment Architecture
 
 The deployment follows the SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane. Each plane is responsible for a distinct aspect of service deployment and operation.
+The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane.
+Each plane is responsible for a distinct aspect of service deployment and operation.
 
 The following subsections describe the role of each plane and its realization in the deployed system.
 
 ## Overall Architecture
 
 Figure 2 illustrates the logical architecture of the deployed system.
-The architecture is organized into four logical planes:
 
 * The application plane provides the operator interface.
 * The control plane performs topology collection, path computation, and SR Policy provisioning.
 * The management plane deploys and configures service functions.
 * The forwarding plane forwards traffic through SR-aware service functions.
 
-
-Together, these planes enable dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
+This architecture enables dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
 
 
 ~~~ drawing
@@ -203,7 +199,7 @@ The management plane is responsible for deploying, configuring, and managing the
 Consistent with the roles defined in {{!RFC8568}}, the management plane comprises the following two logically distinct functions:
 
 * VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
-* Virtualized Infrastructure Manager (VIM): responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
+* VIM: responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
 
 In addition, the management plane includes the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, which is responsible for SRv6-specific service configuration performed after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
 
