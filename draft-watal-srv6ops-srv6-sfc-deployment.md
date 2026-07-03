@@ -186,11 +186,12 @@ The forwarding plane is responsible for packet forwarding and service function e
 
 The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
 
-Topology information collected via BGP-LS is used to populate the Traffic Engineering Database (TED).
-
 A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.
 
-BGP-LS is used to distribute topology information, and BGP Flow Specification is used to distribute traffic classification rules.
+A BGP daemon performs two functions:
+
+* collecting topology information via BGP-LS, including Service Segment advertisements
+* distributing traffic classification rules via BGP Flow Specification
 
 ## Management Plane
 
