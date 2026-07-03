@@ -629,9 +629,9 @@ Table of Contents
    production system.
 
    Service chains were created through the web-based management
-   interface.  Distributed service functions were instantiated, their
-   Service SID information was advertised via BGP-LS, and the resulting
-   chains were incorporated into forwarding without any manual
+   interface.  The distributed service functions were instantiated,
+   their Service SID information was advertised via BGP-LS, and the
+   resulting chains were incorporated into forwarding without any manual
    configuration of backbone routers.
 
 7.3.  Operational Benefits
@@ -666,7 +666,8 @@ Table of Contents
 
    The instantiated service functions become available for path
    computation through the Service SID advertisement mechanism described
-   in Section 6.4 without requiring controller reconfiguration.
+   in Section 6.4 without requiring manual updates to the controller
+   configuration.
 
 8.  Lessons Learned
 
@@ -698,10 +699,9 @@ Table of Contents
    processing, cumulative path latency across multiple sites is an
    important consideration for service function placement.
 
-   In this deployment, VNF placement was determined manually.  However,
-   it is recommended that the application plane integrate latency
-   measurement and topology-aware placement optimization to automate
-   this process.
+   In this deployment, VNF placement was determined manually.  The
+   application plane SHOULD integrate latency measurement and topology-
+   aware placement optimization to automate this process.
 
 9.  Operational Considerations
 

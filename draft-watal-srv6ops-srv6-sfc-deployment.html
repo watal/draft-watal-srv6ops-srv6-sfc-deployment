@@ -1841,7 +1841,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <p id="section-7.2-2">Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 <p id="section-7.2-3">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 <p id="section-7.2-4">Service chains were created through the web-based management interface.
-Distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+The distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-benefits">
@@ -1878,7 +1878,7 @@ Distributed service functions were instantiated, their Service SID information w
 SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
 overall control architecture.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
 <p id="section-7.4-2">Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
-<p id="section-7.4-3">The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring controller reconfiguration.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
+<p id="section-7.4-3">The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring manual updates to the controller configuration.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1908,7 +1908,7 @@ This section summarizes key observations obtained from real-world operation.<a h
 <p id="section-8.2-1">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.2-2">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2-3">In this deployment, VNF placement was determined manually.
-However, it is recommended that the application plane integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+The application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
