@@ -1563,10 +1563,11 @@ Service functions implement the End.AN behavior to process packets and forward t
             <p id="section-5.4-3.2.1">VIM: responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.4-4">In addition, the management plane includes the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, which is responsible for SRv6-specific service configuration performed after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
-<p id="section-5.4-5">Service functions are instantiated on virtualized infrastructure acting as the VIM, as illustrated in Figure 3a.
-SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
-<p id="section-5.4-6">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-6" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">In addition, the management plane includes the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-5">The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
+<p id="section-5.4-6">Service functions are instantiated on virtualized infrastructure acting as the VIM, as illustrated in Figure 3a.
+SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.<a href="#section-5.4-6" class="pilcrow">¶</a></p>
+<p id="section-5.4-7">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="application-plane">
@@ -1589,7 +1590,7 @@ SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b
       </h2>
 <p id="section-6-1">This section describes the operational workflow for deploying and activating an SRv6 service function chain.
 The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">The workflow is illustrated in Figures 3a through 3c.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">The following abbreviations are used:<a href="#section-6-3" class="pilcrow">¶</a></p>
 <span id="name-abbreviations-used-in-figur"></span><div id="fig-wf-legend">
 <figure id="figure-3">

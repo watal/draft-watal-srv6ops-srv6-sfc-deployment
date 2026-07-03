@@ -350,11 +350,12 @@ Table of Contents
 
    In addition, the management plane includes the Service Function
    Manager (SFM), defined in
-   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], which is
-   responsible for SRv6-specific service configuration performed after a
-   service function instance becomes operational, including Service SID
-   assignment and endpoint behavior configuration, as illustrated in
-   Figure 3b.
+   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
+
+   The SFM is responsible for SRv6-specific service configuration after
+   a service function instance becomes operational.  This includes
+   Service SID assignment and endpoint behavior configuration, as
+   illustrated in Figure 3b.
 
    Service functions are instantiated on virtualized infrastructure
    acting as the VIM, as illustrated in Figure 3a.  SRv6-specific
@@ -387,11 +388,7 @@ Table of Contents
    an operator service request and concludes with traffic steering
    through the deployed service functions.
 
-   To keep each diagram within a readable line width, the workflow is
-   presented as three figures: Figure 3a covers network function
-   instantiation, Figure 3b covers service segment configuration and
-   topology advertisement, and Figure 3c covers SFC activation and
-   traffic steering.
+   The workflow is illustrated in Figures 3a through 3c.
 
    The following abbreviations are used:
 
