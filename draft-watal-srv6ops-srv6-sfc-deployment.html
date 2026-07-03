@@ -1625,6 +1625,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |            |            |            |-----------&gt;|
   |            |            |Instance OK |            |
   |            |            |&lt;-----------|            |
+  |            |Instance OK |            |            |
+  |            |&lt;-----------|            |            |
   |            |            |            |            |
 </pre>
 </div>
@@ -1648,7 +1650,11 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |                 |                 |    Advertise    |
   |                 |                 |     Segment     |
   |                 |                 |----------------&gt;|
-  |                 |                 |                 | Update TED
+  |                 | Service SID OK  |                 | Update TED
+  |                 |&lt;----------------|                 |
+  |     Deploy      |                 |                 |
+  |   Segment OK    |                 |                 |
+  |&lt;----------------|                 |                 |
   |                 |                 |                 |
 </pre>
 </div>
@@ -1669,6 +1675,12 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |                 |    Provision    |                 |
   |                 |    SR Policy    |                 |
   |                 |----------------&gt;|                 |
+  |                 |                 |                 |
+  |                 |  SR Policy OK   |                 |
+  |                 |&lt;----------------|                 |
+  |     Request     |                 |                 |
+  |     SFC OK      |                 |                 |
+  |&lt;----------------|                 |                 |
   |     Install     |                 |                 |
   |    Flow Rule    |                 |                 |
   |----------------&gt;|                 |                 |
@@ -1677,6 +1689,10 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |                 |                 |   SFC Traffic   |
   |                 |                 |    Steering     |
   |                 |                 |----------------&gt;|
+  |                 |   FlowSpec OK   |                 |
+  |                 |&lt;----------------|                 |
+  |   FlowSpec OK   |                 |                 |
+  |&lt;----------------|                 |                 |
   |                 |   Monitoring    |                 |
   |                 |     Status      |                 |
   |&lt;----------------------------------------------------|

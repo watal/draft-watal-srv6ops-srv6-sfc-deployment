@@ -418,6 +418,8 @@ Table of Contents
      |            |            |            |----------->|
      |            |            |Instance OK |            |
      |            |            |<-----------|            |
+     |            |Instance OK |            |            |
+     |            |<-----------|            |            |
      |            |            |            |            |
 
                          Figure 4: NF Instantiation
@@ -437,7 +439,11 @@ Table of Contents
      |                 |                 |    Advertise    |
      |                 |                 |     Segment     |
      |                 |                 |---------------->|
-     |                 |                 |                 | Update TED
+     |                 | Service SID OK  |                 | Update TED
+     |                 |<----------------|                 |
+     |     Deploy      |                 |                 |
+     |   Segment OK    |                 |                 |
+     |<----------------|                 |                 |
      |                 |                 |                 |
 
                   Figure 5: Service Segment Configuration
@@ -454,6 +460,12 @@ Table of Contents
      |                 |    Provision    |                 |
      |                 |    SR Policy    |                 |
      |                 |---------------->|                 |
+     |                 |                 |                 |
+     |                 |  SR Policy OK   |                 |
+     |                 |<----------------|                 |
+     |     Request     |                 |                 |
+     |     SFC OK      |                 |                 |
+     |<----------------|                 |                 |
      |     Install     |                 |                 |
      |    Flow Rule    |                 |                 |
      |---------------->|                 |                 |
@@ -462,6 +474,10 @@ Table of Contents
      |                 |                 |   SFC Traffic   |
      |                 |                 |    Steering     |
      |                 |                 |---------------->|
+     |                 |   FlowSpec OK   |                 |
+     |                 |<----------------|                 |
+     |   FlowSpec OK   |                 |                 |
+     |<----------------|                 |                 |
      |                 |   Monitoring    |                 |
      |                 |     Status      |                 |
      |<----------------------------------------------------|
