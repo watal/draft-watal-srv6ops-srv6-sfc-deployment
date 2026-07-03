@@ -19,7 +19,7 @@ Abstract
    IPv6 backbone network.
 
    The deployed system integrates SRv6 forwarding, service function
-   lifecycle management, topology collection, path computation, and flow
+   lifecycle operations, topology collection, path computation, and flow
    classification to enable dynamic provisioning of SFC services via a
    web-based management interface.
 
