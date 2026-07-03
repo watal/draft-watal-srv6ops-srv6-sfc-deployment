@@ -546,11 +546,12 @@ Operators SHOULD implement consistency checks and readiness verification before 
 
 # Security Considerations
 
-The deployment described in this document relies on existing security mechanisms provided by SRv6 and the associated control and management protocols.
+The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV
+management interfaces.
 
-Operators SHOULD ensure that controller communications, management interfaces, and service provisioning mechanisms are appropriately authenticated and protected.
+Operators MUST ensure that SR Policies, topology information, traffic classification rules, and Service SID information are protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.
 
-The security considerations discussed in the referenced specifications remain applicable to this deployment.
+Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.
 
 # IANA Considerations
 
