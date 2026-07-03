@@ -60,7 +60,7 @@ Instead, it describes the deployment and operational experience of the SRv6 SFC 
 
 On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.
 
-This document reports on a deployment integrating these functions on an academic backbone, and summarizes the resulting operational experience.
+This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.
 
 # Terminology
 
@@ -206,7 +206,7 @@ In addition, the management plane includes the Service Function Manager (SFM), d
 
 The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
 
-Service functions are instantiated on NFVI managed by the VIM, as illustrated in Figure 3a.
+Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 3a.
 SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
@@ -331,7 +331,7 @@ Deployment may be triggered either by an explicit operator request or automatica
 
 After service function deployment, a Service SID is assigned to each service function.
 
-Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.
+Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application plane.
 
 See Section 9.1 for operational considerations.
 
@@ -357,9 +357,9 @@ The installed SR Policy specifies the SRv6 segment list representing the selecte
 
 If traffic classification is requested, the control plane installs BGP Flow Specification rules on the SR source node.
 
-Each Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.
+Each BGP Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.
 
-This mechanism enables only the selected traffic flows to traverse the deployed service function chain.
+This mechanism ensures that only the selected traffic flows traverse the deployed service function chain.
 
 ## Traffic Steering
 
@@ -367,14 +367,9 @@ Once both the SR Policy and the corresponding Flow Specification rules have been
 
 ## Monitoring
 
-Operational status is continuously monitored throughout the service lifecycle.
+Operational status is continuously monitored throughout the service lifecycle using telemetry collected from both the network and infrastructure.
 
-Typical monitoring targets include:
-
-* service function health and availability
-* SR Policy status
-* BGP session status
-* Virtualized Infrastructure Manager (VIM) status
+Monitoring data is used to verify service availability and support operational troubleshooting.
 
 In addition, operators MAY verify correct packet forwarding using SR path tracing or in-band telemetry mechanisms.
 
@@ -395,25 +390,23 @@ Service updates are performed while maintaining consistency between the forwardi
 
 This section describes the deployment and operational experience of the SRv6 SFC architecture on the backbone.
 
-The deployment used the infrastructure described in Section 4 to support a remote video production service requiring dynamic deployment of distributed service functions.
+The deployed system supported a remote video production service using the infrastructure described in Section 4.
 
-The following subsections describe the infrastructure, the architecture, the service, and the operational observations.
-
-## Infrastructure Deployment
-
-The deployment utilized the backbone described in Section 4.1 and the distributed OpenStack-based data centers described in Section 4.2.
+The following subsections describe the deployed architecture, the deployed service, and the resulting operational observations.
 
 ## Architecture Deployment
 
-The deployed system implements the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployment utilized the backbone described in Section 4.1 and the distributed OpenStack-based data centers described in Section 4.2.
 
-The application plane was implemented as a web-based interface for service request submission.
+The deployed system was based on the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-The control plane was implemented using Pola PCE and GoBGP. Pola PCE performs path computation and SR Policy provisioning, while GoBGP was used for BGP-LS topology collection and BGP Flow Specification distribution.
+The application plane was implemented as a web-based management interface.
 
-The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible acting as the SFM to perform post-instantiation configuration of SRv6 service functions.
+The control plane was implemented using Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
 
-The forwarding plane consists of the underlying backbone and SR-aware service functions deployed in distributed data centers.
+The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.
+
+The forwarding plane consisted of the existing backbone and distributed SR-aware service functions.
 
 ## Service Deployment
 
@@ -428,7 +421,7 @@ Distributed service functions were instantiated, their Service SID information w
 
 ## Operational Benefits
 
-The deployment demonstrated several operational benefits.
+The deployed system demonstrated several operational benefits.
 
 * Existing backbone routers required no software modifications.
 * Service functions were deployed on demand using existing cloud infrastructure.
@@ -442,10 +435,9 @@ This deployment demonstrated that the architecture can scale incrementally by de
 SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
 overall control architecture.
 
-Once the application, control, and management components are deployed, additional SR-aware service
-functions can be instantiated or removed on the existing NFV infrastructure using the VIM's native
-scaling mechanisms, and become usable in path computation via the Service SID advertisement mechanism
-described in Section 6.4, without manual controller reconfiguration.
+Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.
+
+The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring controller reconfiguration.
 
 # Lessons Learned
 
@@ -454,10 +446,11 @@ This section summarizes key observations obtained from real-world operation.
 
 ## Service Verification and Observability
 
-Verifying that video streams traversed the expected sequence of service functions required correlating SR Policy status with service function instance status across multiple VIM domains.
-Because these were monitored through separate tools during the deployment, diagnosing failures required manual cross-referencing between network-layer and cloud-layer telemetry.
+Verifying that video streams traversed the expected sequence of service functions required correlating SR Policy status with service function status across multiple VIM domains.
 
-This experience motivated the unified observability approach discussed in Section 9.5.
+However, because these two types of status information were monitored through separate tools during the deployment, diagnosing failures required manual cross-referencing between network-layer and cloud-layer telemetry.
+
+This experience motivated the operational recommendations described in Section 9.5.
 
 ## Latency-Aware Service Function Placement
 
@@ -511,7 +504,7 @@ Therefore, service functions MUST be designed to handle potential state inconsis
 
 ## Observability
 
-A multi-layer observability framework SHOULD include:
+Based on the deployment experience described in Section 8.1, a multi-layer observability framework SHOULD include:
 
 * SRv6 topology and SR Policy state
 * Flow classification and traffic steering behavior
@@ -542,6 +535,8 @@ Operators SHOULD implement consistency checks and readiness verification before 
 # Security Considerations
 
 The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV management interfaces.
+
+Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
 Operators MUST ensure that SR Policies, topology information, traffic classification rules, and Service SID information are protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.
 
