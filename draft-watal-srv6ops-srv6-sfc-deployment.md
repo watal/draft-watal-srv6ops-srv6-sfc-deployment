@@ -50,7 +50,7 @@ This document summarizes the deployment architecture, operational workflow, depl
 
 Segment Routing over IPv6 (SRv6) {{!RFC8986}} enables packet steering through a set of instructions called a segment list.
 
-Service Function Chaining (SFC) {{!RFC7665}} can be implemented using SRv6 by steering traffic through a sequence of SR-aware service functions.
+Service Function Chaining (SFC) {{!RFC7665}} can be implemented using SRv6 to steer traffic through SR-aware service functions.
 
 The architecture of SRv6 SFC with SR-aware functions is described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
@@ -59,7 +59,8 @@ This document does not define any new protocols or protocol extensions.
 Instead, it describes the deployment and operational experience of the architecture on an academic network.
 
 On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.
-This document reports on a deployment that integrated these functions on a production academic backbone, and summarizes the resulting operational experience.
+
+This document reports on a deployment integrating these functions on an academic backbone network, and summarizes the resulting operational experience.
 
 # Terminology
 
