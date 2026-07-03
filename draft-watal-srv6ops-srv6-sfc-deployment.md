@@ -327,8 +327,6 @@ If one or more requested service functions are not currently available, new serv
 
 Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.
 
-The instantiation procedure follows the VNFM/VIM interaction described in Section 5.4 and illustrated in Figure 3a. The deployment phase completes after the service functions become operational.
-
 ## Service SID Allocation
 
 After service function deployment, a Service SID is assigned to each service function.
@@ -341,17 +339,13 @@ See Section 9.1 for operational considerations.
 
 Topology information is continuously collected via BGP-LS independently of individual service requests.
 
-After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its Service SID information via BGP-LS.
+After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, it advertises its Service SID information via BGP-LS.
 
-This ensures that only operationally ready service functions are included in topology dissemination and path computation.
-
-The control plane updates the TED accordingly, allowing newly deployed service functions to be considered during subsequent path computations.
+Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.
 
 ## Path Computation
 
 When a service request is received, the control plane computes an SR Policy satisfying the requested service chain based on the current network topology and the available service functions stored in the TED.
-
-Path computation considers both network topology and the locations of deployed service functions.
 
 ## SR Policy Provisioning
 
@@ -370,8 +364,6 @@ This mechanism enables only the selected traffic flows to traverse the deployed 
 ## Traffic Steering
 
 Once both the SR Policy and the corresponding Flow Specification rules have been installed, the SR source node begins steering matching traffic through the selected sequence of service functions.
-
-Traffic traverses each service function according to the SRv6 segment list until reaching the final destination.
 
 ## Monitoring
 
@@ -392,7 +384,6 @@ The deployed system supports updates throughout the service lifecycle.
 
 Typical operations include:
 
-* adding service functions to an existing service chain
 * modifying service chains
 * removing service chains
 * redeploying failed service functions
