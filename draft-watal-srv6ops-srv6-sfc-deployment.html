@@ -1243,19 +1243,16 @@ svg {
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-deployment-experience" class="internal xref">Deployment Experience</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-infrastructure-deployment" class="internal xref">Infrastructure Deployment</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-architecture-deployment" class="internal xref">Architecture Deployment</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-architecture-deployment" class="internal xref">Architecture Deployment</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-service-deployment" class="internal xref">Service Deployment</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
-                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-service-deployment" class="internal xref">Service Deployment</a></p>
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-operational-benefits" class="internal xref">Operational Benefits</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
-                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-operational-benefits" class="internal xref">Operational Benefits</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5">
-                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="auto internal xref">7.5</a>.  <a href="#name-scalability-considerations" class="internal xref">Scalability Considerations</a></p>
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-scalability-considerations" class="internal xref">Scalability Considerations</a></p>
 </li>
             </ul>
 </li>
@@ -1323,7 +1320,7 @@ svg {
 <p id="section-1-4">This document does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">This document reports on a deployment integrating these functions on an academic backbone, and summarizes the resulting operational experience.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-7">This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.<a href="#section-1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1565,7 +1562,7 @@ Service functions implement the End.AN behavior to process packets and forward t
         </ul>
 <p id="section-5.4-4">In addition, the management plane includes the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 <p id="section-5.4-5">The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
-<p id="section-5.4-6">Service functions are instantiated on NFVI managed by the VIM, as illustrated in Figure 3a.
+<p id="section-5.4-6">Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 3a.
 SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.<a href="#section-5.4-6" class="pilcrow">¶</a></p>
 <p id="section-5.4-7">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-7" class="pilcrow">¶</a></p>
 </section>
@@ -1729,7 +1726,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-service-sid-allocation" class="section-name selfRef">Service SID Allocation</a>
         </h3>
 <p id="section-6.3-1">After service function deployment, a Service SID is assigned to each service function.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application plane.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <p id="section-6.3-3">See Section 9.1 for operational considerations.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1766,8 +1763,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-flow-classification" class="section-name selfRef">Flow Classification</a>
         </h3>
 <p id="section-6.7-1">If traffic classification is requested, the control plane installs BGP Flow Specification rules on the SR source node.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
-<p id="section-6.7-2">Each Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.<a href="#section-6.7-2" class="pilcrow">¶</a></p>
-<p id="section-6.7-3">This mechanism enables only the selected traffic flows to traverse the deployed service function chain.<a href="#section-6.7-3" class="pilcrow">¶</a></p>
+<p id="section-6.7-2">Each BGP Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.<a href="#section-6.7-2" class="pilcrow">¶</a></p>
+<p id="section-6.7-3">This mechanism ensures that only the selected traffic flows traverse the deployed service function chain.<a href="#section-6.7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="traffic-steering">
@@ -1783,23 +1780,9 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
         <h3 id="name-monitoring">
 <a href="#section-6.9" class="section-number selfRef">6.9. </a><a href="#name-monitoring" class="section-name selfRef">Monitoring</a>
         </h3>
-<p id="section-6.9-1">Operational status is continuously monitored throughout the service lifecycle.<a href="#section-6.9-1" class="pilcrow">¶</a></p>
-<p id="section-6.9-2">Typical monitoring targets include:<a href="#section-6.9-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6.9-3.1">
-            <p id="section-6.9-3.1.1">service function health and availability<a href="#section-6.9-3.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.9-3.2">
-            <p id="section-6.9-3.2.1">SR Policy status<a href="#section-6.9-3.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.9-3.3">
-            <p id="section-6.9-3.3.1">BGP session status<a href="#section-6.9-3.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.9-3.4">
-            <p id="section-6.9-3.4.1">Virtualized Infrastructure Manager (VIM) status<a href="#section-6.9-3.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-6.9-4">In addition, operators MAY verify correct packet forwarding using SR path tracing or in-band telemetry mechanisms.<a href="#section-6.9-4" class="pilcrow">¶</a></p>
+<p id="section-6.9-1">Operational status is continuously monitored throughout the service lifecycle using telemetry collected from both the network and infrastructure.<a href="#section-6.9-1" class="pilcrow">¶</a></p>
+<p id="section-6.9-2">Monitoring data is used to verify service availability and support operational troubleshooting.<a href="#section-6.9-2" class="pilcrow">¶</a></p>
+<p id="section-6.9-3">In addition, operators MAY verify correct packet forwarding using SR path tracing or in-band telemetry mechanisms.<a href="#section-6.9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-update-and-removal">
@@ -1834,77 +1817,68 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-deployment-experience" class="section-name selfRef">Deployment Experience</a>
       </h2>
 <p id="section-7-1">This section describes the deployment and operational experience of the SRv6 SFC architecture on the backbone.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The deployment used the infrastructure described in Section 4 to support a remote video production service requiring dynamic deployment of distributed service functions.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">The following subsections describe the infrastructure, the architecture, the service, and the operational observations.<a href="#section-7-3" class="pilcrow">¶</a></p>
-<div id="infrastructure-deployment">
+<p id="section-7-2">The deployed system supported a remote video production service using the infrastructure described in Section 4.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">The following subsections describe the deployed architecture, the deployed service, and the resulting operational observations.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<div id="architecture-deployment">
 <section id="section-7.1">
-        <h3 id="name-infrastructure-deployment">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-infrastructure-deployment" class="section-name selfRef">Infrastructure Deployment</a>
+        <h3 id="name-architecture-deployment">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-architecture-deployment" class="section-name selfRef">Architecture Deployment</a>
         </h3>
 <p id="section-7.1-1">The deployment utilized the backbone described in Section 4.1 and the distributed OpenStack-based data centers described in Section 4.2.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="architecture-deployment">
-<section id="section-7.2">
-        <h3 id="name-architecture-deployment">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-architecture-deployment" class="section-name selfRef">Architecture Deployment</a>
-        </h3>
-<p id="section-7.2-1">The deployed system implements the four-plane architecture described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.2-2">The application plane was implemented as a web-based interface for service request submission.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.2-3">The control plane was implemented using Pola PCE and GoBGP. Pola PCE performs path computation and SR Policy provisioning, while GoBGP was used for BGP-LS topology collection and BGP Flow Specification distribution.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.2-4">The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible acting as the SFM to perform post-instantiation configuration of SRv6 service functions.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.2-5">The forwarding plane consists of the underlying backbone and SR-aware service functions deployed in distributed data centers.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">The deployed system was based on the four-plane architecture described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">The application plane was implemented as a web-based management interface.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1-4">The control plane was implemented using Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
+<p id="section-7.1-5">The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.<a href="#section-7.1-5" class="pilcrow">¶</a></p>
+<p id="section-7.1-6">The forwarding plane consisted of the existing backbone and distributed SR-aware service functions.<a href="#section-7.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-deployment">
-<section id="section-7.3">
+<section id="section-7.2">
         <h3 id="name-service-deployment">
-<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-service-deployment" class="section-name selfRef">Service Deployment</a>
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-service-deployment" class="section-name selfRef">Service Deployment</a>
         </h3>
-<p id="section-7.3-1">The deployed system was evaluated using a remote video production service.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
-<p id="section-7.3-2">Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
-<p id="section-7.3-3">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
-<p id="section-7.3-4">Service chains were created through the web-based management interface.
-Distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.<a href="#section-7.3-4" class="pilcrow">¶</a></p>
+<p id="section-7.2-1">The deployed system was evaluated using a remote video production service.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-3">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2-4">Service chains were created through the web-based management interface.
+Distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-benefits">
-<section id="section-7.4">
+<section id="section-7.3">
         <h3 id="name-operational-benefits">
-<a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-operational-benefits" class="section-name selfRef">Operational Benefits</a>
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-operational-benefits" class="section-name selfRef">Operational Benefits</a>
         </h3>
-<p id="section-7.4-1">The deployment demonstrated several operational benefits.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-1">The deployed system demonstrated several operational benefits.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.4-2.1">
-            <p id="section-7.4-2.1.1">Existing backbone routers required no software modifications.<a href="#section-7.4-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-7.3-2.1">
+            <p id="section-7.3-2.1.1">Existing backbone routers required no software modifications.<a href="#section-7.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.4-2.2">
-            <p id="section-7.4-2.2.1">Service functions were deployed on demand using existing cloud infrastructure.<a href="#section-7.4-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-7.3-2.2">
+            <p id="section-7.3-2.2.1">Service functions were deployed on demand using existing cloud infrastructure.<a href="#section-7.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.4-2.3">
-            <p id="section-7.4-2.3.1">SR Policies and Flow Specification rules were automatically generated.<a href="#section-7.4-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-7.3-2.3">
+            <p id="section-7.3-2.3.1">SR Policies and Flow Specification rules were automatically generated.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.4-2.4">
-            <p id="section-7.4-2.4.1">Operators primarily interacted through the application plane, reducing operational complexity.<a href="#section-7.4-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-7.3-2.4">
+            <p id="section-7.3-2.4.1">Operators primarily interacted through the application plane, reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.4-2.5">
-            <p id="section-7.4-2.5.1">Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.<a href="#section-7.4-2.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-7.3-2.5">
+            <p id="section-7.3-2.5.1">Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.<a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="scalability-considerations">
-<section id="section-7.5">
+<section id="section-7.4">
         <h3 id="name-scalability-considerations">
-<a href="#section-7.5" class="section-number selfRef">7.5. </a><a href="#name-scalability-considerations" class="section-name selfRef">Scalability Considerations</a>
+<a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-scalability-considerations" class="section-name selfRef">Scalability Considerations</a>
         </h3>
-<p id="section-7.5-1">This deployment demonstrated that the architecture can scale incrementally by deploying additional
+<p id="section-7.4-1">This deployment demonstrated that the architecture can scale incrementally by deploying additional
 SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
-overall control architecture.<a href="#section-7.5-1" class="pilcrow">¶</a></p>
-<p id="section-7.5-2">Once the application, control, and management components are deployed, additional SR-aware service
-functions can be instantiated or removed on the existing NFV infrastructure using the VIM's native
-scaling mechanisms, and become usable in path computation via the Service SID advertisement mechanism
-described in Section 6.4, without manual controller reconfiguration.<a href="#section-7.5-2" class="pilcrow">¶</a></p>
+overall control architecture.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<p id="section-7.4-2">Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
+<p id="section-7.4-3">The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring controller reconfiguration.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1921,9 +1895,9 @@ This section summarizes key observations obtained from real-world operation.<a h
         <h3 id="name-service-verification-and-ob">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-service-verification-and-ob" class="section-name selfRef">Service Verification and Observability</a>
         </h3>
-<p id="section-8.1-1">Verifying that video streams traversed the expected sequence of service functions required correlating SR Policy status with service function instance status across multiple VIM domains.
-Because these were monitored through separate tools during the deployment, diagnosing failures required manual cross-referencing between network-layer and cloud-layer telemetry.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">This experience motivated the unified observability approach discussed in Section 9.5.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">Verifying that video streams traversed the expected sequence of service functions required correlating SR Policy status with service function status across multiple VIM domains.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">However, because these two types of status information were monitored through separate tools during the deployment, diagnosing failures required manual cross-referencing between network-layer and cloud-layer telemetry.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">This experience motivated the operational recommendations described in Section 9.5.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="latency-aware-service-function-placement">
@@ -2002,7 +1976,7 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
         <h3 id="name-observability">
 <a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-observability" class="section-name selfRef">Observability</a>
         </h3>
-<p id="section-9.5-1">A multi-layer observability framework SHOULD include:<a href="#section-9.5-1" class="pilcrow">¶</a></p>
+<p id="section-9.5-1">Based on the deployment experience described in Section 8.1, a multi-layer observability framework SHOULD include:<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5-2.1">
             <p id="section-9.5-2.1.1">SRv6 topology and SR Policy state<a href="#section-9.5-2.1.1" class="pilcrow">¶</a></p>
@@ -2060,8 +2034,9 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-10-1">The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV management interfaces.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">Operators MUST ensure that SR Policies, topology information, traffic classification rules, and Service SID information are protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-2">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3">Operators MUST ensure that SR Policies, topology information, traffic classification rules, and Service SID information are protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-4">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
