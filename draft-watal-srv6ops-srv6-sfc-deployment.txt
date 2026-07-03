@@ -729,9 +729,9 @@ Table of Contents
 
 9.  Operational Considerations
 
-   SRv6 SFC deployments require tight coordination across control,
+   SRv6 SFC deployments require coordination among the control,
    management, and application planes to ensure consistent service
-   lifecycle behavior.
+   operations.
 
 9.1.  Service SID Allocation
 
