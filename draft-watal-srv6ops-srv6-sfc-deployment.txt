@@ -227,7 +227,7 @@ Table of Contents
 
 4.1.  IPv6 Backbone
 
-   The deployment was conducted on the SINET backbone network, Japan遯ｶ蜀ｱ
+   The deployment was conducted on the SINET backbone network, Japan's
    research and education (R&E) network, interconnecting universities
    and research institutions across Japan.
 
