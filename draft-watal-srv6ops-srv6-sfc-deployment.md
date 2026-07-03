@@ -40,7 +40,7 @@ informative:
 
 This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
 
-The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamic provisioning of SFC services via a web-based management interface.
+The deployed system integrates SRv6 forwarding, service function lifecycle operations, topology collection, path computation, and flow classification to enable dynamic provisioning of SFC services via a web-based management interface.
 
 This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services.
 
@@ -479,7 +479,7 @@ The application plane SHOULD integrate latency measurement and topology-aware pl
 
 # Operational Considerations
 
-SRv6 SFC deployments require tight coordination across control, management, and application planes to ensure consistent service lifecycle behavior.
+SRv6 SFC deployments require coordination among the control, management, and application planes to ensure consistent service operations.
 
 ## Service SID Allocation
 
