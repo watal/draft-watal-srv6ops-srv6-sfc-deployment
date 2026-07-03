@@ -678,17 +678,28 @@ Table of Contents
 
 8.1.  Service Verification and Observability
 
-   Verifying that video streams traversed the expected sequence of
-   service functions required correlating SR Policy status with service
-   function status across multiple VIM domains.
+   Verifying end-to-end service correctness required more than
+   monitoring SR Policy status or the operational state of service
+   functions.  In the deployed video processing service, it also
+   required application-layer verification, such as comparing input and
+   output video streams, to confirm that traffic had been processed
+   correctly.
 
-   However, because these two types of status information were monitored
-   through separate tools during the deployment, diagnosing failures
-   required manual cross-referencing between network-layer and cloud-
-   layer telemetry.
+   Furthermore, because service functions were distributed across
+   multiple VIM domains, effective troubleshooting required correlating
+   network-layer, cloud-layer, and application-layer observations across
+   these domains.
 
-   This experience motivated the operational recommendations described
-   in Section 9.5.
+   During the deployment, however, these types of operational
+   information were monitored using separate tools, and no unified
+   observability framework was available.  As a result, diagnosing
+   service failures required manual cross-referencing between SR Policy
+   state, service function status, and application-layer observations,
+   making troubleshooting time-consuming and operationally complex.
+
+   This experience motivated the operational recommendations in
+   Section 9.5, which describe a unified multi-layer observability
+   framework.
 
 8.2.  Latency-Aware Service Function Placement
 
