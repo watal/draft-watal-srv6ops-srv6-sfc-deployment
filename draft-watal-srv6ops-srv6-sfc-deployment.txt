@@ -5,7 +5,7 @@
 srv6ops                                                       W. Mishima
 Internet-Draft                                               Y. Fukagawa
 Intended status: Informational          Kanagawa Institute of Technology
-Expires: 3 January 2027                                      2 July 2026
+Expires: 4 January 2027                                      3 July 2026
 
 
                SRv6 Service Function Chaining Deployment
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2027.
+   This Internet-Draft will expire on 4 January 2027.
 
 Copyright Notice
 
@@ -138,7 +138,7 @@ Table of Contents
    This document does not define any new protocols or protocol
    extensions.
 
-   Instead, it documents the deployment and operational experience of
+   Instead, it describes the deployment and operational experience of
    the architecture on a production academic IPv6 backbone network.
 
    The deployment integrates SRv6 forwarding, service function lifecycle
