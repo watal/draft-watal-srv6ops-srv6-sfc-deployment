@@ -58,9 +58,8 @@ This document does not define any new protocols or protocol extensions.
 
 Instead, it describes the deployment and operational experience of the architecture on an academic network.
 
-The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable on-demand instantiation of service function chains based on operator requests.
-
-Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for operators deploying SRv6 SFC services.
+On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.
+This document reports on a deployment that integrated these functions on a production academic backbone, and summarizes the resulting operational experience.
 
 # Terminology
 
@@ -115,9 +114,7 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 The deployment was conducted on the SINET backbone network, Japan's research and education (R&E) network, interconnecting universities and research institutions across Japan.
 
-The backbone provides native IPv6 connectivity among geographically distributed sites.
-
-The SRv6 SFC deployment was designed to operate without requiring modifications to the existing backbone forwarding infrastructure, enabling incremental deployment alongside academic network services.
+The backbone provides native IPv6 connectivity among geographically distributed sites, allowing the SRv6 SFC deployment described in this document to be introduced incrementally alongside existing academic network services (see Section 5.2).
 
 ## Data Centers
 
@@ -131,12 +128,9 @@ Each data center provides computing resources with native IPv6 connectivity to t
 
 A virtualized infrastructure was deployed at each selected data center to host SR-aware service functions.
 
-Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, which manages compute, storage, and network resources of the NFV Infrastructure (NFVI) used to host SR-aware service functions.
-The VNF Manager (VNFM) issues life-cycle management requests, such as instantiation and scaling, to the VIM, which provisions the required NFVI resources.
+Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, providing the NFV Infrastructure (NFVI) resources used to host SR-aware service functions.
 
-Service functions are instantiated on demand.
-
-After instance creation, SRv6 endpoint behaviors and service-specific parameters are configured automatically.
+The roles of the VNF Manager (VNFM) and VIM, and the procedure used to instantiate and configure service functions, are described in Section 5.4.
 
 # Deployment Architecture
 
@@ -205,13 +199,15 @@ BGP-LS is used to distribute topology information, and BGP Flow Specification is
 
 The management plane is responsible for deploying, configuring, and managing the lifecycle of SR-aware service functions.
 
-Consistent with the roles defined in {{!RFC8568}}, the management plane comprises two logically distinct functions:
+Consistent with the roles defined in {{!RFC8568}}, the management plane comprises the following two logically distinct functions:
 
 * VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 * Virtualized Infrastructure Manager (VIM): responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
 
-Service functions are instantiated on virtualized infrastructure acting as the VIM.
-After a service function instance becomes operational, the management plane configures SRv6 endpoint behaviors, Service SIDs, and other service-specific parameters required for traffic processing.
+In addition, the management plane includes the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, which is responsible for SRv6-specific service configuration performed after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
+
+Service functions are instantiated on virtualized infrastructure acting as the VIM, as illustrated in Figure 3a.
+SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
 
@@ -318,10 +314,10 @@ The operational workflow begins when an operator submits a service request throu
 
 A service request typically includes:
 
-* ingress and egress nodes;
-* optional traffic classification rules;
-* the required sequence of service functions; and
-* optional service constraints, such as latency requirements.
+* ingress and egress nodes
+* optional traffic classification rules
+* the required sequence of service functions
+* optional service constraints, such as latency requirements
 
 The application plane translates these service requirements into deployment requests for the control and management planes.
 
@@ -331,9 +327,7 @@ If one or more requested service functions are not currently available, new serv
 
 Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.
 
-The VNF Manager requests the VIM to allocate the necessary compute, storage, and network resources and to instantiate the required virtual machines or virtual network functions (VNFs).
-The VIM provisions the corresponding NFVI resources and returns the instantiation result to the VNF Manager.
-The deployment phase completes after the service functions become operational.
+The instantiation procedure follows the VNFM/VIM interaction described in Section 5.4 and illustrated in Figure 3a. The deployment phase completes after the service functions become operational.
 
 ## Service SID Allocation
 
@@ -341,8 +335,7 @@ After service function deployment, a Service SID is assigned to each service fun
 
 Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.
 
-When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain.
-The TED is referenced to identify available SID space and avoid address conflicts.
+See Section 9.1 for operational considerations.
 
 ## Topology Collection
 
@@ -427,7 +420,7 @@ The application plane was implemented as a web-based interface for service reque
 
 The control plane was implemented using Pola PCE and GoBGP. Pola PCE performs path computation and SR Policy provisioning, while GoBGP was used for BGP-LS topology collection and BGP Flow Specification distribution.
 
-The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible for post-instantiation configuration of SRv6 service functions.
+The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible acting as the SFM to perform post-instantiation configuration of SRv6 service functions.
 
 The forwarding plane consists of the underlying backbone network and SR-aware service functions deployed in distributed data centers.
 
@@ -439,9 +432,8 @@ Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishi
 
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
-Service chains were created through the web-based management interface without requiring manual router configuration.
-
-Distributed service functions were instantiated, and their Service SID information was advertised via BGP-LS and incorporated into service chains without manual configuration of backbone routers.
+Service chains were created through the web-based management interface.
+Distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.
 
 ## Operational Benefits
 
@@ -457,7 +449,7 @@ The deployment demonstrated several operational benefits.
 
 Additional service function nodes were added by connecting new OpenStack sites to the backbone.
 
-Service SID information is distributed via BGP-LS, enabling newly deployed service functions to be used in path computation without manual controller reconfiguration.
+Because Service SID advertisement follows the mechanism described in Section 6.4, newly deployed service function nodes required no manual controller reconfiguration to become usable in path computation.
 
 The architecture supported scaling by increasing the number of service function nodes and data centers while maintaining centralized path computation and service orchestration.
 
@@ -466,26 +458,12 @@ The architecture supported scaling by increasing the number of service function 
 During the deployment of the SRv6 SFC system over the backbone, several operational issues and design insights were identified.
 This section summarizes key observations obtained from real-world operation.
 
-## Service SID Allocation and Address Space Management
-
-A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service functions.
-
-In the implemented system, the management plane interacts with the control plane by referencing the TED to identify available SID space before assigning Service SIDs.
-
-This approach ensured uniqueness of Service SIDs within the SR domain and reduced the risk of inconsistent state across distributed sites.
-
 ## Service Verification and Observability
 
-Operators require end-to-end visibility to verify that SRv6 SFC services are deployed and operating as intended.
+Verifying that video streams traversed the expected sequence of service functions required correlating SR Policy status with service function instance status across multiple VIM domains.
+Because these were monitored through separate tools during the deployment, diagnosing failures required manual cross-referencing between network-layer and cloud-layer telemetry.
 
-SRv6 Path Tracing and on-path telemetry (e.g., flow-based or in-band telemetry) can be used to confirm that traffic traverses the expected sequence of service functions according to the installed SRv6 policies.
-
-In addition to verifying that traffic follows the expected path, service-level verification is necessary to confirm that service functions process traffic as intended.
-Achieving this requires integration of both network-level and cloud-level telemetry.
-
-Network telemetry includes SR Policy status, BGP session state, and SRv6 forwarding behavior, while cloud telemetry includes service function instance status and resource utilization across multiple VIM domains.
-
-A unified observability framework is RECOMMENDED to correlate service-level behavior with the underlying network and infrastructure state, enabling rapid fault identification and end-to-end service verification.
+This experience motivated the unified observability approach discussed in Section 9.5.
 
 ## Latency-Aware Service Function Placement
 
@@ -498,6 +476,8 @@ However, it is recommended that the application plane integrate latency measurem
 
 # Operational Considerations
 
+SRv6 SFC deployments require tight coordination across control, management, and application planes to ensure consistent service lifecycle behavior.
+
 ## Service SID Allocation
 
 As described in Section 6.3, Service SID allocation MUST ensure uniqueness within the SR domain.
@@ -508,7 +488,7 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 Controller placement and architecture have a significant impact on system performance and scalability due to frequent interactions between:
 
 * application plane and management plane
-* VNF Manager and Virtualized Infrastructure Manager (VIM) within the management plane
+* VNF Manager, Virtualized Infrastructure Manager (VIM), and Service Function Manager (SFM) within the management plane
 * control plane and SR Headend nodes
 
 To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.
@@ -531,14 +511,9 @@ Implementations SHOULD ensure that SR Policy provisioning and Flow Specification
 
 Failure recovery follows the mechanisms defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-When a network function becomes unavailable, its associated Service SID is withdrawn from topology information so that it is no longer considered during subsequent path computation.
+In operational deployments, fast reroute at the forwarding plane may maintain connectivity, but service-level state consistency is not guaranteed during failover events.
 
-If an Anycast SID {{!RFC8402}} is used, traffic MAY be redirected to alternative service instances.
-If no alternative exists, packets are dropped and an ICMPv6 Destination Unreachable message is generated.
-
-Fast reroute mechanisms operate at the forwarding plane and MAY maintain connectivity; however, service state consistency is not guaranteed during rerouting events.
-
-Therefore, service functions MUST implement mechanisms to handle potential state inconsistencies, such as buffering, re-synchronization, or idempotent processing.
+Therefore, service functions MUST be designed to handle potential state inconsistencies (e.g., buffering, re-synchronization, or idempotent processing).
 
 ## Observability
 
