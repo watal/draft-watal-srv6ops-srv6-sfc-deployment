@@ -16,7 +16,7 @@ Abstract
    This document describes the deployment and operational experience of
    the SRv6 Service Function Chaining (SFC) architecture defined in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions] on an academic
-   network.
+   IPv6 backbone network.
 
    The deployed system integrates SRv6 forwarding, service function
    lifecycle management, topology collection, path computation, and flow
