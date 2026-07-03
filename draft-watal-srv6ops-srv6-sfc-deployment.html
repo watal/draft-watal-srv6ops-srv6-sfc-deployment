@@ -10,7 +10,7 @@
 <meta content="
        This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in   on an academic IPv6 backbone network. 
        The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamically provisioned service function chaining via a web-based management interface. 
-       This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and provides operational guidance for network operators deploying SRv6 SFC services. 
+       This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services. 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
 <meta content="SRv6" name="keyword">
@@ -1092,7 +1092,7 @@ svg {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> on an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamically provisioned service function chaining via a web-based management interface.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3">This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and provides operational guidance for network operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1326,7 +1326,7 @@ svg {
 <p id="section-1-4">This document does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Instead, it describes the deployment and operational experience of the architecture on an academic network.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable service function chaining.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, operational considerations, lessons learned, and provides operational guidance for operators deploying SRv6 SFC services.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-7">Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for operators deploying SRv6 SFC services.<a href="#section-1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1363,7 +1363,10 @@ svg {
             <p id="section-2.1-2.7.1">NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.8">
-            <p id="section-2.1-2.8.1">SRv6 SFC architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.8.1">Service Segment and End.AN defined in <span>[<a href="#I-D.draft-ietf-spring-sr-service-programming" class="cite xref">I-D.draft-ietf-spring-sr-service-programming</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.9">
+            <p id="section-2.1-2.9.1">SRv6 SFC architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.9.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1539,10 +1542,10 @@ Service functions implement the End.AN behavior as defined in <span>[<a href="#I
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-control-plane" class="section-name selfRef">Control Plane</a>
         </h3>
 <p id="section-5.3-1">The control plane is responsible for topology collection, path computation, and SR Policy provisioning.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">Topology information collected through BGP-LS is used to populate the Traffic Engineering Database (TED).
+<p id="section-5.3-2">Topology information collected via BGP-LS is used to populate the Traffic Engineering Database (TED).
 Based on service requests and the current network topology, the Path Computation Element (PCE) computes service paths and provisions the corresponding SR Policies.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <p id="section-5.3-3">The deployed implementation uses Pola PCE, an open-source PCE implementation, for TED management, path computation, and SR Policy provisioning.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
-<p id="section-5.3-4">GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and SRv6 Service Segment information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
+<p id="section-5.3-4">GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and Service SID information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="management-plane">
@@ -1569,11 +1572,10 @@ Based on service requests and the current network topology, the Path Computation
         <h3 id="name-application-plane">
 <a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-application-plane" class="section-name selfRef">Application Plane</a>
         </h3>
-<p id="section-5.5-1">The application plane translates service requirements into intent-based service requests toward the control and management planes.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
-<p id="section-5.5-2">Based on user input, the application plane translates service requests into deployment operations by coordinating both the control and management planes. Operators are not required to manually configure SR Policies or deploy service functions, thereby reducing operational complexity.<a href="#section-5.5-2" class="pilcrow">¶</a></p>
-<p id="section-5.5-3">The application plane MAY incorporate closed-loop automation functions that operate on telemetry feedback from the control and management planes.<a href="#section-5.5-3" class="pilcrow">¶</a></p>
-<p id="section-5.5-4">Such mechanisms provide policy refinement and intent optimization based on observed service and network conditions.<a href="#section-5.5-4" class="pilcrow">¶</a></p>
-<p id="section-5.5-5">These functions are logically separated from the control and management planes and operate at a higher level of abstraction.<a href="#section-5.5-5" class="pilcrow">¶</a></p>
+<p id="section-5.5-1">Based on user input, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.5-2">The application plane MAY incorporate closed-loop automation functions that operate on telemetry feedback from the control and management planes.<a href="#section-5.5-2" class="pilcrow">¶</a></p>
+<p id="section-5.5-3">Such mechanisms provide policy refinement and intent optimization based on observed service and network conditions.<a href="#section-5.5-3" class="pilcrow">¶</a></p>
+<p id="section-5.5-4">These functions are logically separated from the control and management planes and operate at a higher level of abstraction.<a href="#section-5.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1724,7 +1726,7 @@ VIM  = Virtualized         HE   = Headend
         </h3>
 <p id="section-6.3-1">After service function deployment, a Service SID is assigned to each service function.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <p id="section-6.3-2">Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.3-3">When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain. Existing SID information maintained by the Traffic Engineering Database (TED) MAY be used to avoid address conflicts.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-3">When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain. The TED MAY be referenced to identify available SID space and avoid address conflicts.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="topology-collection">
@@ -1732,10 +1734,10 @@ VIM  = Virtualized         HE   = Headend
         <h3 id="name-topology-collection">
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-topology-collection" class="section-name selfRef">Topology Collection</a>
         </h3>
-<p id="section-6.4-1">Topology information is continuously collected through BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its SRv6 Service Segment information through BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-1">Topology information is continuously collected via BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">This ensures that only operationally ready service functions are included in topology dissemination and path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
-<p id="section-6.4-4">The control plane updates the Traffic Engineering Database (TED) accordingly, allowing newly deployed service functions to be considered during subsequent path computations.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.4-4">The control plane updates the TED accordingly, allowing newly deployed service functions to be considered during subsequent path computations.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-computation">
@@ -1837,7 +1839,7 @@ VIM  = Virtualized         HE   = Headend
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-deployment-experience" class="section-name selfRef">Deployment Experience</a>
       </h2>
 <p id="section-7-1">This section describes the deployment and evaluation of the SRv6 SFC architecture on an academic IPv6 backbone network.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The deployment used the infrastructure described in Section 4 and a remote video production service requiring dynamic deployment of distributed service functions.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-2">The deployment used the infrastructure described in Section 4 to support a remote video production service requiring dynamic deployment of distributed service functions.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <p id="section-7-3">The following subsections describe the infrastructure, the architecture, the service, and the operational observations.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <div id="infrastructure-deployment">
 <section id="section-7.1">
@@ -1903,7 +1905,7 @@ VIM  = Virtualized         HE   = Headend
 <a href="#section-7.5" class="section-number selfRef">7.5. </a><a href="#name-scalability-considerations" class="section-name selfRef">Scalability Considerations</a>
         </h3>
 <p id="section-7.5-1">The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the academic backbone.<a href="#section-7.5-1" class="pilcrow">¶</a></p>
-<p id="section-7.5-2">Because Service SID information is distributed through BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.<a href="#section-7.5-2" class="pilcrow">¶</a></p>
+<p id="section-7.5-2">Because Service SID information is distributed via BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.<a href="#section-7.5-2" class="pilcrow">¶</a></p>
 <p id="section-7.5-3">The deployment demonstrated that the architecture can be extended by increasing the number of service function nodes and data centers while maintaining centralized path computation and service orchestration.<a href="#section-7.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1921,7 +1923,7 @@ VIM  = Virtualized         HE   = Headend
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-service-sid-allocation-and-" class="section-name selfRef">Service SID Allocation and Address Space Management</a>
         </h3>
 <p id="section-8.1-1">A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service function instances.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">In the implemented system, the management plane interacts with the control plane by referencing the Traffic Engineering Database (TED) to identify available function identifier space before assigning Service SIDs.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">In the implemented system, the management plane interacts with the control plane by referencing the TED to identify available SID space before assigning Service SIDs.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
 <p id="section-8.1-3">This approach ensured uniqueness of Service SIDs within the SR domain and reduced the risk of inconsistent state across distributed sites.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1993,7 +1995,7 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-flow-classification-and-sr-" class="section-name selfRef">Flow Classification and SR Policy Synchronization</a>
         </h3>
 <p id="section-9.3-1">Flow classification and SR Policy provisioning are tightly coupled in operational behavior.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.3-2">Inconsistent timing between FlowSpec installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">Inconsistent timing between BGP Flow Specification installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
 <p id="section-9.3-3">Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2087,6 +2089,10 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 <a href="#section-12" class="section-number selfRef">12. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="I-D.draft-ietf-spring-sr-service-programming">[I-D.draft-ietf-spring-sr-service-programming]</dt>
+      <dd>
+<span class="refAuthor">Abdelsalam, A.</span>, <span class="refAuthor">Xu, X.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Bernier, D.</span>, <span class="refAuthor">Li, C.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Ma, S.</span>, <span class="refAuthor">Yadlapalli, C.</span>, <span class="refAuthor">Henderickx, W.</span>, and <span class="refAuthor">S. Salsano</span>, <span class="refTitle">"Service Programming with Segment Routing"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-spring-sr-service-programming-12</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-spring-sr-service-programming-12">https://datatracker.ietf.org/doc/html/draft-ietf-spring-sr-service-programming-12</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.draft-watal-spring-srv6-sfc-sr-aware-functions">[I-D.draft-watal-spring-srv6-sfc-sr-aware-functions]</dt>
       <dd>
 <span class="refAuthor">Mishima, W.</span> and <span class="refAuthor">5. 7. 7. 6. 2. 4. 7. 6. 6. 6. 6. 7. Fukagawa</span>, <span class="refTitle">"SRv6 SFC Architecture with SR-aware Functions"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-watal-spring-srv6-sfc-sr-aware-functions-04</span>, <time datetime="2026-02-05" class="refDate">5 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-04">https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-04</a>&gt;</span>. </dd>

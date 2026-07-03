@@ -24,9 +24,9 @@ Abstract
    chaining via a web-based management interface.
 
    This document summarizes the deployment architecture, operational
-   workflow, deployment experience, lessons learned, and provides
-   operational guidance for network operators deploying SRv6 SFC
-   services.
+   workflow, deployment experience, lessons learned, and operational
+   considerations, and provides operational guidance for network
+   operators deploying SRv6 SFC services.
 
 Discussion Venues
 
@@ -143,9 +143,9 @@ Table of Contents
    classification to enable service function chaining.
 
    Based on this deployment experience, this document summarizes the
-   deployment architecture, operational workflow, operational
-   considerations, lessons learned, and provides operational guidance
-   for operators deploying SRv6 SFC services.
+   deployment architecture, operational workflow, deployment experience,
+   lessons learned, and operational considerations, and provides
+   operational guidance for operators deploying SRv6 SFC services.
 
 2.  Terminology
 
@@ -171,6 +171,9 @@ Table of Contents
    *  NFV Infrastructure (NFVI), Virtualized Infrastructure Manager
       (VIM), and Virtualized Network Function Manager (VNFM) defined in
       [RFC8568].
+
+   *  Service Segment and End.AN defined in
+      [I-D.draft-ietf-spring-sr-service-programming].
 
    *  SRv6 SFC architecture defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
@@ -337,7 +340,7 @@ Table of Contents
    The control plane is responsible for topology collection, path
    computation, and SR Policy provisioning.
 
-   Topology information collected through BGP-LS is used to populate the
+   Topology information collected via BGP-LS is used to populate the
    Traffic Engineering Database (TED).  Based on service requests and
    the current network topology, the Path Computation Element (PCE)
    computes service paths and provisions the corresponding SR Policies.
@@ -347,7 +350,7 @@ Table of Contents
    provisioning.
 
    GoBGP, an open-source BGP implementation, is used to receive BGP-LS
-   advertisements carrying topology information and SRv6 Service Segment
+   advertisements carrying topology information and Service SID
    information, and to distribute BGP Flow Specification rules that
    associate traffic flows with the corresponding SR Policies.
 
@@ -379,14 +382,10 @@ Table of Contents
 
 5.5.  Application Plane
 
-   The application plane translates service requirements into intent-
-   based service requests toward the control and management planes.
-
    Based on user input, the application plane translates service
-   requests into deployment operations by coordinating both the control
-   and management planes.  Operators are not required to manually
-   configure SR Policies or deploy service functions, thereby reducing
-   operational complexity.
+   requirements into intent-based service requests and coordinates the
+   control and management planes to realize them as deployment
+   operations.
 
    The application plane MAY incorporate closed-loop automation
    functions that operate on telemetry feedback from the control and
@@ -537,25 +536,25 @@ Table of Contents
 
    When Service SIDs are allocated dynamically, the management plane
    MUST ensure that allocated Service SIDs are unique within the SR
-   domain.  Existing SID information maintained by the Traffic
-   Engineering Database (TED) MAY be used to avoid address conflicts.
+   domain.  The TED MAY be referenced to identify available SID space
+   and avoid address conflicts.
 
 6.4.  Topology Collection
 
-   Topology information is continuously collected through BGP-LS
+   Topology information is continuously collected via BGP-LS
    independently of individual service requests.
 
    After a deployed service function is configured with an End.AN
    behavior and has completed all required initialization and health
-   verification procedures, the corresponding node advertises its SRv6
-   Service Segment information through BGP-LS.
+   verification procedures, the corresponding node advertises its
+   Service SID information via BGP-LS.
 
    This ensures that only operationally ready service functions are
    included in topology dissemination and path computation.
 
-   The control plane updates the Traffic Engineering Database (TED)
-   accordingly, allowing newly deployed service functions to be
-   considered during subsequent path computations.
+   The control plane updates the TED accordingly, allowing newly
+   deployed service functions to be considered during subsequent path
+   computations.
 
 6.5.  Path Computation
 
@@ -640,9 +639,9 @@ Table of Contents
    This section describes the deployment and evaluation of the SRv6 SFC
    architecture on an academic IPv6 backbone network.
 
-   The deployment used the infrastructure described in Section 4 and a
-   remote video production service requiring dynamic deployment of
-   distributed service functions.
+   The deployment used the infrastructure described in Section 4 to
+   support a remote video production service requiring dynamic
+   deployment of distributed service functions.
 
    The following subsections describe the infrastructure, the
    architecture, the service, and the operational observations.
@@ -724,7 +723,7 @@ Table of Contents
    be incorporated by connecting new OpenStack sites to the academic
    backbone.
 
-   Because Service SID information is distributed through BGP-LS, newly
+   Because Service SID information is distributed via BGP-LS, newly
    deployed service functions become available for path computation
    without manual controller reconfiguration.
 
@@ -746,9 +745,8 @@ Table of Contents
    address conflicts across distributed service function instances.
 
    In the implemented system, the management plane interacts with the
-   control plane by referencing the Traffic Engineering Database (TED)
-   to identify available function identifier space before assigning
-   Service SIDs.
+   control plane by referencing the TED to identify available SID space
+   before assigning Service SIDs.
 
    This approach ensured uniqueness of Service SIDs within the SR domain
    and reduced the risk of inconsistent state across distributed sites.
@@ -837,9 +835,9 @@ Table of Contents
    Flow classification and SR Policy provisioning are tightly coupled in
    operational behavior.
 
-   Inconsistent timing between FlowSpec installation and SR Policy
-   activation MAY result in transient traffic misclassification or
-   blackholing.
+   Inconsistent timing between BGP Flow Specification installation and
+   SR Policy activation MAY result in transient traffic
+   misclassification or blackholing.
 
    Implementations SHOULD ensure that SR Policy provisioning and Flow
    Specification installation are performed in a coordinated manner,
@@ -925,6 +923,15 @@ Table of Contents
    This document has no IANA actions.
 
 12.  Normative References
+
+   [I-D.draft-ietf-spring-sr-service-programming]
+              Abdelsalam, A., Xu, X., Filsfils, C., Bernier, D., Li, C.,
+              Decraene, B., Ma, S., Yadlapalli, C., Henderickx, W., and
+              S. Salsano, "Service Programming with Segment Routing",
+              Work in Progress, Internet-Draft, draft-ietf-spring-sr-
+              service-programming-12, 3 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-spring-
+              sr-service-programming-12>.
 
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions]
               Mishima, W. and 5. 7. 7. 6. 2. 4. 7. 6. 6. 6. 6. 7.
