@@ -257,6 +257,8 @@ Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and 
   |            |            |            |----------->|
   |            |            |Instance OK |            |
   |            |            |<-----------|            |
+  |            |Instance OK |            |            |
+  |            |<-----------|            |            |
   |            |            |            |            |
 ~~~
 {: #fig-wf-4 title="NF Instantiation"}
@@ -275,7 +277,11 @@ Figure 5 shows SRv6-specific service configuration after the service function be
   |                 |                 |    Advertise    |
   |                 |                 |     Segment     |
   |                 |                 |---------------->|
-  |                 |                 |                 | Update TED
+  |                 | Service SID OK  |                 | Update TED
+  |                 |<----------------|                 |
+  |     Deploy      |                 |                 |
+  |   Segment OK    |                 |                 |
+  |<----------------|                 |                 |
   |                 |                 |                 |
 ~~~
 {: #fig-wf-5 title="Service Segment Configuration"}
@@ -291,6 +297,12 @@ Figure 6 shows SFC activation, consisting of path computation, SR Policy provisi
   |                 |    Provision    |                 |
   |                 |    SR Policy    |                 |
   |                 |---------------->|                 |
+  |                 |                 |                 |
+  |                 |  SR Policy OK   |                 |
+  |                 |<----------------|                 |
+  |     Request     |                 |                 |
+  |     SFC OK      |                 |                 |
+  |<----------------|                 |                 |
   |     Install     |                 |                 |
   |    Flow Rule    |                 |                 |
   |---------------->|                 |                 |
@@ -299,6 +311,10 @@ Figure 6 shows SFC activation, consisting of path computation, SR Policy provisi
   |                 |                 |   SFC Traffic   |
   |                 |                 |    Steering     |
   |                 |                 |---------------->|
+  |                 |   FlowSpec OK   |                 |
+  |                 |<----------------|                 |
+  |   FlowSpec OK   |                 |                 |
+  |<----------------|                 |                 |
   |                 |   Monitoring    |                 |
   |                 |     Status      |                 |
   |<----------------------------------------------------|
