@@ -236,15 +236,15 @@ Table of Contents
 
 4.2.  Data Centers
 
-   Multiple data centers connected to the backbone were used to host
-   service functions.
+   Multiple SINET data centers connected to the backbone were used to
+   host service functions.
 
    Three geographically distributed data centers (Okinawa, Kanagawa, and
-   Sapporo) were selected for the deployment in order to evaluate
-   service chaining across a wide-area network.
+   Sapporo) were selected to evaluate service chaining across a wide-
+   area network.
 
-   Each data center provides computing resources connected to the
-   backbone through native IPv6 connectivity.
+   Each data center provides computing resources with native IPv6
+   connectivity to the backbone.
 
 4.3.  Virtualized Network Function Infrastructure
 
