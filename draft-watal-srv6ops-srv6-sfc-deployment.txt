@@ -244,15 +244,8 @@ Table of Contents
 4.3.  Virtualized Network Function Infrastructure
 
    A virtualized infrastructure was deployed at each selected data
-   center to host SR-aware service functions.
-
-   Each site operates OpenStack as the Virtualized Infrastructure
-   Manager (VIM) [RFC8568], providing the NFV Infrastructure (NFVI)
-   resources used to host SR-aware service functions.
-
-   The roles of the VNF Manager (VNFM) and VIM, and the procedure used
-   to instantiate and configure service functions, are described in
-   Section 5.4.
+   center to host SR-aware service functions.  Each site operates
+   OpenStack as the Virtualized Infrastructure Manager (VIM).
 
 5.  Deployment Architecture
 
@@ -270,7 +263,6 @@ Table of Contents
 5.1.  Overall Architecture
 
    Figure 2 illustrates the logical architecture of the deployed system.
-   The architecture is organized into four logical planes:
 
    *  The application plane provides the operator interface.
 
@@ -282,8 +274,8 @@ Table of Contents
    *  The forwarding plane forwards traffic through SR-aware service
       functions.
 
-   Together, these planes enable dynamic deployment and operation of
-   SRv6 service function chains while preserving the existing forwarding
+   This architecture enables dynamic deployment and operation of SRv6
+   service function chains while preserving the existing forwarding
    infrastructure.
 
                         +----------------------+
@@ -350,10 +342,9 @@ Table of Contents
       service functions, including issuing instantiation, scaling, and
       termination requests.
 
-   *  Virtualized Infrastructure Manager (VIM): responsible for
-      controlling and managing the underlying NFVI compute, storage, and
-      network resources, and for fulfilling the life-cycle requests
-      issued by the VNF Manager.
+   *  VIM: responsible for controlling and managing the underlying NFVI
+      compute, storage, and network resources, and for fulfilling the
+      life-cycle requests issued by the VNF Manager.
 
    In addition, the management plane includes the Service Function
    Manager (SFM), defined in
