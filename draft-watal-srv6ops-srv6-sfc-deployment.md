@@ -286,7 +286,7 @@ Figure 5 shows SRv6-specific service configuration after the service function be
 ~~~
 {: #fig-wf-5 title="Service Segment Configuration"}
 
-Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, traffic steering, and monitoring.
+Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, and traffic steering.
 
 ~~~ drawing
  App              Ctrl               HE                TE
@@ -315,9 +315,6 @@ Figure 6 shows SFC activation, consisting of path computation, SR Policy provisi
   |                 |<----------------|                 |
   |   FlowSpec OK   |                 |                 |
   |<----------------|                 |                 |
-  |                 |   Monitoring    |                 |
-  |                 |     Status      |                 |
-  |<----------------------------------------------------|
   |                 |                 |                 |
 ~~~
 {: #fig-wf-6 title="SFC Activation and Traffic Steering"}
