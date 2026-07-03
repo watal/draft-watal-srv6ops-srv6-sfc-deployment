@@ -492,11 +492,11 @@ For large-scale deployments, a hierarchical controller model MAY be used to impr
 
 ## Flow Classification and SR Policy Synchronization
 
-Flow classification and SR Policy provisioning are tightly coupled in operational behavior.
+When an SR Policy is intended to steer only selected traffic (e.g., a specific flow or VPN), it SHOULD be associated with a Color so that it is applied only to the intended traffic.
 
-Inconsistent timing between BGP Flow Specification installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.
+The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational.
 
-Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.
+Otherwise, traffic MAY be classified to an SR Policy that is not yet operational, resulting in transient traffic misclassification or blackholing.
 
 ## Failure Recovery
 
@@ -525,9 +525,9 @@ In service scenarios involving content modification (e.g., video processing), ap
 
 Automated orchestration SHOULD ensure correct sequencing of:
 
-1. Service function instantiation
+1. Service function instantiation and readiness verification
 2. Service SID assignment
-3. BGP-LS advertisement (after service readiness verification)
+3. BGP-LS advertisement
 4. SR Policy provisioning
 5. Flow Specification installation
 
