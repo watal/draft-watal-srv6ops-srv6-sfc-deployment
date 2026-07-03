@@ -56,11 +56,11 @@ The architecture of SRv6 SFC with SR-aware functions is described in {{!I-D.draf
 
 This document does not define any new protocols or protocol extensions.
 
-Instead, it describes the deployment and operational experience of the architecture on an academic network.
+Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.
 
 On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.
 
-This document reports on a deployment integrating these functions on an academic backbone network, and summarizes the resulting operational experience.
+This document reports on a deployment integrating these functions on an academic backbone, and summarizes the resulting operational experience.
 
 # Terminology
 
@@ -85,7 +85,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 * Validate the SRv6 SFC architecture on a real backbone network.
 * Demonstrate incremental deployment without modifying the existing IPv6 backbone.
 * Evaluate the operational feasibility of on-demand SFC provisioning.
-* Evaluate the operational integration of forwarding, control, management, and application planes.
+* Evaluate end-to-end service operation across forwarding, control, management, and application planes.
 
 # Deployment Environment
 
@@ -115,13 +115,13 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 The deployment was conducted on the SINET IPv6 backbone, Japan's research and education network interconnecting universities and research institutions.
 
-The backbone provides native IPv6 connectivity among geographically distributed sites, allowing the SRv6 SFC deployment described in this document to be introduced incrementally alongside existing academic network services (see Section 5.2).
+The backbone provides native IPv6 connectivity among geographically distributed sites.
 
 ## Data Centers
 
-Multiple SINET data centers connected to the backbone were used to host service functions.
+Multiple SINET data centers are connected to the backbone.
 
-Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were selected to evaluate service chaining across a wide-area network.
+Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were used to evaluate service chaining across a wide-area network.
 
 Each data center provides computing resources with native IPv6 connectivity to the backbone.
 
@@ -177,7 +177,7 @@ Together, these planes enable dynamic deployment and operation of SRv6 service f
 
 ## Forwarding Plane
 
-The forwarding plane consists of the backbone network and the SR-aware service functions deployed at geographically distributed data centers.
+The forwarding plane consists of the backbone and the SR-aware service functions deployed at geographically distributed data centers.
 
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
 Service functions implement the End.AN behavior to process packets and forward them to the next segment in the service chain.
@@ -423,7 +423,7 @@ The control plane was implemented using Pola PCE and GoBGP. Pola PCE performs pa
 
 The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible acting as the SFM to perform post-instantiation configuration of SRv6 service functions.
 
-The forwarding plane consists of the underlying backbone network and SR-aware service functions deployed in distributed data centers.
+The forwarding plane consists of the underlying backbone and SR-aware service functions deployed in distributed data centers.
 
 ## Service Deployment
 
