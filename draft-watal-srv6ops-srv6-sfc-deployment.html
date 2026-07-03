@@ -1978,9 +1978,9 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
         <h3 id="name-flow-classification-and-sr-">
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-flow-classification-and-sr-" class="section-name selfRef">Flow Classification and SR Policy Synchronization</a>
         </h3>
-<p id="section-9.3-1">Flow classification and SR Policy provisioning are tightly coupled in operational behavior.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.3-2">Inconsistent timing between BGP Flow Specification installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.3-3">Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">When an SR Policy is intended to steer only selected traffic (e.g., a specific flow or VPN), it SHOULD be associated with a Color so that it is applied only to the intended traffic.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">Otherwise, traffic MAY be classified to an unavailable SR Policy, resulting in transient traffic misclassification or blackholing.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="failure-recovery">
@@ -2026,13 +2026,13 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 <p id="section-9.6-1">Automated orchestration SHOULD ensure correct sequencing of:<a href="#section-9.6-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-9.6-2">
 <li id="section-9.6-2.1">
-            <p id="section-9.6-2.1.1">Service function instantiation<a href="#section-9.6-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-9.6-2.1.1">Service function instantiation and readiness verification<a href="#section-9.6-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-9.6-2.2">
             <p id="section-9.6-2.2.1">Service SID assignment<a href="#section-9.6-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-9.6-2.3">
-            <p id="section-9.6-2.3.1">BGP-LS advertisement (after service readiness verification)<a href="#section-9.6-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-9.6-2.3.1">BGP-LS advertisement<a href="#section-9.6-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-9.6-2.4">
             <p id="section-9.6-2.4.1">SR Policy provisioning<a href="#section-9.6-2.4.1" class="pilcrow">¶</a></p>
