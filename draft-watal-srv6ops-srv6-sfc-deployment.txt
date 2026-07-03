@@ -765,8 +765,9 @@ Table of Contents
    only after the SR Policy has been successfully provisioned and is
    operational.
 
-   Otherwise, traffic MAY be classified to an unavailable SR Policy,
-   resulting in transient traffic misclassification or blackholing.
+   Otherwise, traffic MAY be classified to an SR Policy that is not yet
+   operational, resulting in transient traffic misclassification or
+   blackholing.
 
 9.4.  Failure Recovery
 

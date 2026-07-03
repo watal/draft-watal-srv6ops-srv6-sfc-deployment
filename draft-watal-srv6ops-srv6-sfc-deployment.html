@@ -1980,7 +1980,7 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
         </h3>
 <p id="section-9.3-1">When an SR Policy is intended to steer only selected traffic (e.g., a specific flow or VPN), it SHOULD be associated with a Color so that it is applied only to the intended traffic.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 <p id="section-9.3-2">The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.3-3">Otherwise, traffic MAY be classified to an unavailable SR Policy, resulting in transient traffic misclassification or blackholing.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">Otherwise, traffic MAY be classified to an SR Policy that is not yet operational, resulting in transient traffic misclassification or blackholing.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="failure-recovery">
