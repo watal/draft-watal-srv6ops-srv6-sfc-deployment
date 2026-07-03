@@ -354,11 +354,11 @@ Table of Contents
    The SFM is responsible for SRv6-specific service configuration after
    a service function instance becomes operational.  This includes
    Service SID assignment and endpoint behavior configuration, as
-   illustrated in figure 5.
+   illustrated in Figure 5.
 
    Service functions are instantiated on the NFVI managed by the VIM, as
-   illustrated in figure 4.  SRv6-specific configuration by the SFM then
-   follows, as illustrated in figure 5.
+   illustrated in Figure 4.  SRv6-specific configuration by the SFM then
+   follows, as illustrated in Figure 5.
 
    The management plane supports reconfiguration and removal of service
    functions throughout their operational lifecycle.
@@ -387,7 +387,7 @@ Table of Contents
    an operator service request and concludes with traffic steering
    through the deployed service functions.
 
-   The workflow is illustrated in Figures 4 through 6.
+   The workflow is illustrated in Figures 4-6.
 
    The following abbreviations are used:
 
