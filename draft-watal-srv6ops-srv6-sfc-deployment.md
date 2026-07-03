@@ -75,7 +75,7 @@ The following terms are used in this document as defined in the related RFCs and
 * BGP Flow Specification defined in {{!RFC8955}}.
 * NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
 * Service Segment and End.AN defined in {{!I-D.draft-ietf-spring-sr-service-programming}}.
-* SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+* SRv6 SFC architecture, including the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they appear in all capitals, as shown here.
@@ -113,7 +113,7 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 ## IPv6 Backbone
 
-The deployment was conducted on the SINET academic IPv6 backbone network, interconnecting universities and research institutions across Japan.
+The deployment was conducted on the SINET backbone network, Japan's research and education (R&E) network, interconnecting universities and research institutions across Japan.
 
 The backbone provides native IPv6 connectivity among geographically distributed sites.
 
@@ -159,6 +159,7 @@ The architecture is organized into four logical planes:
 
 Together, these planes enable dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
 
+
 ~~~ drawing
                      +----------------------+
                      |  Application Plane   |
@@ -195,11 +196,10 @@ The forwarding plane is responsible for packet forwarding and service function e
 The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
 
 Topology information collected via BGP-LS is used to populate the Traffic Engineering Database (TED).
-Based on service requests and the current network topology, the Path Computation Element (PCE) computes service paths and provisions the corresponding SR Policies.
 
-The deployed implementation uses Pola PCE, an open-source PCE implementation, for TED management, path computation, and SR Policy provisioning.
+A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.
 
-GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and Service SID information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.
+BGP-LS is used to distribute topology information, and BGP Flow Specification is used to distribute traffic classification rules.
 
 ## Management Plane
 
@@ -210,7 +210,7 @@ Consistent with the roles defined in {{!RFC8568}}, the management plane comprise
 * VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 * Virtualized Infrastructure Manager (VIM): responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
 
-Service functions are instantiated on virtualized infrastructures managed by OpenStack, which acts as the VIM.
+Service functions are instantiated on virtualized infrastructure acting as the VIM.
 After a service function instance becomes operational, the management plane configures SRv6 endpoint behaviors, Service SIDs, and other service-specific parameters required for traffic processing.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
@@ -231,10 +231,10 @@ This section describes the operational workflow for deploying and activating an 
 The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions.
 
 To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering.
-The Service Function Manager (SFM) shown in Figure 3b is defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+
 The following abbreviations are used:
 
-~~~
+~~~ drawing
 Op   = Operator            SFM  = Service Function Manager
 App  = Application         VM   = VM/VNF
 VNFM = VNF Manager         Ctrl = Controller
@@ -342,7 +342,7 @@ After service function deployment, a Service SID is assigned to each service fun
 Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.
 
 When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain.
-The TED MAY be referenced to identify available SID space and avoid address conflicts.
+The TED is referenced to identify available SID space and avoid address conflicts.
 
 ## Topology Collection
 
@@ -386,11 +386,10 @@ Operational status is continuously monitored throughout the service lifecycle.
 
 Typical monitoring targets include:
 
-* service function availability
+* service function health and availability
 * SR Policy status
 * BGP session status
 * Virtualized Infrastructure Manager (VIM) status
-* service function health
 
 In addition, operators MAY verify correct packet forwarding using SR path tracing or in-band telemetry mechanisms.
 
@@ -401,10 +400,10 @@ The deployed system supports updates throughout the service lifecycle.
 Typical operations include:
 
 * adding service functions to an existing service chain
-* removing service functions
-* redeploying failed service functions
-* updating SR Policies
+* modifying service chains
 * removing service chains
+* redeploying failed service functions
+* removing service functions
 
 Service updates are performed while maintaining consistency between the forwarding, control, management, and application planes.
 
@@ -422,18 +421,15 @@ The deployment utilized the backbone described in Section 4.1 and the distribute
 
 ## Architecture Deployment
 
-The deployed system implemented the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployed system implements the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-The application, control, management, and forwarding planes were realized as follows.
+The application plane was implemented as a web-based interface for service request submission.
 
-The application plane was implemented as a web-based management interface through which operators requested service deployments.
+The control plane was implemented using Pola PCE and GoBGP. Pola PCE performs path computation and SR Policy provisioning, while GoBGP was used for BGP-LS topology collection and BGP Flow Specification distribution.
 
-The control plane consisted of Pola PCE for topology management, path computation, and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
+The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible for post-instantiation configuration of SRv6 service functions.
 
-Within the management plane, a VNF Manager component issued life-cycle requests to OpenStack, which served as the VIM responsible for allocating compute, storage, and network resources.
-Ansible was used for the automatic configuration of SRv6 endpoint behaviors after instantiation, including End.AN, Service SIDs, and other service-specific parameters.
-
-The forwarding plane consisted of the backbone and SR-aware service functions deployed at the distributed data centers.
+The forwarding plane consists of the underlying backbone network and SR-aware service functions deployed in distributed data centers.
 
 ## Service Deployment
 
