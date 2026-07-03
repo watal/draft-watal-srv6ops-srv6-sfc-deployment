@@ -202,7 +202,9 @@ Consistent with the roles defined in {{!RFC8568}}, the management plane comprise
 * VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 * VIM: responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
 
-In addition, the management plane includes the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, which is responsible for SRv6-specific service configuration performed after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
+In addition, the management plane includes the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+
+The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
 
 Service functions are instantiated on virtualized infrastructure acting as the VIM, as illustrated in Figure 3a.
 SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.
@@ -224,7 +226,7 @@ These functions are logically separated from the control and management planes a
 This section describes the operational workflow for deploying and activating an SRv6 service function chain.
 The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions.
 
-To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering.
+The workflow is illustrated in Figures 3a through 3c.
 
 The following abbreviations are used:
 
@@ -260,7 +262,7 @@ Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and 
 ~~~
 {: #fig-wf-3a title="Figure 3a: NF Instantiation"}
 
-Figure 3b shows the configuration of SRv6-specific service parameters after the service function instance becomes operational, and the subsequent advertisement of the corresponding Service Segment.
+Figure 3b shows SRv6-specific service configuration after the service function becomes operational, followed by Service Segment advertisement.
 
 ~~~ drawing
  App               SFM               VM               Ctrl
