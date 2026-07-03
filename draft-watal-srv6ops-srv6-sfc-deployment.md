@@ -3,6 +3,7 @@ title: "SRv6 Service Function Chaining Deployment"
 abbrev: "SRv6 SFC Deployment"
 docname: draft-watal-srv6ops-srv6-sfc-deployment-latest
 category: info
+submissionType: IETF
 
 ipr: trust200902
 area: Operations and Management
@@ -22,7 +23,7 @@ author:
     ins: W. Mishima
     name: Wataru Mishima
     organization: Kanagawa Institute of Technology
-    email: watal@wide.ad.jp
+    email: mishima@nw.kanagawa-it.ac.jp
     country: Japan
  -
     ins: Y. Fukagawa
@@ -37,7 +38,7 @@ informative:
 
 --- abstract
 
-This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on a production academic IPv6 backbone network.
+This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
 
 The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamically provisioned service function chaining via a web-based management interface.
 
@@ -55,7 +56,7 @@ The architecture of SRv6 SFC with SR-aware functions is described in {{!I-D.draf
 
 This document does not define any new protocols or protocol extensions.
 
-Instead, it documents the deployment and operational experience of the architecture on a production academic IPv6 backbone network.
+Instead, it describes the deployment and operational experience of the architecture on an academic network.
 
 The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable service function chaining.
 
@@ -80,7 +81,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Objectives
 
-* Validate the SRv6 SFC architecture on a production network.
+* Validate the SRv6 SFC architecture on an academic network.
 * Evaluate the operational feasibility of dynamic service chaining.
 * Demonstrate incremental deployment without modifying the existing IPv6 backbone.
 * Assess the integration of forwarding, control, management, and application planes.
@@ -91,40 +92,40 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 
 ~~~ drawing
- +------------+                              +------------+
- |  Edge DC   |---Production IPv6 Backbone---|  Edge DC   |
- +------------+                              +------------+
-       |                                           |
- +------------+                              +------------+
- | OpenStack  |                              | OpenStack  |
- +------------+                              +------------+
-       |                                           |
- +------------+                              +------------+
- |  Service   |                              |  Service   |
- |  Function  |                              |  Function  |
- +------------+                              +------------+
+ +------------+                       +------------+
+ |  Edge DC   | --- IPv6 Backbone --- |  Edge DC   |
+ +------------+                       +------------+
+       |                                    |
+ +------------+                       +------------+
+ | OpenStack  |                       | OpenStack  |
+ +------------+                       +------------+
+       |                                    |
+ +------------+                       +------------+
+ |  Service   |                       |  Service   |
+ |  Function  |                       |  Function  |
+ +------------+                       +------------+
 ~~~
 {: #fig-deployment-environment title="Deployment Environment"}
 
-## Production IPv6 Backbone
+## Academic IPv6 Backbone
 
-The deployment was conducted on a production academic IPv6 backbone network interconnecting universities and research institutions across Japan.
+The deployment was conducted on an academic IPv6 backbone network interconnecting universities and research institutions across Japan.
 
 The backbone provides native IPv6 connectivity among geographically distributed sites.
 
-The SRv6 SFC deployment was designed to operate without requiring modifications to the existing backbone forwarding infrastructure, enabling incremental deployment alongside production network services.
+The SRv6 SFC deployment was designed to operate without requiring modifications to the existing backbone forwarding infrastructure, enabling incremental deployment alongside academic network services.
 
-## Edge Data Centers
+## Data Centers
 
-Multiple edge data centers connected to the production backbone were used to host service functions.
+Multiple data centers connected to the backbone were used to host service functions.
 
-Three geographically distributed edge data centers (Okinawa, Kanagawa, and Sapporo) were selected for the deployment in order to evaluate service chaining across a wide-area network.
+Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were selected for the deployment in order to evaluate service chaining across a wide-area network.
 
-Each edge data center provides computing resources connected to the backbone through native IPv6 connectivity.
+Each data center provides computing resources connected to the backbone through native IPv6 connectivity.
 
 ## Virtualized Network Function Infrastructure
 
-A virtualized infrastructure was deployed at each selected edge data center to host SR-aware service functions.
+A virtualized infrastructure was deployed at each selected data center to host SR-aware service functions.
 
 Each site operates an OpenStack deployment acting as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, controlling and managing the compute, storage, and network resources of the NFV Infrastructure (NFVI) used to host SR-aware service functions. The VNF Manager (VNFM) issues life-cycle management requests, such as instantiation and scaling, to the VIM, which provisions the required NFVI resources.
 
@@ -175,7 +176,7 @@ Together, these planes enable dynamic deployment and operation of SRv6 service f
 
 ## Forwarding Plane
 
-The forwarding plane consists of the production IPv6 backbone network and the SR-aware service functions deployed at geographically distributed edge data centers.
+The forwarding plane consists of the academic IPv6 backbone network and the SR-aware service functions deployed at geographically distributed data centers.
 
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
 Service functions implement the End.AN behavior as defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} to process packets and forward them to the next segment in the service chain.
@@ -399,7 +400,7 @@ Service updates are performed while maintaining consistency between the forwardi
 
 # Deployment Experience
 
-This section describes the deployment experience obtained from implementing the SRv6 SFC architecture on a production academic IPv6 backbone network.
+This section describes the deployment experience obtained from implementing the SRv6 SFC architecture on an academic IPv6 backbone network.
 
 The deployment was performed using the infrastructure described in Section 4.
 
@@ -409,7 +410,7 @@ The following subsections describe the deployed infrastructure, the deployed arc
 
 ## Infrastructure Deployment
 
-The deployment utilized the SINET production IPv6 backbone and distributed OpenStack-based edge data centers described in Section 4.2.
+The deployment utilized the SINET IPv6 backbone and distributed OpenStack-based data centers described in Section 4.2.
 
 ## Architecture Deployment
 
@@ -423,18 +424,18 @@ The control plane consisted of Pola PCE for topology management, path computatio
 
 Within the management plane, a VNF Manager component issued life-cycle requests to OpenStack, which served as the VIM responsible for allocating compute, storage, and network resources. Ansible was used for the automatic configuration of SRv6 endpoint behaviors after instantiation, including End.AN, Service SIDs, and other service-specific parameters.
 
-The forwarding plane consisted of the production IPv6 backbone and SR-aware service functions deployed at the distributed edge data centers.
+The forwarding plane consisted of the IPv6 backbone and SR-aware service functions deployed at the distributed data centers.
 
 ## Service Deployment
 The deployed system was demonstrated during Interop Tokyo 2026 using a remote production service.
 
-Video streams captured at remote production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo edge data centers.
+Video streams captured at remote production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
 
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the video production system.
 
 Service chains were created through the web-based management interface without requiring manual router configuration.
 
-The demonstration confirmed that distributed service functions could be instantiated, their Service SID information advertised through BGP-LS, and subsequently incorporated into service chains without manual configuration of the production backbone routers.
+The demonstration confirmed that distributed service functions could be instantiated, their Service SID information advertised through BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.
 
 ## Operational Benefits
 
@@ -448,15 +449,15 @@ The deployment demonstrated several operational advantages.
 
 ## Scalability Considerations
 
-The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the production backbone.
+The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the academic backbone.
 
 Because Service SID information is distributed through BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.
 
-The deployment demonstrated that the architecture can be extended by increasing the number of service function nodes and edge data centers while maintaining centralized path computation and service orchestration.
+The deployment demonstrated that the architecture can be extended by increasing the number of service function nodes and data centers while maintaining centralized path computation and service orchestration.
 
 # Lessons Learned
 
-During the deployment of the SRv6 SFC system over a production IPv6 backbone, several operational issues and design insights were identified. This section summarizes key observations obtained from real-world operation.
+During the deployment of the SRv6 SFC system over an IPv6 backbone, several operational issues and design insights were identified. This section summarizes key observations obtained from real-world operation.
 
 ## Service SID Allocation and Address Space Management
 
@@ -466,29 +467,26 @@ In the implemented system, the management plane interacts with the control plane
 
 This approach ensured uniqueness of Service SIDs within the SR domain and reduced the risk of inconsistent state across distributed sites.
 
-## Service Verification and Traffic Observability
+## Service Verification and Observability
 
-In order to verify that SRv6 SFC policies were correctly applied, operators required end-to-end visibility of traffic paths.
+Operators require end-to-end visibility to verify that SRv6 SFC services are deployed and operating as intended.
 
-SRv6 Path Tracing and on-path telemetry mechanisms (e.g., Flow-based or in-band telemetry) were used to confirm that traffic traversed the expected sequence of service functions.
+SRv6 Path Tracing and on-path telemetry (e.g., flow-based or in-band telemetry) can be used to confirm that traffic traverses the expected sequence of service functions according to the installed SRv6 policies.
 
-In addition, service-level validation was necessary to confirm that service functions correctly modified or processed traffic as intended.
+In addition to verifying that traffic follows the expected path, service-level verification is necessary to confirm that service functions process traffic as intended.
+Achieving this requires integration of both network-level and cloud-level telemetry.
+
+Network telemetry includes SR Policy status, BGP session state, and SRv6 forwarding behavior, while cloud telemetry includes service function instance status and resource utilization across multiple VIM domains.
+
+A unified observability framework is RECOMMENDED to correlate service-level behavior with the underlying network and infrastructure state, enabling rapid fault identification and end-to-end service verification.
 
 ## Latency-Aware Service Function Placement
 
-Because edge data centers are geographically distributed, inter-site latency has a significant impact on service performance.
+Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.
 
-For latency-sensitive applications such as real-time video processing, service function placement must consider cumulative path latency across multiple sites.
+For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
-In this deployment, placement decisions were performed manually. However, it is recommended that the Application Plane integrate latency measurement and topology-aware placement optimization to automate this process.
-
-## Telemetry and Cross-Domain Observability
-
-Monitoring of SRv6 SFC services required integration of both network-level and cloud-level telemetry.
-
-Network telemetry included SR Policy status, BGP session state, and SRv6 forwarding behavior, while cloud telemetry included virtual machine status and resource utilization across multiple OpenStack (VIM) domains.
-
-A unified observability framework is recommended to correlate service-level behavior with underlying infrastructure state.
+In this deployment, VNF placement was determined manually. However, it is recommended that the Application Plane integrate latency measurement and topology-aware placement optimization to automate this process.
 
 # Operational Considerations
 
@@ -573,7 +571,7 @@ Automated orchestration SHOULD ensure correct sequencing of:
 
 Out-of-order execution MAY result in transient traffic disruption.
 
-Operators SHOULD implement consistency checks and readiness validation before enabling traffic steering.
+Operators SHOULD implement consistency checks and readiness verification before enabling traffic steering.
 
 # Security Considerations
 
