@@ -135,15 +135,15 @@ Table of Contents
    extensions.
 
    Instead, it describes the deployment and operational experience of
-   the architecture on an academic network.
+   the SRv6 SFC architecture on an academic network.
 
    On-demand instantiation of service function chains requires
    forwarding, control, management, and application functions to operate
    as a single coordinated system rather than in isolation.
 
    This document reports on a deployment integrating these functions on
-   an academic backbone network, and summarizes the resulting
-   operational experience.
+   an academic backbone, and summarizes the resulting operational
+   experience.
 
 2.  Terminology
 
@@ -195,7 +195,7 @@ Table of Contents
    *  Evaluate the operational feasibility of on-demand SFC
       provisioning.
 
-   *  Evaluate the operational integration of forwarding, control,
+   *  Evaluate end-to-end service operation across forwarding, control,
       management, and application planes.
 
 4.  Deployment Environment
@@ -228,18 +228,15 @@ Table of Contents
    research institutions.
 
    The backbone provides native IPv6 connectivity among geographically
-   distributed sites, allowing the SRv6 SFC deployment described in this
-   document to be introduced incrementally alongside existing academic
-   network services (see Section 5.2).
+   distributed sites.
 
 4.2.  Data Centers
 
-   Multiple SINET data centers connected to the backbone were used to
-   host service functions.
+   Multiple SINET data centers are connected to the backbone.
 
    Three geographically distributed data centers (Okinawa, Kanagawa, and
-   Sapporo) were selected to evaluate service chaining across a wide-
-   area network.
+   Sapporo) were used to evaluate service chaining across a wide-area
+   network.
 
    Each data center provides computing resources with native IPv6
    connectivity to the backbone.
@@ -310,8 +307,8 @@ Table of Contents
 
 5.2.  Forwarding Plane
 
-   The forwarding plane consists of the backbone network and the SR-
-   aware service functions deployed at geographically distributed data
+   The forwarding plane consists of the backbone and the SR-aware
+   service functions deployed at geographically distributed data
    centers.
 
    Traffic is steered through a sequence of service functions using SRv6
@@ -652,8 +649,8 @@ Table of Contents
    as the VIM, and Ansible acting as the SFM to perform post-
    instantiation configuration of SRv6 service functions.
 
-   The forwarding plane consists of the underlying backbone network and
-   SR-aware service functions deployed in distributed data centers.
+   The forwarding plane consists of the underlying backbone and SR-aware
+   service functions deployed in distributed data centers.
 
 7.3.  Service Deployment
 
