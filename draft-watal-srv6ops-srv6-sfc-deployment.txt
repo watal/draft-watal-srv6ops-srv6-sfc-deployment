@@ -423,9 +423,9 @@ Table of Contents
 
                    Figure 4: Figure 3a: NF Instantiation
 
-   Figure 3b shows the configuration of SRv6-specific service parameters
-   after the service function instance becomes operational, and the
-   subsequent advertisement of the corresponding Service Segment.
+   Figure 3b shows SRv6-specific service configuration after the service
+   function becomes operational, followed by Service Segment
+   advertisement.
 
     App               SFM               VM               Ctrl
      |                 |                 |                 |
