@@ -78,7 +78,7 @@ Table of Contents
      2.2.  Requirements Language
    3.  Deployment Objectives
    4.  Deployment Environment
-     4.1.  Academic IPv6 Backbone
+     4.1.  IPv6 Backbone
      4.2.  Data Centers
      4.3.  Virtualized Network Function Infrastructure
    5.  Deployment Architecture
@@ -224,7 +224,7 @@ Table of Contents
 
                       Figure 1: Deployment Environment
 
-4.1.  Academic IPv6 Backbone
+4.1.  IPv6 Backbone
 
    The deployment was conducted on the SINET academic IPv6 backbone
    network, interconnecting universities and research institutions
