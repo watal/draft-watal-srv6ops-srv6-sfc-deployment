@@ -206,7 +206,7 @@ In addition, the management plane includes the Service Function Manager (SFM), d
 
 The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 3b.
 
-Service functions are instantiated on virtualized infrastructure acting as the VIM, as illustrated in Figure 3a.
+Service functions are instantiated on NFVI managed by the VIM, as illustrated in Figure 3a.
 SRv6-specific configuration by the SFM then follows, as illustrated in Figure 3b.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
@@ -438,11 +438,14 @@ The deployment demonstrated several operational benefits.
 
 ## Scalability Considerations
 
-Additional service function nodes were added by connecting new OpenStack sites to the backbone.
+This deployment demonstrated that the architecture can scale incrementally by deploying additional
+SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
+overall control architecture.
 
-Because Service SID advertisement follows the mechanism described in Section 6.4, newly deployed service function nodes required no manual controller reconfiguration to become usable in path computation.
-
-The architecture supported scaling by increasing the number of service function nodes and data centers while maintaining centralized path computation and service orchestration.
+Once the application, control, and management components are deployed, additional SR-aware service
+functions can be instantiated or removed on the existing NFV infrastructure using the VIM's native
+scaling mechanisms, and become usable in path computation via the Service SID advertisement mechanism
+described in Section 6.4, without manual controller reconfiguration.
 
 # Lessons Learned
 
@@ -525,11 +528,12 @@ In service scenarios involving content modification (e.g., video processing), ap
 
 Automated orchestration SHOULD ensure correct sequencing of:
 
-1. Service function instantiation and readiness verification
-2. Service SID assignment
-3. BGP-LS advertisement
-4. SR Policy provisioning
-5. Flow Specification installation
+1. Service function instantiation
+2. Service SID assignment and service configuration
+3. Readiness verification
+4. BGP-LS advertisement
+5. SR Policy provisioning
+6. Flow Specification installation
 
 Out-of-order execution MAY result in transient traffic disruption.
 
@@ -537,8 +541,7 @@ Operators SHOULD implement consistency checks and readiness verification before 
 
 # Security Considerations
 
-The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV
-management interfaces.
+The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV management interfaces.
 
 Operators MUST ensure that SR Policies, topology information, traffic classification rules, and Service SID information are protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.
 
