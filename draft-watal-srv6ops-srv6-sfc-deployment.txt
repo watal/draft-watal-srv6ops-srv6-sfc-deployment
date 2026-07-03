@@ -322,8 +322,7 @@ Table of Contents
    distributed data centers.
 
    Traffic is steered through a sequence of service functions using SRv6
-   segment lists.  Service functions implement the End.AN behavior as
-   defined in [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions] to
+   segment lists.  Service functions implement the End.AN behavior to
    process packets and forward them to the next segment in the service
    chain.
 
