@@ -449,8 +449,8 @@ Table of Contents
                   Figure 5: Service Segment Configuration
 
    Figure 6 shows SFC activation, consisting of path computation, SR
-   Policy provisioning, Flow Specification installation, traffic
-   steering, and monitoring.
+   Policy provisioning, Flow Specification installation, and traffic
+   steering.
 
     App              Ctrl               HE                TE
      |                 |                 |                 |
@@ -478,9 +478,6 @@ Table of Contents
      |                 |<----------------|                 |
      |   FlowSpec OK   |                 |                 |
      |<----------------|                 |                 |
-     |                 |   Monitoring    |                 |
-     |                 |     Status      |                 |
-     |<----------------------------------------------------|
      |                 |                 |                 |
 
                Figure 6: SFC Activation and Traffic Steering
