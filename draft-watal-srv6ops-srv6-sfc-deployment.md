@@ -112,7 +112,7 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 ## IPv6 Backbone
 
-The deployment was conducted on the SINET backbone network, Japan's research and education (R&E) network, interconnecting universities and research institutions across Japan.
+The deployment was conducted on the SINET IPv6 backbone, Japan's research and education network interconnecting universities and research institutions.
 
 The backbone provides native IPv6 connectivity among geographically distributed sites, allowing the SRv6 SFC deployment described in this document to be introduced incrementally alongside existing academic network services (see Section 5.2).
 
