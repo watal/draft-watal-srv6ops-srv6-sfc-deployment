@@ -1409,18 +1409,21 @@ svg {
 <figure id="figure-1">
         <div class="lang-drawing sourcecode" id="section-4-2.1">
 <pre>
- +------------+                       +------------+
- |  Edge DC   | --- IPv6 Backbone --- |  Edge DC   |
- +------------+                       +------------+
-       |                                    |
- +------------+                       +------------+
- | OpenStack  |                       | OpenStack  |
- +------------+                       +------------+
-       |                                    |
- +------------+                       +------------+
- |  Service   |                       |  Service   |
- |  Function  |                       |  Function  |
- +------------+                       +------------+
+                            IPv6 Backbone
+       +-----------------+-----------------+-----------------+
+       |                 |                 |                 |
+ +------------+    +------------+    +------------+         ...
+ |  Edge DC   |    |  Edge DC   |    |  Edge DC   |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ | OpenStack  |    | OpenStack  |    | OpenStack  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ |  Service   |    |  Service   |    |  Service   |
+ |  Function  |    |  Function  |    |  Function  |
+ +------------+    +------------+    +------------+
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -1432,7 +1435,7 @@ svg {
         <h3 id="name-academic-ipv6-backbone">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-academic-ipv6-backbone" class="section-name selfRef">Academic IPv6 Backbone</a>
         </h3>
-<p id="section-4.1-1">The deployment was conducted on an academic IPv6 backbone network interconnecting universities and research institutions across Japan.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">The deployment was conducted on the SINET academic IPv6 backbone network, interconnecting universities and research institutions across Japan.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">The backbone provides native IPv6 connectivity among geographically distributed sites.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1-3">The SRv6 SFC deployment was designed to operate without requiring modifications to the existing backbone forwarding infrastructure, enabling incremental deployment alongside academic network services.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1833,16 +1836,15 @@ VIM  = Virtualized         HE   = Headend
       <h2 id="name-deployment-experience">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-deployment-experience" class="section-name selfRef">Deployment Experience</a>
       </h2>
-<p id="section-7-1">This section describes the deployment experience obtained from implementing the SRv6 SFC architecture on an academic IPv6 backbone network.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The deployment was performed using the infrastructure described in Section 4.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">The deployment was carried out as part of a public demonstration at Interop Tokyo 2026 during which the proposed architecture was applied to a remote video production service requiring dynamic deployment of distributed service functions.<a href="#section-7-3" class="pilcrow">¶</a></p>
-<p id="section-7-4">The following subsections describe the deployed infrastructure, the deployed architecture, the demonstrated service, and the operational observations obtained from the deployment.<a href="#section-7-4" class="pilcrow">¶</a></p>
+<p id="section-7-1">This section describes the deployment and evaluation of the SRv6 SFC architecture on an academic IPv6 backbone network.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">The deployment used the infrastructure described in Section 4 and a remote video production service requiring dynamic deployment of distributed service functions.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">The following subsections describe the infrastructure, the architecture, the service, and the operational observations.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <div id="infrastructure-deployment">
 <section id="section-7.1">
         <h3 id="name-infrastructure-deployment">
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-infrastructure-deployment" class="section-name selfRef">Infrastructure Deployment</a>
         </h3>
-<p id="section-7.1-1">The deployment utilized the SINET IPv6 backbone and distributed OpenStack-based data centers described in Section 4.2.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-1">The deployment utilized the backbone and distributed OpenStack-based data centers described in Sections 4.1 and 4.2.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="architecture-deployment">
@@ -1863,11 +1865,11 @@ VIM  = Virtualized         HE   = Headend
         <h3 id="name-service-deployment">
 <a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-service-deployment" class="section-name selfRef">Service Deployment</a>
         </h3>
-<p id="section-7.3-1">The deployed system was demonstrated during Interop Tokyo 2026 using a remote production service.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
-<p id="section-7.3-2">Video streams captured at remote production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
-<p id="section-7.3-3">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the video production system.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
+<p id="section-7.3-1">The deployed system was evaluated using a remote video production service.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-2">Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.3-3">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
 <p id="section-7.3-4">Service chains were created through the web-based management interface without requiring manual router configuration.<a href="#section-7.3-4" class="pilcrow">¶</a></p>
-<p id="section-7.3-5">The demonstration confirmed that distributed service functions could be instantiated, their Service SID information advertised through BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.<a href="#section-7.3-5" class="pilcrow">¶</a></p>
+<p id="section-7.3-5">The deployment confirmed that distributed service functions could be instantiated, their Service SID information advertised via BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.<a href="#section-7.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-benefits">
@@ -1875,22 +1877,22 @@ VIM  = Virtualized         HE   = Headend
         <h3 id="name-operational-benefits">
 <a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-operational-benefits" class="section-name selfRef">Operational Benefits</a>
         </h3>
-<p id="section-7.4-1">The deployment demonstrated several operational advantages.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<p id="section-7.4-1">The deployment demonstrated several operational benefits.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7.4-2.1">
-            <p id="section-7.4-2.1.1">Existing backbone routers required no software modification.<a href="#section-7.4-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-7.4-2.1.1">Existing backbone routers required no software modifications.<a href="#section-7.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.4-2.2">
-            <p id="section-7.4-2.2.1">Service functions could be deployed on demand using existing cloud infrastructure.<a href="#section-7.4-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-7.4-2.2.1">Service functions were deployed on demand using existing cloud infrastructure.<a href="#section-7.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.4-2.3">
             <p id="section-7.4-2.3.1">SR Policies and Flow Specification rules were automatically generated.<a href="#section-7.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.4-2.4">
-            <p id="section-7.4-2.4.1">Operators interacted primarily through the application plane, reducing operational complexity.<a href="#section-7.4-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-7.4-2.4.1">Operators primarily interacted through the application plane, reducing operational complexity.<a href="#section-7.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.4-2.5">
-            <p id="section-7.4-2.5.1">Newly deployed service functions became available for path computation after their Service SID information was advertised through BGP-LS.<a href="#section-7.4-2.5.1" class="pilcrow">¶</a></p>
+            <p id="section-7.4-2.5.1">Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.<a href="#section-7.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1943,7 +1945,7 @@ Achieving this requires integration of both network-level and cloud-level teleme
         </h3>
 <p id="section-8.3-1">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
 <p id="section-8.3-2">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.3-3">In this deployment, VNF placement was determined manually. However, it is recommended that the Application Plane integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+<p id="section-8.3-3">In this deployment, VNF placement was determined manually. However, it is recommended that the application plane integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1958,9 +1960,8 @@ Achieving this requires integration of both network-level and cloud-level teleme
         <h3 id="name-service-sid-allocation-2">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-service-sid-allocation-2" class="section-name selfRef">Service SID Allocation</a>
         </h3>
-<p id="section-9.1-1">Service SID allocation MUST ensure uniqueness within the SR domain.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1-3">This prevents address collisions and simplifies multi-site service deployment.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">As described in Section 6.3, Service SID allocation MUST ensure uniqueness within the SR domain.
+A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment, thereby preventing address collisions and simplifying multi-site service deployment.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="controller-considerations">
@@ -1971,17 +1972,17 @@ Achieving this requires integration of both network-level and cloud-level teleme
 <p id="section-9.2-1">Controller placement and architecture have significant impact on system performance and scalability due to frequent interactions between:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.2-2.1">
-            <p id="section-9.2-2.1.1">Application Plane and Management Plane<a href="#section-9.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-9.2-2.1.1">application plane and management plane<a href="#section-9.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-9.2-2.2">
-            <p id="section-9.2-2.2.1">VNF Manager and Virtualized Infrastructure Manager (VIM) within the Management Plane<a href="#section-9.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-9.2-2.2.1">VNF Manager and Virtualized Infrastructure Manager (VIM) within the management plane<a href="#section-9.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-9.2-2.3">
-            <p id="section-9.2-2.3.1">Control Plane and SR Headend nodes<a href="#section-9.2-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-9.2-2.3.1">control plane and SR Headend nodes<a href="#section-9.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-9.2-3">To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
-<p id="section-9.2-4">In the described deployment, the Application Plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
+<p id="section-9.2-4">In the described deployment, the application plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
 <p id="section-9.2-5">A logically centralized controller architecture SHOULD be used to ensure consistent path computation and policy enforcement across the SR domain.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
 <p id="section-9.2-6">For large-scale deployments, a hierarchical controller model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
 </section>
@@ -2067,10 +2068,9 @@ Achieving this requires integration of both network-level and cloud-level teleme
       <h2 id="name-security-considerations">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-10-1">This document does not define any new protocols or protocol extensions.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">The deployment described in this document relies on existing security mechanisms provided by SRv6 and the associated control and management protocols.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3">Operators SHOULD ensure that controller communications, management interfaces, and service provisioning mechanisms are appropriately authenticated and protected.<a href="#section-10-3" class="pilcrow">¶</a></p>
-<p id="section-10-4">The security considerations discussed in the referenced specifications remain applicable to this deployment.<a href="#section-10-4" class="pilcrow">¶</a></p>
+<p id="section-10-1">The deployment described in this document relies on existing security mechanisms provided by SRv6 and the associated control and management protocols.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">Operators SHOULD ensure that controller communications, management interfaces, and service provisioning mechanisms are appropriately authenticated and protected.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3">The security considerations discussed in the referenced specifications remain applicable to this deployment.<a href="#section-10-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">

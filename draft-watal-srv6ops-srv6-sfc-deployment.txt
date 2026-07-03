@@ -200,25 +200,29 @@ Table of Contents
    Figure 1 illustrates the physical deployment environment used
    throughout this document.
 
-    +------------+                       +------------+
-    |  Edge DC   | --- IPv6 Backbone --- |  Edge DC   |
-    +------------+                       +------------+
-          |                                    |
-    +------------+                       +------------+
-    | OpenStack  |                       | OpenStack  |
-    +------------+                       +------------+
-          |                                    |
-    +------------+                       +------------+
-    |  Service   |                       |  Service   |
-    |  Function  |                       |  Function  |
-    +------------+                       +------------+
+                               IPv6 Backbone
+          +-----------------+-----------------+-----------------+
+          |                 |                 |                 |
+    +------------+    +------------+    +------------+         ...
+    |  Edge DC   |    |  Edge DC   |    |  Edge DC   |
+    +------------+    +------------+    +------------+
+          |                 |                 |
+    +------------+    +------------+    +------------+
+    | OpenStack  |    | OpenStack  |    | OpenStack  |
+    +------------+    +------------+    +------------+
+          |                 |                 |
+    +------------+    +------------+    +------------+
+    |  Service   |    |  Service   |    |  Service   |
+    |  Function  |    |  Function  |    |  Function  |
+    +------------+    +------------+    +------------+
 
                       Figure 1: Deployment Environment
 
 4.1.  Academic IPv6 Backbone
 
-   The deployment was conducted on an academic IPv6 backbone network
-   interconnecting universities and research institutions across Japan.
+   The deployment was conducted on the SINET academic IPv6 backbone
+   network, interconnecting universities and research institutions
+   across Japan.
 
    The backbone provides native IPv6 connectivity among geographically
    distributed sites.
@@ -633,26 +637,20 @@ Table of Contents
 
 7.  Deployment Experience
 
-   This section describes the deployment experience obtained from
-   implementing the SRv6 SFC architecture on an academic IPv6 backbone
-   network.
+   This section describes the deployment and evaluation of the SRv6 SFC
+   architecture on an academic IPv6 backbone network.
 
-   The deployment was performed using the infrastructure described in
-   Section 4.
-
-   The deployment was carried out as part of a public demonstration at
-   Interop Tokyo 2026 during which the proposed architecture was applied
-   to a remote video production service requiring dynamic deployment of
+   The deployment used the infrastructure described in Section 4 and a
+   remote video production service requiring dynamic deployment of
    distributed service functions.
 
-   The following subsections describe the deployed infrastructure, the
-   deployed architecture, the demonstrated service, and the operational
-   observations obtained from the deployment.
+   The following subsections describe the infrastructure, the
+   architecture, the service, and the operational observations.
 
 7.1.  Infrastructure Deployment
 
-   The deployment utilized the SINET IPv6 backbone and distributed
-   OpenStack-based data centers described in Section 4.2.
+   The deployment utilized the backbone and distributed OpenStack-based
+   data centers described in Sections 4.1 and 4.2.
 
 7.2.  Architecture Deployment
 
@@ -681,44 +679,44 @@ Table of Contents
 
 7.3.  Service Deployment
 
-   The deployed system was demonstrated during Interop Tokyo 2026 using
-   a remote production service.
+   The deployed system was evaluated using a remote video production
+   service.
 
-   Video streams captured at remote production sites in Okinawa,
-   Kanagawa, Chiba, and Ishikawa were dynamically steered through a
-   sequence of SR-aware service functions deployed in the Kanagawa and
-   Sapporo data centers.
+   Video streams captured at production sites in Okinawa, Kanagawa,
+   Chiba, and Ishikawa were dynamically steered through a sequence of
+   SR-aware service functions deployed in the Kanagawa and Sapporo data
+   centers.
 
    The service functions performed video switching, transcoding, and
    caption insertion before forwarding the processed streams to the
-   video production system.
+   production system.
 
    Service chains were created through the web-based management
    interface without requiring manual router configuration.
 
-   The demonstration confirmed that distributed service functions could
-   be instantiated, their Service SID information advertised through
-   BGP-LS, and subsequently incorporated into service chains without
-   manual configuration of the academic backbone routers.
+   The deployment confirmed that distributed service functions could be
+   instantiated, their Service SID information advertised via BGP-LS,
+   and subsequently incorporated into service chains without manual
+   configuration of the academic backbone routers.
 
 7.4.  Operational Benefits
 
-   The deployment demonstrated several operational advantages.
+   The deployment demonstrated several operational benefits.
 
-   *  Existing backbone routers required no software modification.
+   *  Existing backbone routers required no software modifications.
 
-   *  Service functions could be deployed on demand using existing cloud
+   *  Service functions were deployed on demand using existing cloud
       infrastructure.
 
    *  SR Policies and Flow Specification rules were automatically
       generated.
 
-   *  Operators interacted primarily through the application plane,
+   *  Operators primarily interacted through the application plane,
       reducing operational complexity.
 
    *  Newly deployed service functions became available for path
-      computation after their Service SID information was advertised
-      through BGP-LS.
+      computation after their Service SID information was advertised via
+      BGP-LS.
 
 7.5.  Scalability Considerations
 
@@ -790,7 +788,7 @@ Table of Contents
    important consideration for service function placement.
 
    In this deployment, VNF placement was determined manually.  However,
-   it is recommended that the Application Plane integrate latency
+   it is recommended that the application plane integrate latency
    measurement and topology-aware placement optimization to automate
    this process.
 
@@ -798,14 +796,12 @@ Table of Contents
 
 9.1.  Service SID Allocation
 
-   Service SID allocation MUST ensure uniqueness within the SR domain.
-
-   A centralized allocation mechanism SHOULD be used, where the
-   management plane coordinates with the control plane (TED) to identify
-   available SID space prior to assignment.
-
-   This prevents address collisions and simplifies multi-site service
-   deployment.
+   As described in Section 6.3, Service SID allocation MUST ensure
+   uniqueness within the SR domain.  A centralized allocation mechanism
+   SHOULD be used, where the management plane coordinates with the
+   control plane (TED) to identify available SID space prior to
+   assignment, thereby preventing address collisions and simplifying
+   multi-site service deployment.
 
 9.2.  Controller Considerations
 
@@ -813,18 +809,18 @@ Table of Contents
    system performance and scalability due to frequent interactions
    between:
 
-   *  Application Plane and Management Plane
+   *  application plane and management plane
 
    *  VNF Manager and Virtualized Infrastructure Manager (VIM) within
-      the Management Plane
+      the management plane
 
-   *  Control Plane and SR Headend nodes
+   *  control plane and SR Headend nodes
 
    To reduce control-plane latency and operational overhead, controller
    placement SHOULD minimize latency between control components and
    service endpoints while considering network topology constraints.
 
-   In the described deployment, the Application Plane and associated
+   In the described deployment, the application plane and associated
    management components were co-located at a single data center to
    reduce inter-domain communication latency.
 
@@ -912,9 +908,6 @@ Table of Contents
    verification before enabling traffic steering.
 
 10.  Security Considerations
-
-   This document does not define any new protocols or protocol
-   extensions.
 
    The deployment described in this document relies on existing security
    mechanisms provided by SRv6 and the associated control and management
