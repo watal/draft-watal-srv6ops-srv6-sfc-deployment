@@ -1536,9 +1536,16 @@ Service functions implement the End.AN behavior to process packets and forward t
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-control-plane" class="section-name selfRef">Control Plane</a>
         </h3>
 <p id="section-5.3-1">The control plane is responsible for topology collection, path computation, and SR Policy provisioning.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">Topology information collected via BGP-LS is used to populate the Traffic Engineering Database (TED).<a href="#section-5.3-2" class="pilcrow">¶</a></p>
-<p id="section-5.3-3">A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
-<p id="section-5.3-4">BGP-LS is used to distribute topology information, and BGP Flow Specification is used to distribute traffic classification rules.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-3">A BGP daemon performs two functions:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.3-4.1">
+            <p id="section-5.3-4.1.1">collecting topology information via BGP-LS, including Service Segment advertisements, and<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-4.2">
+            <p id="section-5.3-4.2.1">distributing traffic classification rules via BGP Flow Specification.<a href="#section-5.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="management-plane">
