@@ -42,7 +42,7 @@ This document describes the deployment and operational experience of the SRv6 Se
 
 The deployed system integrates SRv6 forwarding, service function lifecycle operations, topology collection, path computation, and flow classification to enable dynamic provisioning of SFC services via a web-based management interface.
 
-This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services.
+This document summarizes the deployment architecture, operational workflow, experience, and lessons learned, and provides guidance for network operators deploying SRv6 SFC services.
 
 --- middle
 
