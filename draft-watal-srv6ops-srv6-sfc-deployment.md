@@ -42,7 +42,7 @@ This document describes the deployment and operational experience of the SRv6 Se
 
 The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamically provisioned service function chaining via a web-based management interface.
 
-This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and provides operational guidance for network operators deploying SRv6 SFC services.
+This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services.
 
 --- middle
 
@@ -60,7 +60,7 @@ Instead, it describes the deployment and operational experience of the architect
 
 The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable service function chaining.
 
-Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, operational considerations, lessons learned, and provides operational guidance for operators deploying SRv6 SFC services.
+Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for operators deploying SRv6 SFC services.
 
 # Terminology
 
@@ -74,6 +74,7 @@ The following terms are used in this document as defined in the related RFCs and
 * Path Computation Client (PCC), Path Computation Element (PCE), and Traffic Engineering Database (TED) defined in {{!RFC5440}}.
 * BGP Flow Specification defined in {{!RFC8955}}.
 * NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
+* Service Segment and End.AN defined in {{!I-D.draft-ietf-spring-sr-service-programming}}.
 * SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
@@ -92,24 +93,27 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 
 
 ~~~ drawing
- +------------+                       +------------+
- |  Edge DC   | --- IPv6 Backbone --- |  Edge DC   |
- +------------+                       +------------+
-       |                                    |
- +------------+                       +------------+
- | OpenStack  |                       | OpenStack  |
- +------------+                       +------------+
-       |                                    |
- +------------+                       +------------+
- |  Service   |                       |  Service   |
- |  Function  |                       |  Function  |
- +------------+                       +------------+
+                            IPv6 Backbone
+       +-----------------+-----------------+-----------------+
+       |                 |                 |                 |
+ +------------+    +------------+    +------------+         ...
+ |  Edge DC   |    |  Edge DC   |    |  Edge DC   |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ | OpenStack  |    | OpenStack  |    | OpenStack  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ |  Service   |    |  Service   |    |  Service   |
+ |  Function  |    |  Function  |    |  Function  |
+ +------------+    +------------+    +------------+
 ~~~
 {: #fig-deployment-environment title="Deployment Environment"}
 
 ## Academic IPv6 Backbone
 
-The deployment was conducted on an academic IPv6 backbone network interconnecting universities and research institutions across Japan.
+The deployment was conducted on the SINET academic IPv6 backbone network, interconnecting universities and research institutions across Japan.
 
 The backbone provides native IPv6 connectivity among geographically distributed sites.
 
@@ -135,7 +139,7 @@ After instance creation, SRv6 endpoint behaviors and service-specific parameters
 
 # Deployment Architecture
 
-The deployment follows the SRv6 SFC architecture defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployment follows the SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane. Each plane is responsible for a distinct aspect of service deployment and operation.
 
@@ -179,7 +183,7 @@ Together, these planes enable dynamic deployment and operation of SRv6 service f
 The forwarding plane consists of the academic IPv6 backbone network and the SR-aware service functions deployed at geographically distributed data centers.
 
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
-Service functions implement the End.AN behavior as defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} to process packets and forward them to the next segment in the service chain.
+Service functions implement the End.AN behavior to process packets and forward them to the next segment in the service chain.
 
 The forwarding infrastructure operates without modifications to the existing backbone routers, enabling incremental deployment of SRv6 SFC services.
 
@@ -189,12 +193,12 @@ The forwarding plane is responsible for packet forwarding and service function e
 
 The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
 
-Topology information collected through BGP-LS is used to populate the Traffic Engineering Database (TED).
+Topology information collected via BGP-LS is used to populate the Traffic Engineering Database (TED).
 Based on service requests and the current network topology, the Path Computation Element (PCE) computes service paths and provisions the corresponding SR Policies.
 
 The deployed implementation uses Pola PCE, an open-source PCE implementation, for TED management, path computation, and SR Policy provisioning.
 
-GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and SRv6 Service Segment information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.
+GoBGP, an open-source BGP implementation, is used to receive BGP-LS advertisements carrying topology information and Service SID information, and to distribute BGP Flow Specification rules that associate traffic flows with the corresponding SR Policies.
 
 ## Management Plane
 
@@ -211,9 +215,7 @@ The management plane supports reconfiguration and removal of service function in
 
 ## Application Plane
 
-The application plane translates service requirements into intent-based service requests toward the control and management planes.
-
-Based on user input, the application plane translates service requests into deployment operations by coordinating both the control and management planes. Operators are not required to manually configure SR Policies or deploy service functions, thereby reducing operational complexity.
+Based on user input, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.
 
 The application plane MAY incorporate closed-loop automation functions that operate on telemetry feedback from the control and management planes.
 
@@ -226,7 +228,7 @@ These functions are logically separated from the control and management planes a
 This section describes the operational workflow for deploying and activating an SRv6 service function chain.
 The workflow begins with an operator service request and concludes with traffic steering through the deployed service functions.
 
-To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering. The Service Function Manager (SFM) shown in Figure 3b is defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}. The following abbreviations are used:
+To keep each diagram within a readable line width, the workflow is presented as three figures: Figure 3a covers network function instantiation, Figure 3b covers service segment configuration and topology advertisement, and Figure 3c covers SFC activation and traffic steering. The Service Function Manager (SFM) shown in Figure 3b is defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}. The following abbreviations are used:
 
 ~~~
 Op   = Operator            SFM  = Service Function Manager
@@ -332,17 +334,17 @@ After service function deployment, a Service SID is assigned to each service fun
 
 Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application.
 
-When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain. Existing SID information maintained by the Traffic Engineering Database (TED) MAY be used to avoid address conflicts.
+When Service SIDs are allocated dynamically, the management plane MUST ensure that allocated Service SIDs are unique within the SR domain. The TED MAY be referenced to identify available SID space and avoid address conflicts.
 
 ## Topology Collection
 
-Topology information is continuously collected through BGP-LS independently of individual service requests.
+Topology information is continuously collected via BGP-LS independently of individual service requests.
 
-After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its SRv6 Service Segment information through BGP-LS.
+After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, the corresponding node advertises its Service SID information via BGP-LS.
 
 This ensures that only operationally ready service functions are included in topology dissemination and path computation.
 
-The control plane updates the Traffic Engineering Database (TED) accordingly, allowing newly deployed service functions to be considered during subsequent path computations.
+The control plane updates the TED accordingly, allowing newly deployed service functions to be considered during subsequent path computations.
 
 ## Path Computation
 
@@ -400,21 +402,19 @@ Service updates are performed while maintaining consistency between the forwardi
 
 # Deployment Experience
 
-This section describes the deployment experience obtained from implementing the SRv6 SFC architecture on an academic IPv6 backbone network.
+This section describes the deployment and evaluation of the SRv6 SFC architecture on an academic IPv6 backbone network.
 
-The deployment was performed using the infrastructure described in Section 4.
+The deployment used the infrastructure described in Section 4 to support a remote video production service requiring dynamic deployment of distributed service functions.
 
-The deployment was carried out as part of a public demonstration at Interop Tokyo 2026 during which the proposed architecture was applied to a remote video production service requiring dynamic deployment of distributed service functions.
-
-The following subsections describe the deployed infrastructure, the deployed architecture, the demonstrated service, and the operational observations obtained from the deployment.
+The following subsections describe the infrastructure, the architecture, the service, and the operational observations.
 
 ## Infrastructure Deployment
 
-The deployment utilized the SINET IPv6 backbone and distributed OpenStack-based data centers described in Section 4.2.
+The deployment utilized the backbone and distributed OpenStack-based data centers described in Sections 4.1 and 4.2.
 
 ## Architecture Deployment
 
-The deployed system implemented the four-plane architecture described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployed system implemented the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 The application, control, management, and forwarding planes were realized as follows.
 
@@ -427,31 +427,32 @@ Within the management plane, a VNF Manager component issued life-cycle requests 
 The forwarding plane consisted of the IPv6 backbone and SR-aware service functions deployed at the distributed data centers.
 
 ## Service Deployment
-The deployed system was demonstrated during Interop Tokyo 2026 using a remote production service.
 
-Video streams captured at remote production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
+The deployed system was evaluated using a remote video production service.
 
-The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the video production system.
+Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
+
+The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
 Service chains were created through the web-based management interface without requiring manual router configuration.
 
-The demonstration confirmed that distributed service functions could be instantiated, their Service SID information advertised through BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.
+The deployment confirmed that distributed service functions could be instantiated, their Service SID information advertised via BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.
 
 ## Operational Benefits
 
-The deployment demonstrated several operational advantages.
+The deployment demonstrated several operational benefits.
 
-* Existing backbone routers required no software modification.
-* Service functions could be deployed on demand using existing cloud infrastructure.
+* Existing backbone routers required no software modifications.
+* Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
-* Operators interacted primarily through the application plane, reducing operational complexity.
-* Newly deployed service functions became available for path computation after their Service SID information was advertised through BGP-LS.
+* Operators primarily interacted through the application plane, reducing operational complexity.
+* Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.
 
 ## Scalability Considerations
 
 The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the academic backbone.
 
-Because Service SID information is distributed through BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.
+Because Service SID information is distributed via BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.
 
 The deployment demonstrated that the architecture can be extended by increasing the number of service function nodes and data centers while maintaining centralized path computation and service orchestration.
 
@@ -463,7 +464,7 @@ During the deployment of the SRv6 SFC system over an IPv6 backbone, several oper
 
 A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service function instances.
 
-In the implemented system, the management plane interacts with the control plane by referencing the Traffic Engineering Database (TED) to identify available function identifier space before assigning Service SIDs.
+In the implemented system, the management plane interacts with the control plane by referencing the TED to identify available SID space before assigning Service SIDs.
 
 This approach ensured uniqueness of Service SIDs within the SR domain and reduced the risk of inconsistent state across distributed sites.
 
@@ -486,29 +487,26 @@ Because data centers are geographically distributed, inter-site latency has a si
 
 For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
-In this deployment, VNF placement was determined manually. However, it is recommended that the Application Plane integrate latency measurement and topology-aware placement optimization to automate this process.
+In this deployment, VNF placement was determined manually. However, it is recommended that the application plane integrate latency measurement and topology-aware placement optimization to automate this process.
 
 # Operational Considerations
 
 ## Service SID Allocation
 
-Service SID allocation MUST ensure uniqueness within the SR domain.
-
-A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment.
-
-This prevents address collisions and simplifies multi-site service deployment.
+As described in Section 6.3, Service SID allocation MUST ensure uniqueness within the SR domain.
+A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment, thereby preventing address collisions and simplifying multi-site service deployment.
 
 ## Controller Considerations
 
 Controller placement and architecture have significant impact on system performance and scalability due to frequent interactions between:
 
-* Application Plane and Management Plane
-* VNF Manager and Virtualized Infrastructure Manager (VIM) within the Management Plane
-* Control Plane and SR Headend nodes
+* application plane and management plane
+* VNF Manager and Virtualized Infrastructure Manager (VIM) within the management plane
+* control plane and SR Headend nodes
 
 To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.
 
-In the described deployment, the Application Plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.
+In the described deployment, the application plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.
 
 A logically centralized controller architecture SHOULD be used to ensure consistent path computation and policy enforcement across the SR domain.
 
@@ -518,13 +516,13 @@ For large-scale deployments, a hierarchical controller model MAY be used to impr
 
 Flow classification and SR Policy provisioning are tightly coupled in operational behavior.
 
-Inconsistent timing between FlowSpec installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.
+Inconsistent timing between BGP Flow Specification installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.
 
 Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.
 
 ## Failure Recovery
 
-Failure recovery follows the mechanisms defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+Failure recovery follows the mechanisms defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 When a network function becomes unavailable, its associated SID is removed from the forwarding plane.
 
@@ -564,8 +562,6 @@ Out-of-order execution MAY result in transient traffic disruption.
 Operators SHOULD implement consistency checks and readiness verification before enabling traffic steering.
 
 # Security Considerations
-
-This document does not define any new protocols or protocol extensions.
 
 The deployment described in this document relies on existing security mechanisms provided by SRv6 and the associated control and management protocols.
 
