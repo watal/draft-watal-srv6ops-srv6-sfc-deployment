@@ -516,22 +516,11 @@ For large-scale deployments, a hierarchical controller model MAY be used to impr
 
 ## Flow Classification and SR Policy Synchronization
 
-Flow classification and SR Policy provisioning are operationally coupled.
+Flow classification and SR Policy provisioning are tightly coupled in operational behavior.
 
 Inconsistent timing between FlowSpec installation and SR Policy activation MAY result in transient traffic misclassification or blackholing.
 
 Implementations SHOULD ensure that SR Policy provisioning and Flow Specification installation are performed in a coordinated manner, such that traffic steering is only enabled after both components are fully operational.
-
-## Observability
-
-A multi-layer observability framework is required, covering:
-
-* SRv6 topology and SR Policy state
-* Flow classification and traffic steering behavior
-* Service function health and availability
-* Virtual infrastructure resource utilization
-
-In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.
 
 ## Failure Recovery
 
@@ -545,19 +534,20 @@ Fast reroute mechanisms operate at the forwarding plane and MAY maintain connect
 
 Therefore, service functions MUST implement mechanisms to handle potential state inconsistencies, such as buffering, re-synchronization, or idempotent processing.
 
-## Infrastructure and Addressing Considerations
+## Observability
 
-Service functions SHOULD be deployed across multiple geographically distributed edge sites to improve resilience and scalability.
+A multi-layer observability framework SHOULD include:
 
-A structured Service SID allocation plan SHOULD be defined prior to deployment.
+* SRv6 topology and SR Policy state
+* Flow classification and traffic steering behavior
+* Service function health and availability
+* Virtual infrastructure resource utilization
 
-Hierarchical or partitioned SID spaces SHOULD be considered to simplify multi-site scaling and reduce coordination overhead.
-
-## Monitoring
-
-A unified telemetry framework SHOULD be deployed across both network and cloud domains.
+This SHOULD be supported by a unified telemetry framework across both network and cloud domains to ensure consistency.
 
 Correlation between SR Policy state, flow classification, and service function health is essential for rapid fault detection and diagnosis.
+
+In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.
 
 ## Operational Sequencing
 
