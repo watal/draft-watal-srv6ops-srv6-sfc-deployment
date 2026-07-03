@@ -327,10 +327,10 @@ Table of Contents
    A BGP daemon performs two functions:
 
    *  collecting topology information via BGP-LS, including Service
-      Segment advertisements, and
+      Segment advertisements
 
    *  distributing traffic classification rules via BGP Flow
-      Specification.
+      Specification
 
 5.4.  Management Plane
 
