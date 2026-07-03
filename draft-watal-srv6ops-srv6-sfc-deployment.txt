@@ -177,7 +177,8 @@ Table of Contents
    *  Service Segment and End.AN defined in
       [I-D.draft-ietf-spring-sr-service-programming].
 
-   *  SRv6 SFC architecture defined in
+   *  SRv6 SFC architecture, including the Service Function Manager
+      (SFM), defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
 2.2.  Requirements Language
@@ -226,9 +227,9 @@ Table of Contents
 
 4.1.  IPv6 Backbone
 
-   The deployment was conducted on the SINET academic IPv6 backbone
-   network, interconnecting universities and research institutions
-   across Japan.
+   The deployment was conducted on the SINET backbone network, Japan遯ｶ蜀ｱ
+   research and education (R&E) network, interconnecting universities
+   and research institutions across Japan.
 
    The backbone provides native IPv6 connectivity among geographically
    distributed sites.
@@ -342,18 +343,13 @@ Table of Contents
    computation, and SR Policy provisioning.
 
    Topology information collected via BGP-LS is used to populate the
-   Traffic Engineering Database (TED).  Based on service requests and
-   the current network topology, the Path Computation Element (PCE)
-   computes service paths and provisions the corresponding SR Policies.
+   Traffic Engineering Database (TED).
 
-   The deployed implementation uses Pola PCE, an open-source PCE
-   implementation, for TED management, path computation, and SR Policy
-   provisioning.
+   A Path Computation Element (PCE) provides TED management, path
+   computation, and SR Policy provisioning.
 
-   GoBGP, an open-source BGP implementation, is used to receive BGP-LS
-   advertisements carrying topology information and Service SID
-   information, and to distribute BGP Flow Specification rules that
-   associate traffic flows with the corresponding SR Policies.
+   BGP-LS is used to distribute topology information, and BGP Flow
+   Specification is used to distribute traffic classification rules.
 
 5.4.  Management Plane
 
@@ -372,11 +368,11 @@ Table of Contents
       network resources, and for fulfilling the life-cycle requests
       issued by the VNF Manager.
 
-   Service functions are instantiated on virtualized infrastructures
-   managed by OpenStack, which acts as the VIM.  After a service
-   function instance becomes operational, the management plane
-   configures SRv6 endpoint behaviors, Service SIDs, and other service-
-   specific parameters required for traffic processing.
+   Service functions are instantiated on virtualized infrastructure
+   acting as the VIM.  After a service function instance becomes
+   operational, the management plane configures SRv6 endpoint behaviors,
+   Service SIDs, and other service-specific parameters required for
+   traffic processing.
 
    The management plane supports reconfiguration and removal of service
    functions throughout their operational lifecycle.
@@ -409,10 +405,9 @@ Table of Contents
    presented as three figures: Figure 3a covers network function
    instantiation, Figure 3b covers service segment configuration and
    topology advertisement, and Figure 3c covers SFC activation and
-   traffic steering.  The Service Function Manager (SFM) shown in
-   Figure 3b is defined in
-   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].  The following
-   abbreviations are used:
+   traffic steering.
+
+   The following abbreviations are used:
 
    Op   = Operator            SFM  = Service Function Manager
    App  = Application         VM   = VM/VNF
@@ -536,8 +531,8 @@ Table of Contents
 
    When Service SIDs are allocated dynamically, the management plane
    MUST ensure that allocated Service SIDs are unique within the SR
-   domain.  The TED MAY be referenced to identify available SID space
-   and avoid address conflicts.
+   domain.  The TED is referenced to identify available SID space and
+   avoid address conflicts.
 
 6.4.  Topology Collection
 
@@ -601,15 +596,13 @@ Table of Contents
 
    Typical monitoring targets include:
 
-   *  service function availability
+   *  service function health and availability
 
    *  SR Policy status
 
    *  BGP session status
 
    *  Virtualized Infrastructure Manager (VIM) status
-
-   *  service function health
 
    In addition, operators MAY verify correct packet forwarding using SR
    path tracing or in-band telemetry mechanisms.
@@ -623,13 +616,13 @@ Table of Contents
 
    *  adding service functions to an existing service chain
 
-   *  removing service functions
+   *  modifying service chains
+
+   *  removing service chains
 
    *  redeploying failed service functions
 
-   *  updating SR Policies
-
-   *  removing service chains
+   *  removing service functions
 
    Service updates are performed while maintaining consistency between
    the forwarding, control, management, and application planes.
@@ -653,28 +646,23 @@ Table of Contents
 
 7.2.  Architecture Deployment
 
-   The deployed system implemented the four-plane architecture described
+   The deployed system implements the four-plane architecture described
    in [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   The application, control, management, and forwarding planes were
-   realized as follows.
+   The application plane was implemented as a web-based interface for
+   service request submission.
 
-   The application plane was implemented as a web-based management
-   interface through which operators requested service deployments.
+   The control plane was implemented using Pola PCE and GoBGP.  Pola PCE
+   performs path computation and SR Policy provisioning, while GoBGP was
+   used for BGP-LS topology collection and BGP Flow Specification
+   distribution.
 
-   The control plane consisted of Pola PCE for topology management, path
-   computation, and SR Policy provisioning, together with GoBGP for BGP-
-   LS topology collection and BGP Flow Specification distribution.
+   The management plane was implemented using a VNF Manager, OpenStack
+   as the VIM, and Ansible for post-instantiation configuration of SRv6
+   service functions.
 
-   Within the management plane, a VNF Manager component issued life-
-   cycle requests to OpenStack, which served as the VIM responsible for
-   allocating compute, storage, and network resources.  Ansible was used
-   for the automatic configuration of SRv6 endpoint behaviors after
-   instantiation, including End.AN, Service SIDs, and other service-
-   specific parameters.
-
-   The forwarding plane consisted of the backbone and SR-aware service
-   functions deployed at the distributed data centers.
+   The forwarding plane consists of the underlying backbone network and
+   SR-aware service functions deployed in distributed data centers.
 
 7.3.  Service Deployment
 
