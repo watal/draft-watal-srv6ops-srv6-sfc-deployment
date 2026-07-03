@@ -82,7 +82,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Objectives
 
-* Validate the SRv6 SFC architecture on an academic network.
+* Validate the SRv6 SFC architecture on the backbone.
 * Evaluate the operational feasibility of dynamic service chaining.
 * Demonstrate incremental deployment without modifying the existing IPv6 backbone.
 * Assess the integration of forwarding, control, management, and application planes.
@@ -121,11 +121,11 @@ The SRv6 SFC deployment was designed to operate without requiring modifications 
 
 ## Data Centers
 
-Multiple data centers connected to the backbone were used to host service functions.
+Multiple SINET data centers connected to the backbone were used to host service functions.
 
-Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were selected for the deployment in order to evaluate service chaining across a wide-area network.
+Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were selected to evaluate service chaining across a wide-area network.
 
-Each data center provides computing resources connected to the backbone through native IPv6 connectivity.
+Each data center provides computing resources connected to the backbone.
 
 ## Virtualized Network Function Infrastructure
 
@@ -180,7 +180,7 @@ Together, these planes enable dynamic deployment and operation of SRv6 service f
 
 ## Forwarding Plane
 
-The forwarding plane consists of the academic IPv6 backbone network and the SR-aware service functions deployed at geographically distributed data centers.
+The forwarding plane consists of the backbone network and the SR-aware service functions deployed at geographically distributed data centers.
 
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
 Service functions implement the End.AN behavior to process packets and forward them to the next segment in the service chain.
@@ -402,7 +402,7 @@ Service updates are performed while maintaining consistency between the forwardi
 
 # Deployment Experience
 
-This section describes the deployment and evaluation of the SRv6 SFC architecture on an academic IPv6 backbone network.
+This section describes the deployment and evaluation of the SRv6 SFC architecture on the backbone.
 
 The deployment used the infrastructure described in Section 4 to support a remote video production service requiring dynamic deployment of distributed service functions.
 
@@ -424,7 +424,7 @@ The control plane consisted of Pola PCE for topology management, path computatio
 
 Within the management plane, a VNF Manager component issued life-cycle requests to OpenStack, which served as the VIM responsible for allocating compute, storage, and network resources. Ansible was used for the automatic configuration of SRv6 endpoint behaviors after instantiation, including End.AN, Service SIDs, and other service-specific parameters.
 
-The forwarding plane consisted of the IPv6 backbone and SR-aware service functions deployed at the distributed data centers.
+The forwarding plane consisted of the backbone and SR-aware service functions deployed at the distributed data centers.
 
 ## Service Deployment
 
@@ -436,7 +436,7 @@ The service functions performed video switching, transcoding, and caption insert
 
 Service chains were created through the web-based management interface without requiring manual router configuration.
 
-The deployment confirmed that distributed service functions could be instantiated, their Service SID information advertised via BGP-LS, and subsequently incorporated into service chains without manual configuration of the academic backbone routers.
+The deployment confirmed that distributed service functions could be instantiated, their Service SID information advertised via BGP-LS, and subsequently incorporated into service chains without manual configuration of the backbone routers.
 
 ## Operational Benefits
 
@@ -450,7 +450,7 @@ The deployment demonstrated several operational benefits.
 
 ## Scalability Considerations
 
-The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the academic backbone.
+The deployment confirmed that additional service function nodes can be incorporated by connecting new OpenStack sites to the backbone.
 
 Because Service SID information is distributed via BGP-LS, newly deployed service functions become available for path computation without manual controller reconfiguration.
 
@@ -458,7 +458,7 @@ The deployment demonstrated that the architecture can be extended by increasing 
 
 # Lessons Learned
 
-During the deployment of the SRv6 SFC system over an IPv6 backbone, several operational issues and design insights were identified. This section summarizes key observations obtained from real-world operation.
+During the deployment of the SRv6 SFC system over the backbone, several operational issues and design insights were identified. This section summarizes key observations obtained from real-world operation.
 
 ## Service SID Allocation and Address Space Management
 
