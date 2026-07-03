@@ -1898,10 +1898,13 @@ Distributed service functions were instantiated, their Service SID information w
         <h3 id="name-scalability-considerations">
 <a href="#section-7.5" class="section-number selfRef">7.5. </a><a href="#name-scalability-considerations" class="section-name selfRef">Scalability Considerations</a>
         </h3>
-<p id="section-7.5-1">This deployment demonstrated that the architecture can scale incrementally by deploying additional SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the overall control architecture.<a href="#section-7.5-1" class="pilcrow">¶</a></p>
-<p id="section-7.5-2">Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed on the existing NFV infrastructure using the VIM's native scaling mechanisms.<a href="#section-7.5-2" class="pilcrow">¶</a></p>
-<p id="section-7.5-3">After becoming operational, each newly deployed service function advertises its Service SID information via BGP-LS.
-The control plane automatically updates the TED with the advertisement, allowing the service function to participate in subsequent path computation without manual controller reconfiguration.<a href="#section-7.5-3" class="pilcrow">¶</a></p>
+<p id="section-7.5-1">This deployment demonstrated that the architecture can scale incrementally by deploying additional
+SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
+overall control architecture.<a href="#section-7.5-1" class="pilcrow">¶</a></p>
+<p id="section-7.5-2">Once the application, control, and management components are deployed, additional SR-aware service
+functions can be instantiated or removed on the existing NFV infrastructure using the VIM's native
+scaling mechanisms, and become usable in path computation via the Service SID advertisement mechanism
+described in Section 6.4, without manual controller reconfiguration.<a href="#section-7.5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

@@ -675,13 +675,9 @@ Table of Contents
    Once the application, control, and management components are
    deployed, additional SR-aware service functions can be instantiated
    or removed on the existing NFV infrastructure using the VIM's native
-   scaling mechanisms.
-
-   After becoming operational, each newly deployed service function
-   advertises its Service SID information via BGP-LS.  The control plane
-   automatically updates the TED with the advertisement, allowing the
-   service function to participate in subsequent path computation
-   without manual controller reconfiguration.
+   scaling mechanisms, and become usable in path computation via the
+   Service SID advertisement mechanism described in Section 6.4, without
+   manual controller reconfiguration.
 
 8.  Lessons Learned
 
