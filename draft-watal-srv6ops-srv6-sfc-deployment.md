@@ -40,7 +40,7 @@ informative:
 
 This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
 
-The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamically provisioned service function chaining via a web-based management interface.
+The deployed system integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable dynamic provisioning of SFC services via a web-based management interface.
 
 This document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for network operators deploying SRv6 SFC services.
 
@@ -50,7 +50,7 @@ This document summarizes the deployment architecture, operational workflow, depl
 
 Segment Routing over IPv6 (SRv6) {{!RFC8986}} enables packet steering through a set of instructions called a segment list.
 
-Service Function Chaining (SFC) {{!RFC7665}} can be realized using SRv6 by steering traffic through a sequence of SR-aware service functions.
+Service Function Chaining (SFC) {{!RFC7665}} can be implemented using SRv6 by steering traffic through a sequence of SR-aware service functions.
 
 The architecture of SRv6 SFC with SR-aware functions is described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
@@ -58,7 +58,7 @@ This document does not define any new protocols or protocol extensions.
 
 Instead, it describes the deployment and operational experience of the architecture on an academic network.
 
-The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable service function chaining.
+The deployment integrates SRv6 forwarding, service function lifecycle management, topology collection, path computation, and flow classification to enable on-demand instantiation of service function chains based on operator requests.
 
 Based on this deployment experience, this document summarizes the deployment architecture, operational workflow, deployment experience, lessons learned, and operational considerations, and provides operational guidance for operators deploying SRv6 SFC services.
 
@@ -82,10 +82,10 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Objectives
 
-* Validate the SRv6 SFC architecture on the backbone.
-* Evaluate the operational feasibility of dynamic service chaining.
+* Validate the SRv6 SFC architecture on a real backbone network.
 * Demonstrate incremental deployment without modifying the existing IPv6 backbone.
-* Assess the integration of forwarding, control, management, and application planes.
+* Evaluate the operational feasibility of on-demand SFC provisioning.
+* Evaluate the operational integration of forwarding, control, management, and application planes.
 
 # Deployment Environment
 
@@ -111,7 +111,7 @@ Figure 1 illustrates the physical deployment environment used throughout this do
 ~~~
 {: #fig-deployment-environment title="Deployment Environment"}
 
-## Academic IPv6 Backbone
+## IPv6 Backbone
 
 The deployment was conducted on the SINET academic IPv6 backbone network, interconnecting universities and research institutions across Japan.
 
@@ -131,10 +131,10 @@ Each data center provides computing resources with native IPv6 connectivity to t
 
 A virtualized infrastructure was deployed at each selected data center to host SR-aware service functions.
 
-Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, which controls and manages the compute, storage, and network resources of the NFV Infrastructure (NFVI) used to host SR-aware service functions.
+Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM) {{!RFC8568}}, which manages compute, storage, and network resources of the NFV Infrastructure (NFVI) used to host SR-aware service functions.
 The VNF Manager (VNFM) issues life-cycle management requests, such as instantiation and scaling, to the VIM, which provisions the required NFVI resources.
 
-Service function instances are instantiated on demand.
+Service functions are instantiated on demand.
 
 After instance creation, SRv6 endpoint behaviors and service-specific parameters are configured automatically.
 
@@ -207,13 +207,13 @@ The management plane is responsible for deploying, configuring, and managing the
 
 Consistent with the roles defined in {{!RFC8568}}, the management plane comprises two logically distinct functions:
 
-* VNF Manager (VNFM): responsible for the life-cycle management of service function instances, including issuing instantiation, scaling, and termination requests.
+* VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 * Virtualized Infrastructure Manager (VIM): responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
 
 Service functions are instantiated on virtualized infrastructures managed by OpenStack, which acts as the VIM.
 After a service function instance becomes operational, the management plane configures SRv6 endpoint behaviors, Service SIDs, and other service-specific parameters required for traffic processing.
 
-The management plane supports reconfiguration and removal of service function instances throughout their operational lifecycle.
+The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
 
 ## Application Plane
 
@@ -327,13 +327,13 @@ The application plane translates these service requirements into deployment requ
 
 ## Network Function Deployment
 
-If one or more requested service functions are not currently available, new service function instances are deployed.
+If one or more requested service functions are not currently available, new service functions are deployed.
 
 Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.
 
 The VNF Manager requests the VIM to allocate the necessary compute, storage, and network resources and to instantiate the required virtual machines or virtual network functions (VNFs).
 The VIM provisions the corresponding NFVI resources and returns the instantiation result to the VNF Manager.
-The deployment phase completes after the service function instances become operational.
+The deployment phase completes after the service functions become operational.
 
 ## Service SID Allocation
 
@@ -402,7 +402,7 @@ Typical operations include:
 
 * adding service functions to an existing service chain
 * removing service functions
-* redeploying failed service function instances
+* redeploying failed service functions
 * updating SR Policies
 * removing service chains
 
@@ -472,7 +472,7 @@ This section summarizes key observations obtained from real-world operation.
 
 ## Service SID Allocation and Address Space Management
 
-A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service function instances.
+A centralized Service SID allocation mechanism was required to avoid address conflicts across distributed service functions.
 
 In the implemented system, the management plane interacts with the control plane by referencing the TED to identify available SID space before assigning Service SIDs.
 
