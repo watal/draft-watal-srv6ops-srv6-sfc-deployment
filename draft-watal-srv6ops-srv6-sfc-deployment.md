@@ -150,7 +150,6 @@ Figure 2 illustrates the logical architecture of the deployed system.
 
 This architecture enables dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
 
-
 ~~~ drawing
                      +----------------------+
                      |  Application Plane   |
@@ -417,7 +416,7 @@ Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishi
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
 Service chains were created through the web-based management interface.
-Distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.
+The distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.
 
 ## Operational Benefits
 
@@ -437,7 +436,7 @@ overall control architecture.
 
 Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.
 
-The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring controller reconfiguration.
+The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring manual updates to the controller configuration.
 
 # Lessons Learned
 
@@ -459,7 +458,7 @@ Because data centers are geographically distributed, inter-site latency has a si
 For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
 In this deployment, VNF placement was determined manually.
-However, it is recommended that the application plane integrate latency measurement and topology-aware placement optimization to automate this process.
+The application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate this process.
 
 # Operational Considerations
 
