@@ -99,7 +99,7 @@ Table of Contents
      6.9.  Monitoring
      6.10. Service Update and Removal
    7.  Deployment Experience
-     7.1.  Architecture Deployment
+     7.1.  Deployed System Architecture
      7.2.  Service Deployment
      7.3.  Operational Benefits
      7.4.  Scalability Considerations
@@ -604,10 +604,9 @@ Table of Contents
    The following subsections describe the deployed architecture, the
    deployed service, and the resulting operational observations.
 
-7.1.  Architecture Deployment
+7.1.  Deployed System Architecture
 
-   The deployment utilized the deployment environment described in
-   Section 4.
+   The deployment used the environment described in Section 4.
 
    The deployed system implements the following components:
 
@@ -634,10 +633,10 @@ Table of Contents
    production system.
 
    Service chains were created through the web-based management
-   interface.  The distributed service functions were instantiated,
-   their Service SID information was advertised via BGP-LS, and the
-   resulting chains were incorporated into forwarding without any manual
-   configuration of backbone routers.
+   interface.  The distributed service functions were instantiated.
+   Their Service SID information was advertised via BGP-LS, and the
+   resulting service chains were incorporated into forwarding without
+   any manual configuration of backbone routers.
 
 7.3.  Operational Benefits
 
@@ -656,7 +655,7 @@ Table of Contents
 
    *  Newly deployed service functions became available for path
       computation once Service SID advertisement (Section 6.4) was
-      complete.
+      completed.
 
 7.4.  Scalability Considerations
 
@@ -684,7 +683,7 @@ Table of Contents
    monitoring SR Policy status or the operational state of service
    functions.  In the deployed video processing service, it also
    required application-layer verification, such as comparing input and
-   output video streams, to confirm that traffic had been processed
+   output video streams, to confirm that traffic was processed
    correctly.
 
    Furthermore, because service functions were distributed across
@@ -795,8 +794,7 @@ Table of Contents
 
 9.5.  Observability
 
-   Based on the deployment experience described in Section 8.1, a multi-
-   layer observability framework SHOULD include:
+   A multi-layer observability framework SHOULD include:
 
    *  SRv6 topology and SR Policy state
 
