@@ -229,8 +229,8 @@ The following abbreviations are used:
 Op   = Operator            SFM  = Service Function Manager
 App  = Application         VM   = VM/VNF
 VNFM = VNF Manager         Ctrl = Controller
-VIM  = Virtualized         HE   = Headend
-       Infrastructure      TE   = Tailend
+VIM  = Virtualized         Src  = Headend
+       Infrastructure      Dest = Tailend
        Manager
 ~~~
 {: #fig-wf-legend title="Abbreviations Used in Figures 4-6"}
@@ -285,7 +285,7 @@ Figure 5 shows SRv6-specific service configuration after the service function be
 Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, and traffic steering.
 
 ~~~ drawing
- App              Ctrl               HE                TE
+ App              Ctrl               Src              Dest
   |                 |                 |                 |
   |   Request SFC   |                 |                 |
   |---------------->|                 |                 |
