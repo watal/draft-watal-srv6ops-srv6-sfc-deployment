@@ -1328,10 +1328,10 @@ svg {
 <p id="section-1-1">Segment Routing over IPv6 (SRv6) <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span> enables packet steering through a set of instructions called a segment list.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Service Function Chaining (SFC) <span>[<a href="#RFC7665" class="cite xref">RFC7665</a>]</span> can be implemented using SRv6 to steer traffic through SR-aware service functions.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The architecture of SRv6 SFC with SR-aware functions is described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">This document does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document does not define any new protocols or protocol extensions.
+It documents the deployment and operational experience of the SRv6 SFC architecture on an academic network.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.<a href="#section-1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1765,7 +1765,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-network-function-deployment" class="section-name selfRef">Network Function Deployment</a>
         </h3>
 <p id="section-6.2-1">If one or more requested service functions are not currently available, new service functions are deployed.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">Deployment may be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-2">Deployment can be triggered either by an explicit operator request or automatically based on operational policies, such as resource utilization or closed-loop service management.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-sid-allocation">
@@ -1918,7 +1918,7 @@ The resulting service function chains were deployed in the forwarding plane with
             <p id="section-7.3-2.3.1">SR Policies and Flow Specification rules were automatically generated.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.3-2.4">
-            <p id="section-7.3-2.4.1">Operators manage services through a minimal intent-based interface, without awareness of low-level network details, thereby reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-7.3-2.4.1">Operators manage services through an intent-based interface, without requiring awareness of low-level network details, thereby reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.3-2.5">
             <p id="section-7.3-2.5.1">Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was completed.<a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
@@ -1987,11 +1987,11 @@ While the underlying architecture supports incremental scaling of service functi
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-service-sid-allocation-2" class="section-name selfRef">Service SID Allocation</a>
         </h3>
 <p id="section-9.1-1">Building on the Service SID allocation described in Section 6.3, Service SID uniqueness within the SR domain MUST be ensured.
-This uniqueness is achieved at two distinct levels, corresponding to the Locator and Function portions of an SRv6 SID <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+Uniqueness is ensured at two distinct levels, corresponding to the Locator and Function portions of an SRv6 SID <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.1-2">Reachability to the node hosting a service function is provided by the SRv6 Locator assigned to that node and advertised through normal IGP/BGP routing.
 Transit nodes along the path need only maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual End.AN instances behind it.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
 <p id="section-9.1-3">Within a given Locator, however, the Function portion of the SID that identifies a specific End.AN instance MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.
-Because this Function-level assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement, and verified against the current TED, obtained from the control plane via BGP-LS, to prevent collisions across data centers and service functions.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
+Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement, and verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
 <p id="section-9.1-4">A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane to identify available Function space prior to assignment, thereby preventing address collisions and simplifying multi-site service deployment.<a href="#section-9.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2008,7 +2008,7 @@ The VIM's native scaling mechanisms (Section 7.4) MAY be used to instantiate or 
 <p id="section-9.2-3">Control-plane, management-plane, and application-plane components similarly benefit from careful placement, though the relevant consideration differs by the frequency of interaction.
 Interactions between the application plane and the control and management planes (e.g., service function deployment and configuration requests, path computation and SR Policy provisioning requests) occur repeatedly throughout the service lifecycle.
 In contrast, interactions between the operator and the application plane (e.g., service requests and status queries) are comparatively infrequent and can tolerate greater physical separation.
-Co-locating the application, control, and management planes SHOULD therefore take precedence over placing the application plane close to operators or video source sites.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+Co-locating the application plane with the control and management planes SHOULD therefore take precedence over placing the application plane close to operators or video source sites.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
 <p id="section-9.2-4">In the described deployment, the application plane, the VNFM, the SFM, and the control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize the latency of these frequent interactions.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
 <p id="section-9.2-5">In this deployment, the VIM centrally managed NFVI resources across the participating data centers.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
 <p id="section-9.2-6">A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
@@ -2098,19 +2098,19 @@ For large-scale deployments, a hierarchical controller and management model MAY 
       </h2>
 <p id="section-10-1">The security considerations described in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>, <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>, and <span>[<a href="#RFC9256" class="cite xref">RFC9256</a>]</span> apply to this deployment.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">This deployment relies on the SR domain trust model described in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span> and <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>.
-Operators MUST ensure that SRv6-encapsulated packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries, to prevent external attackers from injecting traffic addressed to internal SIDs.<a href="#section-10-2" class="pilcrow">¶</a></p>
+Operators MUST ensure that SRv6 packets originating outside the trusted SR domain are not accepted for SRv6 processing at domain boundaries.<a href="#section-10-2" class="pilcrow">¶</a></p>
 <p id="section-10-3">This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in <span>[<a href="#RFC8231" class="cite xref">RFC8231</a>]</span> and <span>[<a href="#RFC8281" class="cite xref">RFC8281</a>]</span>.
 As noted in those documents, if the security mechanisms defined therein are not used, an attacker able to inject or modify PCEP messages could provision unauthorized SR Policies without the additional verification that a signaling protocol would otherwise provide.
-Operators MUST ensure that appropriate authentication, authorization, and integrity protection are applied to PCEP sessions used for SR Policy provisioning.<a href="#section-10-3" class="pilcrow">¶</a></p>
+Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-3" class="pilcrow">¶</a></p>
 <p id="section-10-4">Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
 The management plane SHOULD verify the identity and integrity of a service function instance before its Service SID is advertised into the SR domain.
-Otherwise, a rogue or compromised service function that is incorrectly registered as a legitimate service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-4" class="pilcrow">¶</a></p>
+Otherwise, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-4" class="pilcrow">¶</a></p>
 <p id="section-10-5">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.
-Operators SHOULD ensure that only trusted consumers are configured to receive this information, and that topology and Service Segment information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-5" class="pilcrow">¶</a></p>
+Operators SHOULD ensure that only trusted consumers are configured to receive this information, and that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-5" class="pilcrow">¶</a></p>
 <p id="section-10-6">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-6" class="pilcrow">¶</a></p>
 <p id="section-10-7">Traffic classification rules and the Color values used to associate them with SR Policies MUST also be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection mechanisms.
 Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-7" class="pilcrow">¶</a></p>
-<p id="section-10-8">Compromise of any of the components discussed in this section may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-8" class="pilcrow">¶</a></p>
+<p id="section-10-8">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
