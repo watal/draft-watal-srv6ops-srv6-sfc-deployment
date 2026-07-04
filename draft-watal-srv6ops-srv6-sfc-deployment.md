@@ -73,6 +73,7 @@ The following terms are used in this document as defined in the related RFCs and
 * SFC, Service Function, and Service Function Chain defined in {{!RFC7665}}.
 * Path Computation Client (PCC), Path Computation Element (PCE), and Traffic Engineering Database (TED) defined in {{!RFC5440}}.
 * BGP Flow Specification defined in {{!RFC8955}}.
+* Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{!RFC7426}}.
 * NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
 * Service Segment and End.AN defined in {{!I-D.draft-ietf-spring-sr-service-programming}}.
 * SRv6 SFC architecture, including the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
@@ -193,7 +194,7 @@ The forwarding plane is responsible for packet forwarding and service function e
 
 The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
 
-A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.
+A Path Computation Element (PCE) uses a Traffic Engineering Database (TED) for topology and resource information.
 
 A BGP daemon performs two functions:
 
