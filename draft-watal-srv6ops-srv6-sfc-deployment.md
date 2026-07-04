@@ -200,7 +200,7 @@ The management plane comprises the following three logically distinct functions:
 
 * VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 
-* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 4.
+* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
 
 * Service Function Manager (SFM): defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
@@ -435,9 +435,7 @@ The deployed system demonstrated several operational benefits.
 
 ## Scalability Considerations
 
-This deployment demonstrated that the architecture can scale incrementally by deploying additional
-SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
-overall control architecture.
+This deployment demonstrated that the architecture can scale incrementally by deploying additional SRv6-capable service function nodes without changing the overall control architecture.
 
 Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.
 
@@ -478,7 +476,8 @@ SRv6 SFC deployments require coordination among the control, management, and app
 
 ## Service SID Allocation
 
-As described in Section 6.3, Service SID allocation MUST ensure uniqueness within the SR domain.
+Building on the Service SID allocation described in Section 6.3, allocation MUST ensure uniqueness within the SR domain.
+
 A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane (TED) to identify available SID space prior to assignment, thereby preventing address collisions and simplifying multi-site service deployment.
 
 ## Controller Considerations
