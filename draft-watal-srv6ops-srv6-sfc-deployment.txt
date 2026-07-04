@@ -773,7 +773,7 @@ Table of Contents
    the Service SIDs corresponding to individual service functions
    providing the End.AN behavior.
 
-   Within a given Locator, however, the Function field identifying a
+   Within a given Locator, however, the Function field associated with a
    specific End.AN behavior MUST be uniquely assigned so as not to
    collide with other service functions sharing the same Locator.
    Because this Function value assignment is not visible to the routing
