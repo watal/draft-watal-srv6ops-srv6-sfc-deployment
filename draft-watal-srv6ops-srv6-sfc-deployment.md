@@ -220,7 +220,7 @@ The management plane supports reconfiguration and removal of service functions t
 The application plane consists of an operator-facing web-based management interface together with the service orchestration logic.
 Based on operator requests, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.
 
-The application plane MAY incorporate closed-loop automation functions that operate on telemetry feedback from the control and management planes.
+The application plane MAY include closed-loop automation functions that operate on telemetry feedback from the control and management planes.
 
 Such mechanisms provide policy refinement and intent optimization based on observed service and network conditions.
 
@@ -432,7 +432,7 @@ The service functions performed video switching, transcoding, and caption insert
 
 Operators created service function chains through the web-based management interface.
 The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
-The resulting service function chains were incorporated into forwarding without any manual configuration of backbone routers.
+The resulting service function chains were deployed in the forwarding plane without requiring any changes to the existing backbone infrastructure.
 
 ## Operational Benefits
 
