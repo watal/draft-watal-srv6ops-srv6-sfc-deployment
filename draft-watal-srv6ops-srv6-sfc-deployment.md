@@ -490,6 +490,8 @@ These service functions become available for path computation without requiring 
 
 # Lessons Learned
 
+This section describes observed operational behaviors. It does not specify requirements or recommendations.
+
 During the deployment of the SRv6 SFC system over the backbone, several operational issues and design insights were identified.
 This section summarizes key observations obtained from real-world operation.
 
@@ -520,6 +522,33 @@ In the deployed system, service function placement was determined manually based
 While the underlying architecture supports incremental scaling of service function nodes (Section 7.4), this manual placement decision process itself does not scale well as the number of deployment sites increases.
 
 This experience led to the operational recommendations in Section 9.2, which describe latency-aware and topology-aware approaches to service function placement.
+
+## Service Orchestration Timing and Consistency Issues
+
+During the deployment, we observed that correct service operation depends on the relative timing between service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.
+
+In particular, Service SID advertisement may occur before the control-plane state (e.g., BGP-LS update and TED synchronization) has fully converged.
+In such cases, service functions may become eligible for path computation while downstream SR Policy provisioning is still in progress.
+
+We also observed that Flow Specification rules may be installed before the corresponding SR Policy becomes operational.
+This can result in transient traffic misclassification or blackholing, especially during initial service activation or service updates.
+
+Furthermore, synchronization delays between the management plane (VNFM and SFM), control plane (PCE and BGP-LS), and forwarding plane can lead to temporary inconsistencies in service availability information.
+
+As a result, orchestration systems SHOULD ensure that Flow Specification installation is performed only after SR Policy provisioning has completed and is verified as operational, and that Service SID advertisements reflect confirmed service readiness.
+
+## Multi-domain State Correlation Limitations
+
+The deployed system spans multiple VIM domains distributed across geographically separated data centers.
+As a result, operational state is distributed across network, cloud, and application layers, each of which is observed using independent monitoring tools.
+
+We observed that there was no unified mechanism to correlate SR Policy state, service function status, and application-layer service verification results across these domains.
+
+Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation such as end-to-end service output comparison.
+
+This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.
+
+A unified multi-layer observability framework, capable of correlating network, cloud, and application states using consistent identifiers, is essential for efficient operation of SRv6 SFC deployments at scale.
 
 # Operational Considerations
 
@@ -558,14 +587,6 @@ The VIM centrally manages NFVI resources across the participating data centers.
 
 A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
 For large-scale deployments, a hierarchical controller and management model MAY be used to improve scalability while preserving global policy consistency.
-
-## Flow Classification and SR Policy Synchronization
-
-When an SR Policy is intended to steer only selected traffic (e.g., a specific flow or VPN), it SHOULD be associated with a Color so that it is applied only to the intended traffic.
-
-The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational.
-
-Otherwise, traffic MAY be classified to an SR Policy that is not yet operational, resulting in transient traffic misclassification or blackholing.
 
 ## Failure Recovery
 
@@ -625,6 +646,9 @@ Operators SHOULD ensure that BGP-LS topology and Service SID information is dist
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
 Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
+
+The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational. Otherwise, traffic MAY be classified to an SR Policy that is not yet operational, resulting in transient traffic misclassification or blackholing.
+
 Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.
 
 Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.
