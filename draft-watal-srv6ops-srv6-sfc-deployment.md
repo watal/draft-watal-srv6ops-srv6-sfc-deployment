@@ -37,6 +37,9 @@ normative:
   RFC4655:
   RFC5440:
   RFC8174:
+  RFC8231:
+  RFC8281:
+  RFC8402:
   RFC8568:
   RFC8986:
   RFC9256:
@@ -57,9 +60,9 @@ normative:
 informative:
   RFC7426:
   RFC7665:
-  RFC8402:
   RFC8664:
   RFC8955:
+  RFC9552:
   RFC9862:
   I-D.draft-ietf-spring-sr-service-programming:
   I-D.draft-ietf-idr-bgp-ls-sr-service-segments:
@@ -101,6 +104,7 @@ The following terms are used in this document as defined in the related RFCs and
 * SFC, Service Function, and Service Function Chain defined in {{RFC7665}}.
 * Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{RFC4655}} and {{RFC5440}}, respectively.
 * PCEP extensions for SR and SR Policy are defined in {{RFC8664}} and {{RFC9256}}, with additional SR-related extensions specified in {{RFC9862}}.
+* BGP-LS defined in {{RFC9552}}.
 * BGP Flow Specification defined in {{RFC8955}}.
 * Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{RFC7426}}.
 * NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{RFC8568}}.
@@ -585,7 +589,11 @@ Operators SHOULD implement consistency checks and readiness verification before 
 
 # Security Considerations
 
-The deployment described in this document relies on existing security mechanisms provided by SRv6 and associated control and management protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV management interfaces.
+The security considerations described in {{RFC8402}} and {{RFC8986}} apply to this deployment.
+
+This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in {{RFC8231}} and {{RFC8281}}. As noted in those documents, if the security mechanisms defined therein are not used, an attacker able to inject or modify PCEP messages could instantiate a path without the additional verification that a signaling protocol would otherwise provide.
+
+The export of topology and traffic engineering information via BGP-LS, as described in {{RFC9552}}, may expose commercially sensitive network information; operators SHOULD ensure that only trusted consumers are configured to receive this information.
 
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
