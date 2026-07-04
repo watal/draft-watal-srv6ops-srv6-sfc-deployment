@@ -186,7 +186,7 @@ The forwarding plane consists of the backbone and the SR-aware service functions
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
 Service functions implement the End.AN behavior to process packets and forward them to the next segment in the service chain.
 
-The forwarding infrastructure operates without modifications to the existing backbone routers, enabling incremental deployment of SRv6 SFC services.
+The forwarding infrastructure operates over existing backbone routers, enabling incremental deployment of SRv6 SFC services.
 
 The forwarding plane is responsible for packet forwarding and service function execution, while service orchestration and policy decisions are handled by the upper planes.
 
@@ -432,13 +432,13 @@ The service functions performed video switching, transcoding, and caption insert
 
 Operators created service function chains through the web-based management interface.
 The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
-The resulting service function chains were deployed in the forwarding plane without requiring any changes to the existing backbone infrastructure.
+The resulting service function chains were deployed in the forwarding plane without requiring changes to the existing infrastructure.
 
 ## Operational Benefits
 
 The deployed system demonstrated several operational benefits.
 
-* Existing backbone routers required no changes.
+* No modifications to the existing backbone infrastructure were required for deployment or operation.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
