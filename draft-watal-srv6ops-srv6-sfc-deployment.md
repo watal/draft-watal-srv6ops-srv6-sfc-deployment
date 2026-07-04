@@ -58,7 +58,7 @@ This document does not define any new protocols or protocol extensions.
 
 Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.
 
-On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system rather than in isolation.
+On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system.
 
 This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.
 
@@ -71,20 +71,21 @@ The following terms are used in this document as defined in the related RFCs and
 * SRv6 defined in {{!RFC8986}}.
 * Headend, Color, and SR Policy defined in {{!RFC9256}}.
 * SFC, Service Function, and Service Function Chain defined in {{!RFC7665}}.
-* Path Computation Client (PCC), Path Computation Element (PCE), and Traffic Engineering Database (TED) defined in {{!RFC5440}}.
+* Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{!RFC4655}} and {{!RFC5440}}, respectively.
+* PCEP extensions for SR and SR Policy are defined in {{!RFC8664}} and {{!RFC9256}}, with additional SR-related extensions specified in {{!RFC9862}}.
 * BGP Flow Specification defined in {{!RFC8955}}.
 * Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{!RFC7426}}.
 * NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
-* Service Segment and End.AN defined in {{!I-D.draft-ietf-spring-sr-service-programming}}.
-* SRv6 SFC architecture, including the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+* Service Segment described in {{!I-D.draft-ietf-spring-sr-service-programming}}.
+* SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they appear in all capitals, as shown here.
 
 # Deployment Objectives
 
-* Validate the SRv6 SFC architecture on a real backbone network.
-* Demonstrate incremental deployment without modifying the existing IPv6 backbone.
+* Validate the SRv6 SFC architecture on a backbone network in practical use.
+* Demonstrate incremental deployment without modifying existing transit backbone routers.
 * Evaluate the operational feasibility of on-demand SFC provisioning.
 * Evaluate end-to-end service operation across forwarding, control, management, and application planes.
 
@@ -116,23 +117,18 @@ Figure 1 shows the physical deployment environment.
 
 ## IPv6 Backbone
 
-The deployment was conducted on the SINET IPv6 backbone, Japan's research and education network interconnecting universities and research institutions.
+The deployment was conducted on SINET, Japan's research and education network interconnecting universities and research institutions.
 
-The backbone provides native IPv6 connectivity among geographically distributed sites.
+SINET provides native IPv6 connectivity among geographically distributed sites.
 
 ## Data Centers
 
-Multiple SINET data centers are connected to the backbone.
-
-Three geographically distributed data centers (Sapporo, Kanagawa, and Okinawa) were used to evaluate service chaining across a wide-area network.
-
-Each data center provides computing resources with native IPv6 connectivity to the backbone.
+Three geographically distributed data centers in Sapporo, Kanagawa, and Okinawa were selected to evaluate service chaining over a wide-area network.
+Each data center provides NFV Infrastructure (NFVI).
 
 ## Video Source Sites
 
-University-operated video source servers were used as traffic sources for the deployed service.
-
-These servers were located at Kanagawa, Chiba, Ishikawa, and Okinawa, with native IPv6 connectivity to the backbone.
+University-operated video source servers were located at Kanagawa, Chiba, Ishikawa, and Okinawa.
 
 ## Virtualized Network Function Infrastructure
 
@@ -207,9 +203,9 @@ The management plane is responsible for deploying, configuring, and managing the
 
 The management plane consists of the following three logically distinct functions:
 
-* VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
+* VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the lifecycle management of service functions, including issuing instantiation, scaling, and termination requests.
 
-* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
+* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
 
 * Service Function Manager (SFM): defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
@@ -237,7 +233,7 @@ The following abbreviations are used:
 
 ~~~ drawing
 Op   = Operator            SFM  = Service Function Manager
-App  = Application         VM   = VM/VNF
+App  = Application         VNF  = Virtualized Network Function
 VNFM = VNF Manager         Ctrl = Controller
 VIM  = Virtualized         Src  = Headend
        Infrastructure      Dest = Tailend
@@ -245,20 +241,20 @@ VIM  = Virtualized         Src  = Headend
 ~~~
 {: #fig-wf-legend title="Abbreviations Used in Figures 4-6"}
 
-In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.2 (the PCE and the BGP daemon) collectively.
+In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.3 (the PCE and the BGP daemon) collectively.
 The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).
 
 Figure 4 shows service function instantiation.
-Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.
+Consistent with {{!RFC8568}}, the VNF Manager issues the lifecycle request and the VIM allocates and provisions the underlying NFVI resources.
 
 ~~~ drawing
- Op           App         VNFM          VIM           VM
+ Op           App         VNFM          VIM           VNF
   |            |            |            |             |
   |  Service   |            |            |             |
   |  Request   |            |            |             |
   |----------->|            |            |             |
-  |            |  Deploy    |            |             |
-  |            |    NF      |            |             |
+  |            |   Deploy   |            |             |
+  |            |    VNF     |            |             |
   |            |----------->|            |             |
   |            |            |Instantiate |             |
   |            |            |----------->|             |
@@ -277,7 +273,7 @@ Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and 
 Figure 5 shows SRv6-specific service configuration after the service function becomes operational, followed by Service Segment advertisement.
 
 ~~~ drawing
- App               SFM               VM               Ctrl
+ App               SFM               VNF              Ctrl
   |                 |                 |                 |
   |     Deploy      |                 |                 |
   |     Segment     |                 |                 |
@@ -286,7 +282,7 @@ Figure 5 shows SRv6-specific service configuration after the service function be
   |                 |   Service SID   |                 |
   |                 |---------------->|                 |
   |                 |                 |    Advertise    |
-  |                 |                 |     Segment     |
+  |                 |                 |   Service SID   |
   |                 |                 |---------------->|
   |                 | Service SID OK  |                 | Update TED
   |                 |<----------------|                 |
@@ -302,17 +298,18 @@ Figure 6 shows SFC activation, consisting of path computation, SR Policy provisi
 ~~~ drawing
  App              Ctrl               Src              Dest
   |                 |                 |                 |
-  |   Request SFC   |                 |                 |
+  |     Request     |                 |                 |
+  |   Path Compute  |                 |                 |
   |---------------->|                 |                 |
   |                 | Compute Path    |                 |
+  |                 |                 |                 |
   |                 |    Provision    |                 |
   |                 |    SR Policy    |                 |
   |                 |---------------->|                 |
   |                 |                 |                 |
   |                 |  SR Policy OK   |                 |
   |                 |<----------------|                 |
-  |     Request     |                 |                 |
-  |     SFC OK      |                 |                 |
+  |   SR Policy OK  |                 |                 |
   |<----------------|                 |                 |
   |     Install     |                 |                 |
   |    Flow Rule    |                 |                 |
@@ -362,7 +359,7 @@ See Section 9.1 for operational considerations.
 
 Topology information is continuously collected via BGP-LS independently of individual service requests.
 
-Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS.
+Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS extension defined in {{!I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
 
 Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.
 
@@ -432,7 +429,7 @@ The service functions performed video switching, transcoding, and caption insert
 
 Operators created service function chains through the web-based management interface.
 The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
-The resulting service function chains were deployed in the forwarding plane without requiring changes to the existing backbone infrastructure.
+The resulting service function chains were deployed in the forwarding plane without requiring changes to existing transit backbone routers.
 
 ## Operational Benefits
 
@@ -441,7 +438,7 @@ The deployed system demonstrated several operational benefits.
 * No modifications to the existing backbone infrastructure were required for deployment or operation.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
-* Operators primarily interacted through the application plane, reducing operational complexity.
+* Operators manage services through a minimal intent-based interface, without awareness of low-level network details, thereby reducing operational complexity.
 * Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was completed.
 
 ## Scalability Considerations
@@ -539,7 +536,7 @@ A multi-layer observability framework SHOULD include:
 * Service function health and availability
 * Virtual infrastructure resource utilization
 
-This SHOULD be supported by a unified telemetry framework spanning network and cloud domains, correlating the layers above to enable rapid fault detection and diagnosis.
+This framework SHOULD include a unified telemetry system spanning both network and cloud domains, enabling cross-layer analysis for rapid fault detection and diagnosis.
 
 For content-modifying services (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.
 
