@@ -125,6 +125,12 @@ Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) w
 
 Each data center provides computing resources with native IPv6 connectivity to the backbone.
 
+## Video Source Sites
+
+University-operated video source servers were used as traffic sources for the deployed service.
+
+These servers were located at Okinawa, Kanagawa, Chiba, and Ishikawa, with native IPv6 connectivity to the backbone.
+
 ## Virtualized Network Function Infrastructure
 
 A virtualized infrastructure was deployed at each selected data center to host SR-aware service functions.
@@ -402,16 +408,16 @@ The following subsections describe the deployed architecture, the deployed servi
 
 The deployment utilized the deployment environment described in Section 4.
 
-The deployed system consists of the following planes:
+The deployed system implements the following components:
 
-* Application plane: a web-based management interface system.
+* Application plane: a web-based management interface.
 * Control plane: Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
 * Management plane: a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.
 * Forwarding plane: the existing backbone and distributed SR-aware service functions.
 
 ## Service Deployment
 
-Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
+Video streams were captured at the video source sites described in Section 4.3, and steered through SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
 
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
@@ -434,7 +440,7 @@ This deployment demonstrated that the architecture can scale incrementally by de
 
 Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.
 
-As described in Section 6.4, these service functions become available for path computation without requiring manual updates to the controller configuration.
+These service functions become available for path computation without requiring manual updates to the controller configuration.
 
 # Lessons Learned
 
