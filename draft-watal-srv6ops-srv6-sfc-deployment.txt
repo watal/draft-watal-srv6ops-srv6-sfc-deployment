@@ -904,23 +904,19 @@ Table of Contents
 
 10.  Security Considerations
 
-   The security considerations described in [RFC8402], [RFC8986], and
-   [RFC9256] apply to this deployment.
-
-   This deployment relies on the SR domain trust model described in
-   [RFC8402] and [RFC8986].  Operators MUST ensure that SRv6 packets
-   originating outside the trusted SR domain are not accepted for SRv6
-   processing at domain boundaries.
+   The security considerations in [RFC8402], [RFC8986], and [RFC9256]
+   apply to this deployment, which relies on the SR domain trust model
+   described in [RFC8402].  Operators MUST ensure that SRv6 packets
+   originating outside the trusted SR domain are not processed as SRv6
+   traffic at domain boundaries.
 
    This deployment provisions SR Policies to SR source nodes directly
    via PCEP without the use of a hop-by-hop signaling protocol such as
    RSVP-TE, consistent with the PCE-initiated LSP model described in
-   [RFC8231] and [RFC8281].  As noted in those documents, if the
-   security mechanisms defined therein are not used, an attacker able to
-   inject or modify PCEP messages could provision unauthorized SR
-   Policies without the additional verification that a signaling
-   protocol would otherwise provide.  Operators MUST ensure that PCEP
-   sessions used for SR Policy provisioning are protected using
+   [RFC8231] and [RFC8281].  Failure to use the specified security
+   mechanisms allows an attacker to inject or modify PCEP messages and
+   to provision unauthorized SR Policies.  Operators MUST ensure that
+   PCEP sessions used for SR Policy provisioning are protected using
    appropriate authentication, authorization, and integrity protection
    mechanisms.
 
@@ -929,14 +925,14 @@ Table of Contents
    Section 6.4), operators SHOULD ensure that Service SID information is
    advertised only for authenticated and authorized service functions.
    The management plane SHOULD verify the identity and integrity of a
-   service function instance before its Service SID is advertised into
-   the SR domain.  Otherwise, a rogue or compromised service function
-   could be selected during path computation, resulting in traffic being
-   steered to an unauthorized function.
+   service function instance before advertising its Service SID into the
+   SR domain.  If not, a rogue or compromised service function could be
+   selected during path computation, resulting in traffic being steered
+   to an unauthorized function.
 
    The export of topology and traffic engineering information via BGP-
    LS, as described in [RFC9552], may expose commercially sensitive
-   network information.  Operators SHOULD ensure that only trusted
+   network information.  Operators SHOULD ensure that authorized
    consumers are configured to receive this information, and that
    topology and Service SID information advertised via BGP-LS is
    protected against unauthorized modification or injection.
@@ -944,12 +940,12 @@ Table of Contents
    Management interfaces SHOULD be protected using mutually
    authenticated secure transport protocols.
 
-   Traffic classification rules and the Color values used to associate
-   them with SR Policies MUST also be protected against unauthorized
-   modification or injection, using appropriate authentication,
-   authorization, and integrity protection mechanisms.  Incorrect
-   association between traffic classification rules, Color values, and
-   SR Policies may result in unintended traffic steering.
+   Traffic classification rules and Color values used to associate them
+   with SR Policies MUST be protected against unauthorized modification
+   or injection, using appropriate authentication, authorization, and
+   integrity protection.  Incorrect association between traffic
+   classification rules, Color values, and SR Policies may result in
+   unintended traffic steering.
 
    Compromise of these components may result in incorrect traffic
    steering, service misbehavior, or service disruption.
