@@ -89,8 +89,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Environment
 
-Figure 1 illustrates the physical deployment environment used throughout this document.
-
+Figure 1 shows the physical deployment environment.
 
 ~~~ drawing
                          SINET IPv6 Backbone
