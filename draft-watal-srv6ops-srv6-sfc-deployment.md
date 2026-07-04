@@ -41,6 +41,18 @@ normative:
   RFC8986:
   RFC9256:
   I-D.draft-watal-spring-srv6-sfc-sr-aware-functions:
+    target: https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-05
+    title: SRv6 SFC Architecture with SR-aware Functions
+    author:
+      -
+        ins: W. Mishima
+        name: Wataru Mishima
+      -
+        ins: Y. Fukagawa
+        name: Yuta Fukagawa
+    date: 2026-07-04
+    seriesinfo:
+      Internet-Draft: draft-watal-spring-srv6-sfc-sr-aware-functions-05
 
 informative:
   RFC7426:
