@@ -1322,7 +1322,7 @@ svg {
 <p id="section-1-3">The architecture of SRv6 SFC with SR-aware functions is described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">This document does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system rather than in isolation.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-6">On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.<a href="#section-1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1351,22 +1351,25 @@ svg {
             <p id="section-2.1-2.4.1">SFC, Service Function, and Service Function Chain defined in <span>[<a href="#RFC7665" class="cite xref">RFC7665</a>]</span>.<a href="#section-2.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.5">
-            <p id="section-2.1-2.5.1">Path Computation Client (PCC), Path Computation Element (PCE), and Traffic Engineering Database (TED) defined in <span>[<a href="#RFC5440" class="cite xref">RFC5440</a>]</span>.<a href="#section-2.1-2.5.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.5.1">Path Computation Client (PCC) and Path Computation Element (PCE) are defined in <span>[<a href="#RFC4655" class="cite xref">RFC4655</a>]</span> and <span>[<a href="#RFC5440" class="cite xref">RFC5440</a>]</span>, respectively.<a href="#section-2.1-2.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.6">
-            <p id="section-2.1-2.6.1">BGP Flow Specification defined in <span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.6.1">PCEP extensions for SR and SR Policy are defined in <span>[<a href="#RFC8664" class="cite xref">RFC8664</a>]</span> and <span>[<a href="#RFC9256" class="cite xref">RFC9256</a>]</span>, with additional SR-related extensions specified in <span>[<a href="#RFC9862" class="cite xref">RFC9862</a>]</span>.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.7">
-            <p id="section-2.1-2.7.1">Forwarding Plane, Control Plane, Management Plane, Application Plane defined in <span>[<a href="#RFC7426" class="cite xref">RFC7426</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.7.1">BGP Flow Specification defined in <span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.8">
-            <p id="section-2.1-2.8.1">NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.8.1">Forwarding Plane, Control Plane, Management Plane, Application Plane defined in <span>[<a href="#RFC7426" class="cite xref">RFC7426</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.9">
-            <p id="section-2.1-2.9.1">Service Segment and End.AN defined in <span>[<a href="#I-D.draft-ietf-spring-sr-service-programming" class="cite xref">I-D.draft-ietf-spring-sr-service-programming</a>]</span>.<a href="#section-2.1-2.9.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.9.1">NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>.<a href="#section-2.1-2.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.10">
-            <p id="section-2.1-2.10.1">SRv6 SFC architecture, including the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.10.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.10.1">Service Segment described in <span>[<a href="#I-D.draft-ietf-spring-sr-service-programming" class="cite xref">I-D.draft-ietf-spring-sr-service-programming</a>]</span>.<a href="#section-2.1-2.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.11">
+            <p id="section-2.1-2.11.1">SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.11.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1388,10 +1391,10 @@ svg {
       </h2>
 <ul class="normal">
 <li class="normal" id="section-3-1.1">
-          <p id="section-3-1.1.1">Validate the SRv6 SFC architecture on a real backbone network.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-1.1.1">Validate the SRv6 SFC architecture on a backbone network in practical use.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-1.2">
-          <p id="section-3-1.2.1">Demonstrate incremental deployment without modifying the existing IPv6 backbone.<a href="#section-3-1.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-1.2.1">Demonstrate incremental deployment without modifying existing transit backbone routers.<a href="#section-3-1.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-1.3">
           <p id="section-3-1.3.1">Evaluate the operational feasibility of on-demand SFC provisioning.<a href="#section-3-1.3.1" class="pilcrow">¶</a></p>
@@ -1441,8 +1444,8 @@ svg {
         <h3 id="name-ipv6-backbone">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-ipv6-backbone" class="section-name selfRef">IPv6 Backbone</a>
         </h3>
-<p id="section-4.1-1">The deployment was conducted on the SINET IPv6 backbone, Japan's research and education network interconnecting universities and research institutions.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">The backbone provides native IPv6 connectivity among geographically distributed sites.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">The deployment was conducted on SINET, Japan's research and education network interconnecting universities and research institutions.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">SINET provides native IPv6 connectivity among geographically distributed sites.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="data-centers">
@@ -1450,9 +1453,8 @@ svg {
         <h3 id="name-data-centers">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-data-centers" class="section-name selfRef">Data Centers</a>
         </h3>
-<p id="section-4.2-1">Multiple SINET data centers are connected to the backbone.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">Three geographically distributed data centers (Sapporo, Kanagawa, and Okinawa) were used to evaluate service chaining across a wide-area network.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2-3">Each data center provides computing resources with native IPv6 connectivity to the backbone.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">Three geographically distributed data centers in Sapporo, Kanagawa, and Okinawa were selected to evaluate service chaining over a wide-area network.
+Each data center provides NFV Infrastructure (NFVI).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="video-source-sites">
@@ -1460,8 +1462,7 @@ svg {
         <h3 id="name-video-source-sites">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-video-source-sites" class="section-name selfRef">Video Source Sites</a>
         </h3>
-<p id="section-4.3-1">University-operated video source servers were used as traffic sources for the deployed service.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.3-2">These servers were located at Kanagawa, Chiba, Ishikawa, and Okinawa, with native IPv6 connectivity to the backbone.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">University-operated video source servers were located at Kanagawa, Chiba, Ishikawa, and Okinawa.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="virtualized-network-function-infrastructure">
@@ -1572,10 +1573,10 @@ Service functions implement the End.AN behavior to process packets and forward t
 <p id="section-5.4-2">The management plane consists of the following three logically distinct functions:<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.4-3.1">
-            <p id="section-5.4-3.1.1">VNF Manager (VNFM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.1.1">VNF Manager (VNFM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for the lifecycle management of service functions, including issuing instantiation, scaling, and termination requests.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.2">
-            <p id="section-5.4-3.2.1">VIM: defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.2.1">VIM: defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.3">
             <p id="section-5.4-3.3.1">Service Function Manager (SFM): defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
@@ -1612,7 +1613,7 @@ The workflow begins with an operator service request and concludes with traffic 
         <div class="lang-drawing sourcecode" id="section-6-4.1">
 <pre>
 Op   = Operator            SFM  = Service Function Manager
-App  = Application         VM   = VM/VNF
+App  = Application         VNF  = Virtualized Network Function
 VNFM = VNF Manager         Ctrl = Controller
 VIM  = Virtualized         Src  = Headend
        Infrastructure      Dest = Tailend
@@ -1623,21 +1624,21 @@ VIM  = Virtualized         Src  = Headend
 <a href="#name-abbreviations-used-in-figur" class="selfRef">Abbreviations Used in Figures 4-6</a>
         </figcaption></figure>
 </div>
-<p id="section-6-5">In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.2 (the PCE and the BGP daemon) collectively.
+<p id="section-6-5">In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.3 (the PCE and the BGP daemon) collectively.
 The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).<a href="#section-6-5" class="pilcrow">¶</a></p>
 <p id="section-6-6">Figure 4 shows service function instantiation.
-Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.<a href="#section-6-6" class="pilcrow">¶</a></p>
+Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, the VNF Manager issues the lifecycle request and the VIM allocates and provisions the underlying NFVI resources.<a href="#section-6-6" class="pilcrow">¶</a></p>
 <span id="name-nf-instantiation"></span><div id="fig-wf-4">
 <figure id="figure-4">
         <div class="lang-drawing sourcecode" id="section-6-7.1">
 <pre>
- Op           App         VNFM          VIM           VM
+ Op           App         VNFM          VIM           VNF
   |            |            |            |             |
   |  Service   |            |            |             |
   |  Request   |            |            |             |
   |-----------&gt;|            |            |             |
-  |            |  Deploy    |            |             |
-  |            |    NF      |            |             |
+  |            |   Deploy   |            |             |
+  |            |    VNF     |            |             |
   |            |-----------&gt;|            |             |
   |            |            |Instantiate |             |
   |            |            |-----------&gt;|             |
@@ -1661,7 +1662,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <figure id="figure-5">
         <div class="lang-drawing sourcecode" id="section-6-9.1">
 <pre>
- App               SFM               VM               Ctrl
+ App               SFM               VNF              Ctrl
   |                 |                 |                 |
   |     Deploy      |                 |                 |
   |     Segment     |                 |                 |
@@ -1670,7 +1671,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |                 |   Service SID   |                 |
   |                 |----------------&gt;|                 |
   |                 |                 |    Advertise    |
-  |                 |                 |     Segment     |
+  |                 |                 |   Service SID   |
   |                 |                 |----------------&gt;|
   |                 | Service SID OK  |                 | Update TED
   |                 |&lt;----------------|                 |
@@ -1691,17 +1692,18 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <pre>
  App              Ctrl               Src              Dest
   |                 |                 |                 |
-  |   Request SFC   |                 |                 |
+  |     Request     |                 |                 |
+  |   Path Compute  |                 |                 |
   |----------------&gt;|                 |                 |
   |                 | Compute Path    |                 |
+  |                 |                 |                 |
   |                 |    Provision    |                 |
   |                 |    SR Policy    |                 |
   |                 |----------------&gt;|                 |
   |                 |                 |                 |
   |                 |  SR Policy OK   |                 |
   |                 |&lt;----------------|                 |
-  |     Request     |                 |                 |
-  |     SFC OK      |                 |                 |
+  |   SR Policy OK  |                 |                 |
   |&lt;----------------|                 |                 |
   |     Install     |                 |                 |
   |    Flow Rule    |                 |                 |
@@ -1771,7 +1773,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-topology-collection" class="section-name selfRef">Topology Collection</a>
         </h3>
 <p id="section-6.4-1">Topology information is continuously collected via BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS extension defined in <span>[<a href="#I-D.draft-ietf-idr-bgp-ls-sr-service-segments" class="cite xref">I-D.draft-ietf-idr-bgp-ls-sr-service-segments</a>]</span>, which is currently under standardization.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1885,7 +1887,7 @@ Installation ordering relative to SR Policy provisioning is discussed in Section
 <p id="section-7.2-2">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 <p id="section-7.2-3">Operators created service function chains through the web-based management interface.
 The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
-The resulting service function chains were deployed in the forwarding plane without requiring changes to the existing backbone infrastructure.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+The resulting service function chains were deployed in the forwarding plane without requiring changes to existing transit backbone routers.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-benefits">
@@ -1905,7 +1907,7 @@ The resulting service function chains were deployed in the forwarding plane with
             <p id="section-7.3-2.3.1">SR Policies and Flow Specification rules were automatically generated.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.3-2.4">
-            <p id="section-7.3-2.4.1">Operators primarily interacted through the application plane, reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-7.3-2.4.1">Operators manage services through a minimal intent-based interface, without awareness of low-level network details, thereby reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.3-2.5">
             <p id="section-7.3-2.5.1">Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was completed.<a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
@@ -2042,7 +2044,7 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
             <p id="section-9.5-2.4.1">Virtual infrastructure resource utilization<a href="#section-9.5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-9.5-3">This SHOULD be supported by a unified telemetry framework spanning network and cloud domains, correlating the layers above to enable rapid fault detection and diagnosis.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
+<p id="section-9.5-3">This framework SHOULD include a unified telemetry system spanning both network and cloud domains, enabling cross-layer analysis for rapid fault detection and diagnosis.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
 <p id="section-9.5-4">For content-modifying services (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2103,6 +2105,10 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
 <a href="#section-12" class="section-number selfRef">12. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="I-D.draft-ietf-idr-bgp-ls-sr-service-segments">[I-D.draft-ietf-idr-bgp-ls-sr-service-segments]</dt>
+      <dd>
+<span class="refAuthor">Dawra, G.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Talaulikar, K.</span>, <span class="refAuthor">Clad, F.</span>, <span class="refAuthor">Bernier, D.</span>, <span class="refAuthor">Uttaro, J.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Elmalky, H.</span>, <span class="refAuthor">Xu, X.</span>, <span class="refAuthor">Guichard, J.</span>, and <span class="refAuthor">C. Li</span>, <span class="refTitle">"BGP-LS Advertisement of Segment Routing Service Segments"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-idr-bgp-ls-sr-service-segments-02</span>, <time datetime="2022-11-05" class="refDate">5 November 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-ls-sr-service-segments-02">https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-ls-sr-service-segments-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.draft-ietf-spring-sr-service-programming">[I-D.draft-ietf-spring-sr-service-programming]</dt>
       <dd>
 <span class="refAuthor">Abdelsalam, A.</span>, <span class="refAuthor">Xu, X.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Bernier, D.</span>, <span class="refAuthor">Li, C.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Ma, S.</span>, <span class="refAuthor">Yadlapalli, C.</span>, <span class="refAuthor">Henderickx, W.</span>, and <span class="refAuthor">S. Salsano</span>, <span class="refTitle">"Service Programming with Segment Routing"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-spring-sr-service-programming-12</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-spring-sr-service-programming-12">https://datatracker.ietf.org/doc/html/draft-ietf-spring-sr-service-programming-12</a>&gt;</span>. </dd>
@@ -2114,6 +2120,10 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4655">[RFC4655]</dt>
+      <dd>
+<span class="refAuthor">Farrel, A.</span>, <span class="refAuthor">Vasseur, J.-P.</span>, and <span class="refAuthor">J. Ash</span>, <span class="refTitle">"A Path Computation Element (PCE)-Based Architecture"</span>, <span class="seriesInfo">RFC 4655</span>, <span class="seriesInfo">DOI 10.17487/RFC4655</span>, <time datetime="2006-08" class="refDate">August 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4655">https://www.rfc-editor.org/rfc/rfc4655</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5440">[RFC5440]</dt>
       <dd>
@@ -2139,6 +2149,10 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
       <dd>
 <span class="refAuthor">Bernardos, CJ.</span>, <span class="refAuthor">Rahman, A.</span>, <span class="refAuthor">Zuniga, JC.</span>, <span class="refAuthor">Contreras, LM.</span>, <span class="refAuthor">Aranda, P.</span>, and <span class="refAuthor">P. Lynch</span>, <span class="refTitle">"Network Virtualization Research Challenges"</span>, <span class="seriesInfo">RFC 8568</span>, <span class="seriesInfo">DOI 10.17487/RFC8568</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8568">https://www.rfc-editor.org/rfc/rfc8568</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8664">[RFC8664]</dt>
+      <dd>
+<span class="refAuthor">Sivabalan, S.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Tantsura, J.</span>, <span class="refAuthor">Henderickx, W.</span>, and <span class="refAuthor">J. Hardwick</span>, <span class="refTitle">"Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing"</span>, <span class="seriesInfo">RFC 8664</span>, <span class="seriesInfo">DOI 10.17487/RFC8664</span>, <time datetime="2019-12" class="refDate">December 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8664">https://www.rfc-editor.org/rfc/rfc8664</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8955">[RFC8955]</dt>
       <dd>
 <span class="refAuthor">Loibl, C.</span>, <span class="refAuthor">Hares, S.</span>, <span class="refAuthor">Raszuk, R.</span>, <span class="refAuthor">McPherson, D.</span>, and <span class="refAuthor">M. Bacher</span>, <span class="refTitle">"Dissemination of Flow Specification Rules"</span>, <span class="seriesInfo">RFC 8955</span>, <span class="seriesInfo">DOI 10.17487/RFC8955</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8955">https://www.rfc-editor.org/rfc/rfc8955</a>&gt;</span>. </dd>
@@ -2148,8 +2162,12 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
 <span class="refAuthor">Filsfils, C., Ed.</span>, <span class="refAuthor">Camarillo, P., Ed.</span>, <span class="refAuthor">Leddy, J.</span>, <span class="refAuthor">Voyer, D.</span>, <span class="refAuthor">Matsushima, S.</span>, and <span class="refAuthor">Z. Li</span>, <span class="refTitle">"Segment Routing over IPv6 (SRv6) Network Programming"</span>, <span class="seriesInfo">RFC 8986</span>, <span class="seriesInfo">DOI 10.17487/RFC8986</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8986">https://www.rfc-editor.org/rfc/rfc8986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9256">[RFC9256]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Talaulikar, K., Ed.</span>, <span class="refAuthor">Voyer, D.</span>, <span class="refAuthor">Bogdanov, A.</span>, and <span class="refAuthor">P. Mattes</span>, <span class="refTitle">"Segment Routing Policy Architecture"</span>, <span class="seriesInfo">RFC 9256</span>, <span class="seriesInfo">DOI 10.17487/RFC9256</span>, <time datetime="2022-07" class="refDate">July 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9256">https://www.rfc-editor.org/rfc/rfc9256</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9862">[RFC9862]</dt>
+    <dd>
+<span class="refAuthor">Koldychev, M.</span>, <span class="refAuthor">Sivabalan, S.</span>, <span class="refAuthor">Sidor, S.</span>, <span class="refAuthor">Barth, C.</span>, <span class="refAuthor">Peng, S.</span>, and <span class="refAuthor">H. Bidgoli</span>, <span class="refTitle">"Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing (SR) Policy Candidate Paths"</span>, <span class="seriesInfo">RFC 9862</span>, <span class="seriesInfo">DOI 10.17487/RFC9862</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9862">https://www.rfc-editor.org/rfc/rfc9862</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
