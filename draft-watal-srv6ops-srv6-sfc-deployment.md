@@ -125,25 +125,25 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Figure 1 shows the physical deployment environment.
 
 ~~~ drawing
-+------------+ +------------+          +------------+ +------------+
-|Video Source| |Video Source|          |Video Source| |Video Source|
-+-----+------+ +-----+------+          +-----+------+ +-----+------+
-      \              |                       |              /
-       \             |  SINET IPv6 Backbone  |             /
-      +-+------------+--+-----------------+--+------------+-+
-      |                 |                 |                 |
-+------------+    +------------+    +------------+         ...
-|  SINET DC  |    |  SINET DC  |    |  SINET DC  |
-+------------+    +------------+    +------------+
-      |                 |                 |
-+------------+    +------------+    +------------+
-| OpenStack  |    | OpenStack  |    | OpenStack  |
-+------------+    +------------+    +------------+
-      |                 |                 |
-+------------+    +------------+    +------------+
-|  Service   |    |  Service   |    |  Service   |
-|  Function  |    |  Function  |    |  Function  |
-+------------+    +------------+    +------------+
+ +------------+ +------------+          +------------+ +------------+
+ |Video Source| |Video Source|          |Video Source| |Video Source|
+ +-----+------+ +-----+------+          +-----+------+ +-----+------+
+       \              |                       |              /
+        \             |  SINET IPv6 Backbone  |             /
+       +-+------------+--+-----------------+--+------------+-+
+       |                 |                 |                 |
+ +------------+    +------------+    +------------+         ...
+ |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ | OpenStack  |    | OpenStack  |    | OpenStack  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ |  Service   |    |  Service   |    |  Service   |
+ |  Function  |    |  Function  |    |  Function  |
+ +------------+    +------------+    +------------+
 ~~~
 {: #fig-deployment-environment title="Deployment Environment"}
 
@@ -188,22 +188,22 @@ Figure 2 illustrates the logical architecture of the deployed system.
 This architecture enables dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
 
 ~~~ drawing
-                     +----------------------+
-                     |  Application Plane   |
-                     +------+------+--------+
-                            |      |
-                            |      |
-           +----------------+      +-----------------+
-           |                                         |
-+----------v-----------+                   +---------v---------+
-|    Control Plane     |                   | Management Plane  |
-+----------+-----------+                   +-------------------+
-           |                                         |
-           +----------------+      +-----------------+
-                            |      |
-                     +------v------v------+
-                     |  Forwarding Plane  |
-                     +--------------------+
+                      +----------------------+
+                      |  Application Plane   |
+                      +------+------+--------+
+                             |      |
+                             |      |
+            +----------------+      +-----------------+
+            |                                         |
+ +----------v-----------+                   +---------v---------+
+ |    Control Plane     |                   | Management Plane  |
+ +----------+-----------+                   +-------------------+
+            |                                         |
+            +----------------+      +-----------------+
+                             |      |
+                      +------v------v------+
+                      |  Forwarding Plane  |
+                      +--------------------+
 ~~~
 {: #fig-plane title="Logical Architecture of the Deployed System"}
 
@@ -264,12 +264,12 @@ The workflow is illustrated in Figures 4-6.
 The following abbreviations are used:
 
 ~~~ drawing
-Op   = Operator            SFM  = Service Function Manager
-App  = Application         VNF  = Virtualized Network Function
-VNFM = VNF Manager         Ctrl = Controller
-VIM  = Virtualized         Src  = Headend
-       Infrastructure      Dest = Tailend
-       Manager
+ Op   = Operator            SFM  = Service Function Manager
+ App  = Application         VNF  = Virtualized Network Function
+ VNFM = VNF Manager         Ctrl = Controller
+ VIM  = Virtualized         Src  = Headend
+        Infrastructure      Dest = Tailend
+        Manager
 ~~~
 {: #fig-wf-legend title="Abbreviations Used in Figures 4-6"}
 
