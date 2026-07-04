@@ -904,12 +904,11 @@ Table of Contents
 12.1.  Normative References
 
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions]
-              Mishima, W. and 5. 7. 7. 6. 2. 4. 7. 6. 6. 6. 6. 7.
-              Fukagawa, "SRv6 SFC Architecture with SR-aware Functions",
-              Work in Progress, Internet-Draft, draft-watal-spring-srv6-
-              sfc-sr-aware-functions-05, 4 July 2026,
-              <https://datatracker.ietf.org/doc/html/draft-watal-spring-
-              srv6-sfc-sr-aware-functions-05>.
+              Mishima, W. and Y. Fukagawa, "SRv6 SFC Architecture with
+              SR-aware Functions", Work in Progress, Internet-Draft,
+              draft-watal-spring-srv6-sfc-sr-aware-functions-05, 4 July
+              2026, <https://datatracker.ietf.org/doc/html/draft-watal-
+              spring-srv6-sfc-sr-aware-functions-05>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
