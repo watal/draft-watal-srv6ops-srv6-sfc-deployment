@@ -380,9 +380,9 @@ Table of Contents
    control and management planes to realize them as deployment
    operations.
 
-   The application plane MAY incorporate closed-loop automation
-   functions that operate on telemetry feedback from the control and
-   management planes.
+   The application plane MAY include closed-loop automation functions
+   that operate on telemetry feedback from the control and management
+   planes.
 
    Such mechanisms provide policy refinement and intent optimization
    based on observed service and network conditions.
@@ -654,8 +654,8 @@ Table of Contents
    management interface.  The management plane instantiated the
    distributed service functions, after which their Service SID
    information was advertised via BGP-LS.  The resulting service
-   function chains were incorporated into forwarding without any manual
-   configuration of backbone routers.
+   function chains were deployed in the forwarding plane without
+   requiring any changes to the existing backbone infrastructure.
 
 7.3.  Operational Benefits
 
