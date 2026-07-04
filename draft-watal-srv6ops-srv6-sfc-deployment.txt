@@ -320,9 +320,9 @@ Table of Contents
    process packets and forward them to the next segment in the service
    chain.
 
-   The forwarding infrastructure operates without modifications to the
-   existing backbone routers, enabling incremental deployment of SRv6
-   SFC services.
+   The forwarding infrastructure operates on existing backbone routers
+   without requiring modifications, enabling incremental deployment of
+   SRv6 SFC services.
 
    The forwarding plane is responsible for packet forwarding and service
    function execution, while service orchestration and policy decisions
@@ -655,13 +655,14 @@ Table of Contents
    distributed service functions, after which their Service SID
    information was advertised via BGP-LS.  The resulting service
    function chains were deployed in the forwarding plane without
-   requiring any changes to the existing backbone infrastructure.
+   requiring changes to the existing backbone infrastructure.
 
 7.3.  Operational Benefits
 
    The deployed system demonstrated several operational benefits.
 
-   *  Existing backbone routers required no changes.
+   *  No modifications to the existing backbone infrastructure were
+      required for deployment or operation.
 
    *  Service functions were deployed on demand using existing cloud
       infrastructure.
