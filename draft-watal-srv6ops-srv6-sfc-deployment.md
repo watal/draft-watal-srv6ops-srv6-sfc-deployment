@@ -380,11 +380,7 @@ Deployment may be triggered either by an explicit operator request or automatica
 
 ## Service SID Allocation
 
-After service function deployment, a Service SID is assigned to each service function.
-
-Service SID allocation MAY be performed dynamically by the management plane or explicitly specified by the application plane.
-
-See Section 9.1 for further discussion.
+After service function deployment and service function initialization, Service SID allocation is performed by the management plane before BGP-LS advertisement, as described in Section 9.1.
 
 ## Topology Collection
 
@@ -459,8 +455,11 @@ Video streams from the video source sites described in Section 4.3 were dynamica
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
 Operators created service function chains through the web-based management interface.
-The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
-The resulting service function chains were deployed in the forwarding plane without requiring changes to existing transit backbone routers.
+
+The management plane instantiated the distributed service functions, after which Service SIDs were assigned.
+
+Service SID information was advertised via BGP-LS after service SID assignment.
+
 
 ## Operational Benefits
 
