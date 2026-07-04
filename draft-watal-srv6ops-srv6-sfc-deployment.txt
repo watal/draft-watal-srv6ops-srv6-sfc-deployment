@@ -80,7 +80,7 @@ Table of Contents
      4.1.  IPv6 Backbone
      4.2.  Data Centers
      4.3.  Video Source Sites
-     4.4.  Virtualized Network Function Infrastructure
+     4.4.  NFV Infrastructure and Virtualized Infrastructure Manager
    5.  Deployment Architecture
      5.1.  Overall Architecture
      5.2.  Forwarding Plane
@@ -108,7 +108,7 @@ Table of Contents
      8.2.  Latency-Aware Service Function Placement
    9.  Operational Considerations
      9.1.  Service SID Allocation
-     9.2.  Controller Considerations
+     9.2.  System Component Placement
      9.3.  Flow Classification and SR Policy Synchronization
      9.4.  Failure Recovery
      9.5.  Observability
@@ -168,6 +168,8 @@ Table of Contents
    *  PCEP extensions for SR and SR Policy are defined in [RFC8664] and
       [RFC9256], with additional SR-related extensions specified in
       [RFC9862].
+
+   *  BGP-LS defined in [RFC9552].
 
    *  BGP Flow Specification defined in [RFC8955].
 
@@ -251,7 +253,7 @@ Table of Contents
    University-operated video source servers were located at Kanagawa,
    Chiba, Ishikawa, and Okinawa.
 
-4.4.  Virtualized Network Function Infrastructure
+4.4.  NFV Infrastructure and Virtualized Infrastructure Manager
 
    A virtualized infrastructure was deployed at each selected data
    center to host SR-aware service functions.  Each site operates
@@ -350,14 +352,15 @@ Table of Contents
    The management plane consists of the following three logically
    distinct functions:
 
-   *  VNF Manager (VNFM): defined in [RFC8568], responsible for the
-      lifecycle management of service functions, including issuing
-      instantiation, scaling, and termination requests.
+   *  Virtualized Network Function Manager (VNFM): defined in [RFC8568],
+      responsible for the lifecycle management of service functions,
+      including issuing instantiation, scaling, and termination
+      requests.
 
    *  VIM: defined in [RFC8568], responsible for controlling and
       managing the underlying NFVI compute, storage, and network
       resources, and for fulfilling the lifecycle requests issued by the
-      VNF Manager.  Service functions are instantiated on this NFVI, as
+      VNFM.  Service functions are instantiated on this NFVI, as
       illustrated in Figure 4.
 
    *  Service Function Manager (SFM): defined in
@@ -416,7 +419,7 @@ Table of Contents
    provisioning are handled by the PCE).
 
    Figure 4 shows service function instantiation.  Consistent with
-   [RFC8568], the VNF Manager issues the lifecycle request and the VIM
+   [RFC8568], the VNFM issues the lifecycle request and the VIM
    allocates and provisions the underlying NFVI resources.
 
     Op           App         VNFM          VIM           VNF
@@ -535,7 +538,7 @@ Table of Contents
    Service SID allocation MAY be performed dynamically by the management
    plane or explicitly specified by the application plane.
 
-   See Section 9.1 for operational considerations.
+   See Section 9.1 for further discussion.
 
 6.4.  Topology Collection
 
@@ -545,7 +548,7 @@ Table of Contents
    Once the service function has completed initialization and health
    verification, and the Service SID has been configured with the
    corresponding End.AN behavior, it advertises its Service SID
-   information via BGP-LS extension defined in
+   information via the BGP-LS extension defined in
    [I-D.draft-ietf-idr-bgp-ls-sr-service-segments], which is currently
    under standardization.
 
@@ -635,8 +638,8 @@ Table of Contents
       provisioning, together with GoBGP for BGP-LS topology collection
       and BGP Flow Specification distribution.
 
-   *  Management plane: a VNF Manager, OpenStack as the VIM, and Ansible
-      as the SFM.
+   *  Management plane: a VNFM, OpenStack as the VIM, and Ansible as the
+      SFM.
 
    *  Forwarding plane: the existing backbone and distributed SR-aware
       service functions.
@@ -731,7 +734,8 @@ Table of Contents
 8.2.  Latency-Aware Service Function Placement
 
    This section addresses the placement of SR-aware service functions.
-   For control-plane component placement, see Section 9.2.
+   For control-, management-, and application-plane component placement,
+   see Section 9.2.
 
    Because data centers are geographically distributed, inter-site
    latency has a significant impact on service performance.
@@ -747,9 +751,9 @@ Table of Contents
    manual placement decision process itself does not scale well as the
    number of deployment sites increases.
 
-   Based on this experience, the application plane SHOULD integrate
-   latency measurement and topology-aware placement optimization to
-   automate placement decisions.
+   This experience led to the operational recommendations in
+   Section 9.2, which describe latency-aware and topology-aware
+   approaches to service function placement.
 
 9.  Operational Considerations
 
@@ -760,52 +764,76 @@ Table of Contents
 9.1.  Service SID Allocation
 
    Building on the Service SID allocation described in Section 6.3,
-   allocation MUST ensure uniqueness within the SR domain.
+   Service SID uniqueness within the SR domain MUST be ensured.  This
+   uniqueness is achieved at two distinct levels, corresponding to the
+   Locator and Function portions of an SRv6 SID [RFC8986].
+
+   Reachability to the node hosting a service function is provided by
+   the SRv6 Locator assigned to that node and advertised through normal
+   IGP/BGP routing.  Transit nodes along the path need only maintain
+   reachability to this Locator; they are not required to be aware of
+   the Service SIDs corresponding to individual End.AN instances behind
+   it.
+
+   Within a given Locator, however, the Function portion of the SID that
+   identifies a specific End.AN instance MUST be uniquely assigned so as
+   not to collide with other service functions sharing the same Locator.
+   Because this Function-level assignment is not visible to the routing
+   and forwarding plane, it SHOULD be coordinated by the management
+   plane (e.g., the SFM) prior to advertisement, and verified against
+   the current TED, obtained from the control plane via BGP-LS, to
+   prevent collisions across data centers and service functions.
 
    A centralized allocation mechanism SHOULD be used, where the
-   management plane coordinates with the control plane (TED) to identify
-   available SID space prior to assignment, thereby preventing address
-   collisions and simplifying multi-site service deployment.
+   management plane coordinates with the control plane to identify
+   available Function space prior to assignment, thereby preventing
+   address collisions and simplifying multi-site service deployment.
 
-9.2.  Controller Considerations
+9.2.  System Component Placement
 
-   Controller placement and architecture have a significant impact on
-   system performance and scalability due to frequent interactions
-   between:
+   Because the deployment spans geographically distributed data centers,
+   the placement of both service functions and control-, management-,
+   and application-plane components has a significant impact on system
+   performance and scalability.
 
-   *  the control plane and the application plane, which issues service
-      requests and receives status updates
+   Service function placement affects both path latency and the
+   distribution of traffic load across the SR domain.  As discussed in
+   Section 8.2, placement decisions SHOULD be based on measured inter-
+   site latency between ingress points (e.g., video source sites), data
+   centers, and egress points (e.g., the production system), rather than
+   on static assumptions.  Placement decisions SHOULD also take into
+   account the resource availability of the underlying NFVI at each data
+   center and the current load distribution among already-deployed
+   service functions, to avoid concentrating traffic onto a subset of
+   data centers.  The VIM's native scaling mechanisms (Section 7.4) MAY
+   be used to instantiate or remove service function instances in
+   response to such placement decisions.
 
-   *  the control plane and the management plane, which coordinates
-      Service SID allocation and topology updates
-
-   *  the control plane and SR source nodes, which receive SR Policy and
-      Flow Specification provisioning
-
-   Operator-to-application-plane interactions are comparatively
-   infrequent (e.g., initial service requests and occasional lifecycle
-   updates) and can tolerate greater physical separation.  In contrast,
-   interactions between the application plane and the management plane
-   (e.g., service function deployment and configuration requests to the
-   VNFM and SFM) and between the application plane and the control plane
-   occur repeatedly throughout the service lifecycle.  Co-locating these
-   frequently-interacting components SHOULD be prioritized over co-
-   locating components with only occasional interactions.
-
-   To reduce control-plane latency and operational overhead, controller
-   placement SHOULD minimize latency between control components and
-   service endpoints while considering network topology constraints.
+   Control-plane, management-plane, and application-plane components
+   similarly benefit from careful placement, though the relevant
+   consideration differs by the frequency of interaction.  Interactions
+   between the application plane and the control and management planes
+   (e.g., service function deployment and configuration requests, path
+   computation and SR Policy provisioning requests) occur repeatedly
+   throughout the service lifecycle.  In contrast, interactions between
+   the operator and the application plane (e.g., service requests and
+   status queries) are comparatively infrequent and can tolerate greater
+   physical separation.  Co-locating the application, control, and
+   management planes SHOULD therefore take precedence over placing the
+   application plane close to operators or video source sites.
 
    In the described deployment, the application plane, the VNFM, the
    SFM, and the control plane (Pola PCE and GoBGP) were co-located at a
    single data center (Sagamihara) to minimize the latency of these
    frequent interactions.
 
-   A logically centralized controller architecture SHOULD be used to
-   ensure consistent path computation and policy enforcement across the
-   SR domain.
+   In this deployment, the VIM centrally managed NFVI resources across
+   the participating data centers.
 
-   For large-scale deployments, a hierarchical controller model MAY be
+   A logically centralized controller and management architecture SHOULD
+   be used to ensure consistent path computation, service configuration,
+   and policy enforcement across the SR domain.  For large-scale
+   deployments, a hierarchical controller and management model MAY be
    used to improve scalability while preserving global policy
    consistency.
 
@@ -879,21 +907,57 @@ Table of Contents
 
 10.  Security Considerations
 
-   The deployment described in this document relies on existing security
-   mechanisms provided by SRv6 and associated control and management
-   protocols, including BGP-LS, PCEP, BGP Flow Specification, and NFV
-   management interfaces.
+   The security considerations described in [RFC8402], [RFC8986], and
+   [RFC9256] apply to this deployment.
+
+   This deployment relies on the SR domain trust model described in
+   [RFC8402] and [RFC8986].  Operators MUST ensure that
+   SRv6-encapsulated packets originating outside the trusted SR domain
+   are not processed as SRv6 traffic at domain boundaries, to prevent
+   external attackers from injecting traffic addressed to internal SIDs.
+
+   This deployment provisions SR Policies to SR source nodes directly
+   via PCEP without the use of a hop-by-hop signaling protocol such as
+   RSVP-TE, consistent with the PCE-initiated LSP model described in
+   [RFC8231] and [RFC8281].  As noted in those documents, if the
+   security mechanisms defined therein are not used, an attacker able to
+   inject or modify PCEP messages could provision unauthorized SR
+   Policies without the additional verification that a signaling
+   protocol would otherwise provide.  Operators MUST ensure that
+   appropriate authentication, authorization, and integrity protection
+   are applied to PCEP sessions used for SR Policy provisioning.
+
+   Because service functions are instantiated dynamically and become
+   eligible for path computation after Service SID advertisement (see
+   Section 6.4), operators SHOULD ensure that Service SID information is
+   advertised only for authenticated and authorized service functions.
+   The management plane SHOULD verify the identity and integrity of a
+   service function instance before its Service SID is advertised into
+   the SR domain.  Otherwise, a rogue or compromised service function
+   that is incorrectly registered as a legitimate service function could
+   be selected during path computation, resulting in traffic being
+   steered to an unauthorized function.
+
+   The export of topology and traffic engineering information via BGP-
+   LS, as described in [RFC9552], may expose commercially sensitive
+   network information.  Operators SHOULD ensure that only trusted
+   consumers are configured to receive this information, and that
+   topology and Service Segment information advertised via BGP-LS is
+   protected against unauthorized modification or injection.
 
    Management interfaces SHOULD be protected using mutually
    authenticated secure transport protocols.
 
-   Operators MUST ensure that SR Policies, topology information, traffic
-   classification rules, and Service SID information are protected
-   against unauthorized modification or injection, using appropriate
-   authentication, authorization, and integrity protection mechanisms.
+   Traffic classification rules and the Color values used to associate
+   them with SR Policies MUST also be protected against unauthorized
+   modification or injection, using appropriate authentication,
+   authorization, and integrity protection mechanisms.  Incorrect
+   association between traffic classification rules, Color values, and
+   SR Policies may result in unintended traffic steering.
 
-   Compromise of these components may result in incorrect traffic
-   steering, service misbehavior, or service disruption.
+   Compromise of any of the components discussed in this section may
+   result in incorrect traffic steering, service misbehavior, or service
+   disruption.
 
 11.  IANA Considerations
 
@@ -928,6 +992,23 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
+              Computation Element Communication Protocol (PCEP)
+              Extensions for Stateful PCE", RFC 8231,
+              DOI 10.17487/RFC8231, September 2017,
+              <https://www.rfc-editor.org/rfc/rfc8231>.
+
+   [RFC8281]  Crabbe, E., Minei, I., Sivabalan, S., and R. Varga, "Path
+              Computation Element Communication Protocol (PCEP)
+              Extensions for PCE-Initiated LSP Setup in a Stateful PCE
+              Model", RFC 8281, DOI 10.17487/RFC8281, December 2017,
+              <https://www.rfc-editor.org/rfc/rfc8281>.
+
+   [RFC8402]  Filsfils, C., Ed., Previdi, S., Ed., Ginsberg, L.,
+              Decraene, B., Litkowski, S., and R. Shakir, "Segment
+              Routing Architecture", RFC 8402, DOI 10.17487/RFC8402,
+              July 2018, <https://www.rfc-editor.org/rfc/rfc8402>.
 
    [RFC8568]  Bernardos, CJ., Rahman, A., Zuniga, JC., Contreras, LM.,
               Aranda, P., and P. Lynch, "Network Virtualization Research
@@ -977,11 +1058,6 @@ Table of Contents
               DOI 10.17487/RFC7665, October 2015,
               <https://www.rfc-editor.org/rfc/rfc7665>.
 
-   [RFC8402]  Filsfils, C., Ed., Previdi, S., Ed., Ginsberg, L.,
-              Decraene, B., Litkowski, S., and R. Shakir, "Segment
-              Routing Architecture", RFC 8402, DOI 10.17487/RFC8402,
-              July 2018, <https://www.rfc-editor.org/rfc/rfc8402>.
-
    [RFC8664]  Sivabalan, S., Filsfils, C., Tantsura, J., Henderickx, W.,
               and J. Hardwick, "Path Computation Element Communication
               Protocol (PCEP) Extensions for Segment Routing", RFC 8664,
@@ -992,6 +1068,11 @@ Table of Contents
               Bacher, "Dissemination of Flow Specification Rules",
               RFC 8955, DOI 10.17487/RFC8955, December 2020,
               <https://www.rfc-editor.org/rfc/rfc8955>.
+
+   [RFC9552]  Talaulikar, K., Ed., "Distribution of Link-State and
+              Traffic Engineering Information Using BGP", RFC 9552,
+              DOI 10.17487/RFC9552, December 2023,
+              <https://www.rfc-editor.org/rfc/rfc9552>.
 
    [RFC9862]  Koldychev, M., Sivabalan, S., Sidor, S., Barth, C., Peng,
               S., and H. Bidgoli, "Path Computation Element
