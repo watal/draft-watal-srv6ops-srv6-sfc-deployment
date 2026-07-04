@@ -125,24 +125,25 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Figure 1 shows the physical deployment environment.
 
 ~~~ drawing
-    +-----------------------+
-    |Video Source Sites (x4)|
-    +-----------+-----------+
-                |        SINET IPv6 Backbone
-       +--------+--------+-----------------+-----------------+
-       |                 |                 |                 |
- +------------+    +------------+    +------------+         ...
- |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
- +------------+    +------------+    +------------+
-       |                 |                 |
- +------------+    +------------+    +------------+
- | OpenStack  |    | OpenStack  |    | OpenStack  |
- +------------+    +------------+    +------------+
-       |                 |                 |
- +------------+    +------------+    +------------+
- |  Service   |    |  Service   |    |  Service   |
- |  Function  |    |  Function  |    |  Function  |
- +------------+    +------------+    +------------+
++------------+ +------------+          +------------+ +------------+
+|Video Source| |Video Source|          |Video Source| |Video Source|
++-----+------+ +-----+------+          +-----+------+ +-----+------+
+      \              |                       |              /
+       \             |  SINET IPv6 Backbone  |             /
+      +-+------------+--+-----------------+--+------------+-+
+      |                 |                 |                 |
++------------+    +------------+    +------------+         ...
+|  SINET DC  |    |  SINET DC  |    |  SINET DC  |
++------------+    +------------+    +------------+
+      |                 |                 |
++------------+    +------------+    +------------+
+| OpenStack  |    | OpenStack  |    | OpenStack  |
++------------+    +------------+    +------------+
+      |                 |                 |
++------------+    +------------+    +------------+
+|  Service   |    |  Service   |    |  Service   |
+|  Function  |    |  Function  |    |  Function  |
++------------+    +------------+    +------------+
 ~~~
 {: #fig-deployment-environment title="Deployment Environment"}
 
@@ -619,7 +620,7 @@ The export of topology and traffic engineering information via BGP-LS, as descri
 
 Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.
 
-Operators SHOULD ensure that this information is distributed only to authorized consumers.
+Operators SHOULD ensure that BGP-LS topology and Service SID information is distributed only to authorized consumers.
 
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
