@@ -199,8 +199,7 @@ Table of Contents
 
 4.  Deployment Environment
 
-   Figure 1 illustrates the physical deployment environment used
-   throughout this document.
+   Figure 1 shows the physical deployment environment.
 
                             SINET IPv6 Backbone
           +-----------------+-----------------+-----------------+
