@@ -661,7 +661,7 @@ Table of Contents
 
    The deployed system demonstrated several operational benefits.
 
-   *  Existing backbone routers required no software modifications.
+   *  Existing backbone routers required no changes.
 
    *  Service functions were deployed on demand using existing cloud
       infrastructure.
