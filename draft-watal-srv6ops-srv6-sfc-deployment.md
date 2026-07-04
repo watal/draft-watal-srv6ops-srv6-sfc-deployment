@@ -403,9 +403,9 @@ The deployed system supported a remote video production service.
 
 The following subsections describe the deployed architecture, the deployed service, and the resulting operational observations.
 
-## Architecture Deployment
+## Deployed System Architecture
 
-The deployment utilized the deployment environment described in Section 4.
+The deployment used the environment described in Section 4.
 
 The deployed system implements the following components:
 
@@ -421,7 +421,8 @@ Video streams from the video source sites described in Section 4.3 were dynamica
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
 Service chains were created through the web-based management interface.
-The distributed service functions were instantiated, their Service SID information was advertised via BGP-LS, and the resulting chains were incorporated into forwarding without any manual configuration of backbone routers.
+The distributed service functions were instantiated.
+Their Service SID information was advertised via BGP-LS, and the resulting service chains were incorporated into forwarding without any manual configuration of backbone routers.
 
 ## Operational Benefits
 
@@ -431,7 +432,7 @@ The deployed system demonstrated several operational benefits.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
-* Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was complete.
+* Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was completed.
 
 ## Scalability Considerations
 
@@ -449,7 +450,7 @@ This section summarizes key observations obtained from real-world operation.
 ## Service Verification and Observability
 
 Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.
-In the deployed video processing service, it also required application-layer verification, such as comparing input and output video streams, to confirm that traffic had been processed correctly.
+In the deployed video processing service, it also required application-layer verification, such as comparing input and output video streams, to confirm that traffic was processed correctly.
 
 Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.
 
@@ -514,7 +515,7 @@ Therefore, service functions MUST be designed to handle potential state inconsis
 
 ## Observability
 
-Based on the deployment experience described in Section 8.1, a multi-layer observability framework SHOULD include:
+A multi-layer observability framework SHOULD include:
 
 * SRv6 topology and SR Policy state
 * Flow classification and traffic steering behavior
