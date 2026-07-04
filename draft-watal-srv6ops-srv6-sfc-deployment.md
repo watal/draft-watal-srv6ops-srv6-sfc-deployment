@@ -417,7 +417,7 @@ The deployed system implements the following components:
 
 ## Service Deployment
 
-Video streams were captured at the video source sites described in Section 4.3, and steered through SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
+Video streams from the video source sites described in Section 4.3 were dynamically steered through SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
 
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
