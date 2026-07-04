@@ -244,27 +244,32 @@ VIM  = Virtualized         Src  = Headend
 ~~~
 {: #fig-wf-legend title="Abbreviations Used in Figures 4-6"}
 
+In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.2 (the PCE and the BGP daemon) collectively.
+The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).
+
 Figure 4 shows service function instantiation.
 Consistent with {{!RFC8568}}, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.
 
 ~~~ drawing
- Op           App         VNFM          VIM          VM
-  |            |            |            |            |
-  |  Service   |            |            |            |
-  |  Request   |            |            |            |
-  |----------->|            |            |            |
-  |            |  Deploy    |            |            |
-  |            |    NF      |            |            |
-  |            |----------->|            |            |
-  |            |            |Instantiate |            |
-  |            |            |----------->|            |
-  |            |            |            |Instantiate |
-  |            |            |            |----------->|
-  |            |            |Instance OK |            |
-  |            |            |<-----------|            |
-  |            |Instance OK |            |            |
-  |            |<-----------|            |            |
-  |            |            |            |            |
+ Op           App         VNFM          VIM           VM
+  |            |            |            |             |
+  |  Service   |            |            |             |
+  |  Request   |            |            |             |
+  |----------->|            |            |             |
+  |            |  Deploy    |            |             |
+  |            |    NF      |            |             |
+  |            |----------->|            |             |
+  |            |            |Instantiate |             |
+  |            |            |----------->|             |
+  |            |            |            |Instantiate  |
+  |            |            |            |------------>|
+  |            |            |            |Instantiated |
+  |            |            |            |<------------|
+  |            |            |Instance OK |             |
+  |            |            |<-----------|             |
+  |            |Instance OK |            |             |
+  |            |<-----------|            |             |
+  |            |            |            |             |
 ~~~
 {: #fig-wf-4 title="NF Instantiation"}
 
@@ -456,6 +461,8 @@ This section summarizes key observations obtained from real-world operation.
 Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.
 In the deployed video processing service, it also required application-layer verification, such as comparing input and output video streams, to confirm that traffic was processed correctly.
 
+Application-layer verification was performed by comparing streams at the video source sites in Chiba and Kanagawa with the corresponding output from the service function chain.
+
 Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.
 
 During the deployment, however, these types of operational information were monitored using separate tools, and no unified observability framework was available.
@@ -494,9 +501,13 @@ Controller placement and architecture have a significant impact on system perfor
 * the control plane and the management plane, which coordinates Service SID allocation and topology updates
 * the control plane and SR source nodes, which receive SR Policy and Flow Specification provisioning
 
+Operator-to-application-plane interactions are comparatively infrequent (e.g., initial service requests and occasional lifecycle updates) and can tolerate greater physical separation.
+In contrast, interactions between the application plane and the management plane (e.g., service function deployment and configuration requests to the VNFM and SFM) and between the application plane and the control plane occur repeatedly throughout the service lifecycle.
+Co-locating these frequently-interacting components SHOULD be prioritized over co-locating components with only occasional interactions.
+
 To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.
 
-In the described deployment, the application plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.
+In the described deployment, the application plane, the VNFM, the SFM, and the control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize the latency of these frequent interactions.
 
 A logically centralized controller architecture SHOULD be used to ensure consistent path computation and policy enforcement across the SR domain.
 
