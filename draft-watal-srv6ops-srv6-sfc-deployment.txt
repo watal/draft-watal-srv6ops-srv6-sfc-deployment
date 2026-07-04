@@ -491,7 +491,7 @@ Table of Contents
 
    A service request typically includes:
 
-   *  ingress and egress nodes
+   *  headend and tailend nodes
 
    *  optional traffic classification rules
 
@@ -526,10 +526,10 @@ Table of Contents
    Topology information is continuously collected via BGP-LS
    independently of individual service requests.
 
-   Once the assigned Service SID (Section 6.3) has been configured with
-   the corresponding End.AN behavior and the service function has
-   completed all required initialization and health verification
-   procedures, it advertises its Service SID information via BGP-LS.
+   Once the service function has completed initialization and health
+   verification, and the Service SID has been configured with the
+   corresponding End.AN behavior, it advertises its Service SID
+   information via BGP-LS.
 
    Until this advertisement is received, the service function is not
    included in the TED and is therefore not considered during path
@@ -573,7 +573,7 @@ Table of Contents
    Monitoring data is used to verify service availability and support
    operational troubleshooting.
 
-   In addition, operators MAY verify correct packet forwarding using SR
+   In addition, operators MAY verify correct traffic steering using SR
    path tracing or in-band telemetry mechanisms.
 
 6.10.  Service Update and Removal
@@ -699,14 +699,14 @@ Table of Contents
    state, service function status, and application-layer observations,
    making troubleshooting time-consuming and operationally complex.
 
-   This experience motivated the operational recommendations in
+   This experience led to the operational recommendations in
    Section 9.5, which describe a unified multi-layer observability
    framework.
 
 8.2.  Latency-Aware Service Function Placement
 
-   This section addresses the placement of service functions (VNFs)
-   themselves.  For control-plane component placement, see Section 9.2.
+   This section addresses the placement of SR-aware service functions.
+   For control-plane component placement, see Section 9.2.
 
    Because data centers are geographically distributed, inter-site
    latency has a significant impact on service performance.
@@ -747,8 +747,8 @@ Table of Contents
    *  the control plane and the management plane, which coordinates
       Service SID allocation and topology updates
 
-   *  the control plane and SR Headend nodes, which receive SR Policy
-      and Flow Specification provisioning
+   *  the control plane and SR source nodes, which receive SR Policy and
+      Flow Specification provisioning
 
    To reduce control-plane latency and operational overhead, controller
    placement SHOULD minimize latency between control components and

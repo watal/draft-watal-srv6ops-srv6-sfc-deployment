@@ -1720,7 +1720,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <p id="section-6.1-2">A service request typically includes:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-3.1">
-            <p id="section-6.1-3.1.1">ingress and egress nodes<a href="#section-6.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-3.1.1">headend and tailend nodes<a href="#section-6.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-3.2">
             <p id="section-6.1-3.2.1">optional traffic classification rules<a href="#section-6.1-3.2.1" class="pilcrow">¶</a></p>
@@ -1760,7 +1760,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-topology-collection" class="section-name selfRef">Topology Collection</a>
         </h3>
 <p id="section-6.4-1">Topology information is continuously collected via BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">Once the assigned Service SID (Section 6.3) has been configured with the corresponding End.AN behavior and the service function has completed all required initialization and health verification procedures, it advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1805,7 +1805,7 @@ Installation ordering relative to SR Policy provisioning is discussed in Section
         </h3>
 <p id="section-6.9-1">Operational status is continuously monitored throughout the service lifecycle using telemetry collected from both the network and infrastructure.<a href="#section-6.9-1" class="pilcrow">¶</a></p>
 <p id="section-6.9-2">Monitoring data is used to verify service availability and support operational troubleshooting.<a href="#section-6.9-2" class="pilcrow">¶</a></p>
-<p id="section-6.9-3">In addition, operators MAY verify correct packet forwarding using SR path tracing or in-band telemetry mechanisms.<a href="#section-6.9-3" class="pilcrow">¶</a></p>
+<p id="section-6.9-3">In addition, operators MAY verify correct traffic steering using SR path tracing or in-band telemetry mechanisms.<a href="#section-6.9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-update-and-removal">
@@ -1930,7 +1930,7 @@ In the deployed video processing service, it also required application-layer ver
 <p id="section-8.1-2">Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
 <p id="section-8.1-3">During the deployment, however, these types of operational information were monitored using separate tools, and no unified observability framework was available.
 As a result, diagnosing service failures required manual cross-referencing between SR Policy state, service function status, and application-layer observations, making troubleshooting time-consuming and operationally complex.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">This experience motivated the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">This experience led to the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="latency-aware-service-function-placement">
@@ -1938,7 +1938,7 @@ As a result, diagnosing service failures required manual cross-referencing betwe
         <h3 id="name-latency-aware-service-funct">
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-latency-aware-service-funct" class="section-name selfRef">Latency-Aware Service Function Placement</a>
         </h3>
-<p id="section-8.2-1">This section addresses the placement of service functions (VNFs) themselves.
+<p id="section-8.2-1">This section addresses the placement of SR-aware service functions.
 For control-plane component placement, see Section 9.2.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.2-2">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2-3">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
@@ -1977,7 +1977,7 @@ The application plane SHOULD integrate latency measurement and topology-aware pl
             <p id="section-9.2-2.2.1">the control plane and the management plane, which coordinates Service SID allocation and topology updates<a href="#section-9.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-9.2-2.3">
-            <p id="section-9.2-2.3.1">the control plane and SR Headend nodes, which receive SR Policy and Flow Specification provisioning<a href="#section-9.2-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-9.2-2.3.1">the control plane and SR source nodes, which receive SR Policy and Flow Specification provisioning<a href="#section-9.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-9.2-3">To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
