@@ -551,6 +551,12 @@ Table of Contents
    Engineering Database (TED) and is not considered during path
    computation.
 
+   The Service Function Manager (SFM) is responsible for monitoring the
+   operational state of service function instances.  When a service
+   function becomes unavailable or is no longer eligible for traffic
+   steering, the SFM MUST withdraw the corresponding Service SID
+   advertisement via BGP-LS.
+
    Service SID advertisements SHOULD be withdrawn when the corresponding
    service function becomes unavailable or is no longer eligible for
    path computation.  Failure to withdraw stale Service SID information,
@@ -558,6 +564,9 @@ Table of Contents
    manner in the Traffic Engineering Database (TED), may result in
    incorrect path computation and traffic being steered to non-
    operational or invalid service functions.
+
+   The control plane updates the Traffic Engineering Database (TED)
+   based on received BGP-LS advertisements and withdrawals.
 
 6.5.  Path Computation
 
