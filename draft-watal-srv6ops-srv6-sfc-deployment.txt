@@ -5,7 +5,7 @@
 srv6ops                                                       W. Mishima
 Internet-Draft                                               Y. Fukagawa
 Intended status: Informational          Kanagawa Institute of Technology
-Expires: 4 January 2027                                      3 July 2026
+Expires: 5 January 2027                                      4 July 2026
 
 
                SRv6 Service Function Chaining Deployment
@@ -19,14 +19,13 @@ Abstract
    IPv6 backbone network.
 
    The deployed system integrates SRv6 forwarding, service function
-   lifecycle operations, topology collection, path computation, and flow
+   management, topology collection, path computation, and flow
    classification to enable dynamic provisioning of SFC services via a
    web-based management interface.
 
    This document summarizes the deployment architecture, operational
-   workflow, deployment experience, lessons learned, and operational
-   considerations, and provides operational guidance for network
-   operators deploying SRv6 SFC services.
+   workflow, experience, and lessons learned, and provides guidance for
+   network operators deploying SRv6 SFC services.
 
 Discussion Venues
 
@@ -54,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2027.
+   This Internet-Draft will expire on 5 January 2027.
 
 Copyright Notice
 
