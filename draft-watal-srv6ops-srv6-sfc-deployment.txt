@@ -546,9 +546,18 @@ Table of Contents
    [I-D.draft-ietf-idr-bgp-ls-sr-service-segments], which is currently
    under standardization.
 
-   Until this advertisement is received, the service function is not
-   included in the TED and is therefore not considered during path
+   Until this advertisement is received, or if the advertisement is
+   withdrawn, the service function is not included in the Traffic
+   Engineering Database (TED) and is not considered during path
    computation.
+
+   Service SID advertisements SHOULD be withdrawn when the corresponding
+   service function becomes unavailable or is no longer eligible for
+   path computation.  Failure to withdraw stale Service SID information,
+   or failure to reflect service function availability in a timely
+   manner in the Traffic Engineering Database (TED), may result in
+   incorrect path computation and traffic being steered to non-
+   operational or invalid service functions.
 
 6.5.  Path Computation
 
