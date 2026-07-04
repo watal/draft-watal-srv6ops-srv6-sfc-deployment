@@ -1426,24 +1426,25 @@ It documents the deployment and operational experience of the SRv6 SFC architect
 <figure id="figure-1">
         <div class="lang-drawing sourcecode" id="section-4-2.1">
 <pre>
-    +-----------------------+
-    |Video Source Sites (x4)|
-    +-----------+-----------+
-                |        SINET IPv6 Backbone
-       +--------+--------+-----------------+-----------------+
-       |                 |                 |                 |
- +------------+    +------------+    +------------+         ...
- |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
- +------------+    +------------+    +------------+
-       |                 |                 |
- +------------+    +------------+    +------------+
- | OpenStack  |    | OpenStack  |    | OpenStack  |
- +------------+    +------------+    +------------+
-       |                 |                 |
- +------------+    +------------+    +------------+
- |  Service   |    |  Service   |    |  Service   |
- |  Function  |    |  Function  |    |  Function  |
- +------------+    +------------+    +------------+
++------------+ +------------+          +------------+ +------------+
+|Video Source| |Video Source|          |Video Source| |Video Source|
++-----+------+ +-----+------+          +-----+------+ +-----+------+
+      \              |                       |              /
+       \             |  SINET IPv6 Backbone  |             /
+      +-+------------+--+-----------------+--+------------+-+
+      |                 |                 |                 |
++------------+    +------------+    +------------+         ...
+|  SINET DC  |    |  SINET DC  |    |  SINET DC  |
++------------+    +------------+    +------------+
+      |                 |                 |
++------------+    +------------+    +------------+
+| OpenStack  |    | OpenStack  |    | OpenStack  |
++------------+    +------------+    +------------+
+      |                 |                 |
++------------+    +------------+    +------------+
+|  Service   |    |  Service   |    |  Service   |
+|  Function  |    |  Function  |    |  Function  |
++------------+    +------------+    +------------+
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -2109,7 +2110,7 @@ The management plane SHOULD verify the identity and integrity of a service funct
 If not, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-3" class="pilcrow">¶</a></p>
 <p id="section-10-4">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.<a href="#section-10-4" class="pilcrow">¶</a></p>
 <p id="section-10-5">Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-5" class="pilcrow">¶</a></p>
-<p id="section-10-6">Operators SHOULD ensure that this information is distributed only to authorized consumers.<a href="#section-10-6" class="pilcrow">¶</a></p>
+<p id="section-10-6">Operators SHOULD ensure that BGP-LS topology and Service SID information is distributed only to authorized consumers.<a href="#section-10-6" class="pilcrow">¶</a></p>
 <p id="section-10-7">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-7" class="pilcrow">¶</a></p>
 <p id="section-10-8">Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
 Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-8" class="pilcrow">¶</a></p>
