@@ -196,17 +196,13 @@ A BGP daemon performs two functions:
 
 The management plane is responsible for deploying, configuring, and managing the lifecycle of SR-aware service functions.
 
-Consistent with the roles defined in {{!RFC8568}}, the management plane comprises the following two logically distinct functions:
+The management plane comprises the following three logically distinct functions:
 
-* VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
-* VIM: responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.
+* VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 
-In addition, the management plane includes the Service Function Manager (SFM), defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 4.
 
-The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
-
-Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 4.
-SRv6-specific configuration by the SFM then follows, as illustrated in Figure 5.
+* Service Function Manager (SFM): defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
 
