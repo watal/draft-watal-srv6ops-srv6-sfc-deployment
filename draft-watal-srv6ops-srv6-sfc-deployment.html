@@ -1357,13 +1357,16 @@ svg {
             <p id="section-2.1-2.6.1">BGP Flow Specification defined in <span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.7">
-            <p id="section-2.1-2.7.1">NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.7.1">Forwarding Plane, Control Plane, Management Plane, Application Plane defined in <span>[<a href="#RFC7426" class="cite xref">RFC7426</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.8">
-            <p id="section-2.1-2.8.1">Service Segment and End.AN defined in <span>[<a href="#I-D.draft-ietf-spring-sr-service-programming" class="cite xref">I-D.draft-ietf-spring-sr-service-programming</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.8.1">NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>.<a href="#section-2.1-2.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.9">
-            <p id="section-2.1-2.9.1">SRv6 SFC architecture, including the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.9.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.9.1">Service Segment and End.AN defined in <span>[<a href="#I-D.draft-ietf-spring-sr-service-programming" class="cite xref">I-D.draft-ietf-spring-sr-service-programming</a>]</span>.<a href="#section-2.1-2.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.10">
+            <p id="section-2.1-2.10.1">SRv6 SFC architecture, including the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-2.1-2.10.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1548,7 +1551,7 @@ Service functions implement the End.AN behavior to process packets and forward t
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-control-plane" class="section-name selfRef">Control Plane</a>
         </h3>
 <p id="section-5.3-1">The control plane is responsible for topology collection, path computation, and SR Policy provisioning.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">A Path Computation Element (PCE) provides TED management, path computation, and SR Policy provisioning.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">A Path Computation Element (PCE) uses a Traffic Engineering Database (TED) for topology and resource information.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <p id="section-5.3-3">A BGP daemon performs two functions:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-4.1">
@@ -2115,6 +2118,10 @@ Co-locating these frequently-interacting components SHOULD be prioritized over c
 <dt id="RFC5440">[RFC5440]</dt>
       <dd>
 <span class="refAuthor">Vasseur, JP., Ed.</span> and <span class="refAuthor">JL. Le Roux, Ed.</span>, <span class="refTitle">"Path Computation Element (PCE) Communication Protocol (PCEP)"</span>, <span class="seriesInfo">RFC 5440</span>, <span class="seriesInfo">DOI 10.17487/RFC5440</span>, <time datetime="2009-03" class="refDate">March 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5440">https://www.rfc-editor.org/rfc/rfc5440</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7426">[RFC7426]</dt>
+      <dd>
+<span class="refAuthor">Haleplidis, E., Ed.</span>, <span class="refAuthor">Pentikousis, K., Ed.</span>, <span class="refAuthor">Denazis, S.</span>, <span class="refAuthor">Hadi Salim, J.</span>, <span class="refAuthor">Meyer, D.</span>, and <span class="refAuthor">O. Koufopavlou</span>, <span class="refTitle">"Software-Defined Networking (SDN): Layers and Architecture Terminology"</span>, <span class="seriesInfo">RFC 7426</span>, <span class="seriesInfo">DOI 10.17487/RFC7426</span>, <time datetime="2015-01" class="refDate">January 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7426">https://www.rfc-editor.org/rfc/rfc7426</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7665">[RFC7665]</dt>
       <dd>

@@ -165,6 +165,9 @@ Table of Contents
 
    *  BGP Flow Specification defined in [RFC8955].
 
+   *  Forwarding Plane, Control Plane, Management Plane, Application
+      Plane defined in [RFC7426].
+
    *  NFV Infrastructure (NFVI), Virtualized Infrastructure Manager
       (VIM), and Virtualized Network Function Manager (VNFM) defined in
       [RFC8568].
@@ -330,8 +333,8 @@ Table of Contents
    The control plane is responsible for topology collection, path
    computation, and SR Policy provisioning.
 
-   A Path Computation Element (PCE) provides TED management, path
-   computation, and SR Policy provisioning.
+   A Path Computation Element (PCE) uses a Traffic Engineering Database
+   (TED) for topology and resource information.
 
    A BGP daemon performs two functions:
 
@@ -921,6 +924,12 @@ Table of Contents
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
               DOI 10.17487/RFC5440, March 2009,
               <https://www.rfc-editor.org/rfc/rfc5440>.
+
+   [RFC7426]  Haleplidis, E., Ed., Pentikousis, K., Ed., Denazis, S.,
+              Hadi Salim, J., Meyer, D., and O. Koufopavlou, "Software-
+              Defined Networking (SDN): Layers and Architecture
+              Terminology", RFC 7426, DOI 10.17487/RFC7426, January
+              2015, <https://www.rfc-editor.org/rfc/rfc7426>.
 
    [RFC7665]  Halpern, J., Ed. and C. Pignataro, Ed., "Service Function
               Chaining (SFC) Architecture", RFC 7665,
