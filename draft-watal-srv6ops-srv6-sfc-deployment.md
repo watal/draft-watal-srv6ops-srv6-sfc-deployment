@@ -33,12 +33,28 @@ author:
     country: Japan
 
 normative:
+  RFC2119:
+  RFC4655:
+  RFC5440:
+  RFC8174:
+  RFC8568:
+  RFC8986:
+  RFC9256:
+  I-D.draft-watal-spring-srv6-sfc-sr-aware-functions:
 
 informative:
+  RFC7426:
+  RFC7665:
+  RFC8402:
+  RFC8664:
+  RFC8955:
+  RFC9862:
+  I-D.draft-ietf-spring-sr-service-programming:
+  I-D.draft-ietf-idr-bgp-ls-sr-service-segments:
 
 --- abstract
 
-This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
+This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
 
 The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable dynamic provisioning of SFC services via a web-based management interface.
 
@@ -48,11 +64,11 @@ This document summarizes the deployment architecture, operational workflow, expe
 
 # Introduction
 
-Segment Routing over IPv6 (SRv6) {{!RFC8986}} enables packet steering through a set of instructions called a segment list.
+Segment Routing over IPv6 (SRv6) {{RFC8986}} enables packet steering through a set of instructions called a segment list.
 
-Service Function Chaining (SFC) {{!RFC7665}} can be implemented using SRv6 to steer traffic through SR-aware service functions.
+Service Function Chaining (SFC) {{RFC7665}} can be implemented using SRv6 to steer traffic through SR-aware service functions.
 
-The architecture of SRv6 SFC with SR-aware functions is described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The architecture of SRv6 SFC with SR-aware functions is described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 This document does not define any new protocols or protocol extensions.
 
@@ -67,20 +83,20 @@ This document reports on a deployment that integrates these functions on an acad
 ## Terminology Defined in Related RFCs and Internet-Drafts
 The following terms are used in this document as defined in the related RFCs and Internet-Drafts:
 
-* SR and Segment Identifier (SID) defined in {{!RFC8402}}.
-* SRv6 defined in {{!RFC8986}}.
-* Headend, Color, and SR Policy defined in {{!RFC9256}}.
-* SFC, Service Function, and Service Function Chain defined in {{!RFC7665}}.
-* Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{!RFC4655}} and {{!RFC5440}}, respectively.
-* PCEP extensions for SR and SR Policy are defined in {{!RFC8664}} and {{!RFC9256}}, with additional SR-related extensions specified in {{!RFC9862}}.
-* BGP Flow Specification defined in {{!RFC8955}}.
-* Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{!RFC7426}}.
-* NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{!RFC8568}}.
-* Service Segment described in {{!I-D.draft-ietf-spring-sr-service-programming}}.
-* SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+* SR and Segment Identifier (SID) defined in {{RFC8402}}.
+* SRv6 defined in {{RFC8986}}.
+* Headend, Color, and SR Policy defined in {{RFC9256}}.
+* SFC, Service Function, and Service Function Chain defined in {{RFC7665}}.
+* Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{RFC4655}} and {{RFC5440}}, respectively.
+* PCEP extensions for SR and SR Policy are defined in {{RFC8664}} and {{RFC9256}}, with additional SR-related extensions specified in {{RFC9862}}.
+* BGP Flow Specification defined in {{RFC8955}}.
+* Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{RFC7426}}.
+* NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{RFC8568}}.
+* Service Segment described in {{I-D.draft-ietf-spring-sr-service-programming}}.
+* SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they appear in all capitals, as shown here.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all capitals, as shown here.
 
 # Deployment Objectives
 
@@ -137,7 +153,7 @@ Each site operates OpenStack as the Virtualized Infrastructure Manager (VIM).
 
 # Deployment Architecture
 
-The deployment follows the SRv6 SFC architecture defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployment follows the SRv6 SFC architecture defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane.
 Each plane is responsible for a distinct aspect of service deployment and operation.
@@ -203,11 +219,11 @@ The management plane is responsible for deploying, configuring, and managing the
 
 The management plane consists of the following three logically distinct functions:
 
-* VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the lifecycle management of service functions, including issuing instantiation, scaling, and termination requests.
+* VNF Manager (VNFM): defined in {{RFC8568}}, responsible for the lifecycle management of service functions, including issuing instantiation, scaling, and termination requests.
 
-* VIM: defined in {{!RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
+* VIM: defined in {{RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNF Manager. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
 
-* Service Function Manager (SFM): defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
+* Service Function Manager (SFM): defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
 
@@ -245,7 +261,7 @@ In Figures 5 and 6, Ctrl represents the control-plane components described in Se
 The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).
 
 Figure 4 shows service function instantiation.
-Consistent with {{!RFC8568}}, the VNF Manager issues the lifecycle request and the VIM allocates and provisions the underlying NFVI resources.
+Consistent with {{RFC8568}}, the VNF Manager issues the lifecycle request and the VIM allocates and provisions the underlying NFVI resources.
 
 ~~~ drawing
  Op           App         VNFM          VIM           VNF
@@ -359,7 +375,7 @@ See Section 9.1 for operational considerations.
 
 Topology information is continuously collected via BGP-LS independently of individual service requests.
 
-Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS extension defined in {{!I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
+Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via BGP-LS extension defined in {{I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
 
 Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.
 
@@ -521,7 +537,7 @@ Otherwise, traffic MAY be classified to an SR Policy that is not yet operational
 
 ## Failure Recovery
 
-Failure recovery follows the mechanisms defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+Failure recovery follows the mechanisms defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 In operational deployments, fast reroute at the forwarding plane can maintain connectivity, but service-level state consistency is not guaranteed during failover events.
 
@@ -573,5 +589,6 @@ This document has no IANA actions.
 
 # Acknowledgments
 {:numbered="false"}
-The authors would like to acknowledge the reviews and input from Mitsuru Maruyama, Katsuhiro Sebayashi, Taisei Tanabe, Ryuta Futami, and Takashi Kurimoto.
-This work was partially supported by JST CRONOS No. JPMJCS24N9.
+The authors would like to thank Mitsuru Maruyama, Katsuhiro Sebayashi, Taisei Tanabe, Ryuta Futami, and Takashi Kurimoto for their valuable reviews.
+
+This work was partially supported by JST CRONOS (No. JPMJCS24N9).
