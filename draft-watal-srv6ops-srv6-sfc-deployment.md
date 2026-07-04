@@ -388,7 +388,15 @@ Topology information is continuously collected via BGP-LS independently of indiv
 
 Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via the BGP-LS extension defined in {{I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
 
-Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.
+Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the Traffic Engineering Database (TED) and is not considered during path computation.
+
+The Service Function Manager (SFM) is responsible for monitoring the operational state of service function instances.
+When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.
+
+Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
+Failure to withdraw stale Service SID information, or failure to reflect service function availability in a timely manner in the Traffic Engineering Database (TED), may result in incorrect path computation and traffic being steered to non-operational or invalid service functions.
+
+The control plane updates the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.
 
 ## Path Computation
 
