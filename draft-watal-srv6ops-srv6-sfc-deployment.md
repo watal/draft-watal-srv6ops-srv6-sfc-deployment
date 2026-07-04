@@ -347,7 +347,7 @@ See Section 9.1 for operational considerations.
 
 Topology information is continuously collected via BGP-LS independently of individual service requests.
 
-After a deployed service function is configured with an End.AN behavior and has completed all required initialization and health verification procedures, it advertises its Service SID information via BGP-LS.
+Once the assigned Service SID (Section 6.3) has been configured with the corresponding End.AN behavior and the service function has completed all required initialization and health verification procedures, it advertises its Service SID information via BGP-LS.
 
 Until this advertisement is received, the service function is not included in the TED and is therefore not considered during path computation.
 
@@ -427,7 +427,7 @@ The distributed service functions were instantiated, their Service SID informati
 
 The deployed system demonstrated several operational benefits.
 
-* Existing backbone routers required no software modifications.
+* Existing backbone routers required no software modifications, confirming the incremental-deployment design described in Section 5.2.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
@@ -485,9 +485,9 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 
 Controller placement and architecture have a significant impact on system performance and scalability due to frequent interactions between:
 
-* application plane and management plane
-* VNF Manager, Virtualized Infrastructure Manager (VIM), and Service Function Manager (SFM) within the management plane
-* control plane and SR Headend nodes
+* the control plane and the application plane, which issues service requests and receives status updates
+* the control plane and the management plane, which coordinates Service SID allocation and topology updates
+* the control plane and SR Headend nodes, which receive SR Policy and Flow Specification provisioning
 
 To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.
 
@@ -509,7 +509,7 @@ Otherwise, traffic MAY be classified to an SR Policy that is not yet operational
 
 Failure recovery follows the mechanisms defined in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-In operational deployments, fast reroute at the forwarding plane may maintain connectivity, but service-level state consistency is not guaranteed during failover events.
+In operational deployments, fast reroute at the forwarding plane can maintain connectivity, but service-level state consistency is not guaranteed during failover events.
 
 Therefore, service functions MUST be designed to handle potential state inconsistencies (e.g., buffering, re-synchronization, or idempotent processing).
 
