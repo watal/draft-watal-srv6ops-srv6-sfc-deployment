@@ -836,8 +836,8 @@ Table of Contents
 
    In the described deployment, the application plane, VNFM, SFM, and
    control plane (Pola PCE and GoBGP) were co-located at a single data
-   center (Sagamihara) to minimize interaction latency for these
-   frequent interactions.
+   center (Sagamihara) to minimize latency of these frequent
+   interactions.
 
    The VIM centrally manages NFVI resources across the participating
    data centers.
