@@ -211,25 +211,25 @@ Table of Contents
 
    Figure 1 shows the physical deployment environment.
 
-   +------------+ +------------+          +------------+ +------------+
-   |Video Source| |Video Source|          |Video Source| |Video Source|
-   +-----+------+ +-----+------+          +-----+------+ +-----+------+
-         \              |                       |              /
-          \             |  SINET IPv6 Backbone  |             /
-         +-+------------+--+-----------------+--+------------+-+
-         |                 |                 |                 |
-   +------------+    +------------+    +------------+         ...
-   |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
-   +------------+    +------------+    +------------+
-         |                 |                 |
-   +------------+    +------------+    +------------+
-   | OpenStack  |    | OpenStack  |    | OpenStack  |
-   +------------+    +------------+    +------------+
-         |                 |                 |
-   +------------+    +------------+    +------------+
-   |  Service   |    |  Service   |    |  Service   |
-   |  Function  |    |  Function  |    |  Function  |
-   +------------+    +------------+    +------------+
+    +------------+ +------------+          +------------+ +------------+
+    |Video Source| |Video Source|          |Video Source| |Video Source|
+    +-----+------+ +-----+------+          +-----+------+ +-----+------+
+          \              |                       |              /
+           \             |  SINET IPv6 Backbone  |             /
+          +-+------------+--+-----------------+--+------------+-+
+          |                 |                 |                 |
+    +------------+    +------------+    +------------+         ...
+    |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
+    +------------+    +------------+    +------------+
+          |                 |                 |
+    +------------+    +------------+    +------------+
+    | OpenStack  |    | OpenStack  |    | OpenStack  |
+    +------------+    +------------+    +------------+
+          |                 |                 |
+    +------------+    +------------+    +------------+
+    |  Service   |    |  Service   |    |  Service   |
+    |  Function  |    |  Function  |    |  Function  |
+    +------------+    +------------+    +------------+
 
                       Figure 1: Deployment Environment
 
@@ -289,22 +289,22 @@ Table of Contents
    service function chains while preserving the existing forwarding
    infrastructure.
 
-                        +----------------------+
-                        |  Application Plane   |
-                        +------+------+--------+
-                               |      |
-                               |      |
-              +----------------+      +-----------------+
-              |                                         |
-   +----------v-----------+                   +---------v---------+
-   |    Control Plane     |                   | Management Plane  |
-   +----------+-----------+                   +-------------------+
-              |                                         |
-              +----------------+      +-----------------+
-                               |      |
-                        +------v------v------+
-                        |  Forwarding Plane  |
-                        +--------------------+
+                         +----------------------+
+                         |  Application Plane   |
+                         +------+------+--------+
+                                |      |
+                                |      |
+               +----------------+      +-----------------+
+               |                                         |
+    +----------v-----------+                   +---------v---------+
+    |    Control Plane     |                   | Management Plane  |
+    +----------+-----------+                   +-------------------+
+               |                                         |
+               +----------------+      +-----------------+
+                                |      |
+                         +------v------v------+
+                         |  Forwarding Plane  |
+                         +--------------------+
 
            Figure 2: Logical Architecture of the Deployed System
 
@@ -401,12 +401,12 @@ Table of Contents
 
    The following abbreviations are used:
 
-   Op   = Operator            SFM  = Service Function Manager
-   App  = Application         VNF  = Virtualized Network Function
-   VNFM = VNF Manager         Ctrl = Controller
-   VIM  = Virtualized         Src  = Headend
-          Infrastructure      Dest = Tailend
-          Manager
+    Op   = Operator            SFM  = Service Function Manager
+    App  = Application         VNF  = Virtualized Network Function
+    VNFM = VNF Manager         Ctrl = Controller
+    VIM  = Virtualized         Src  = Headend
+           Infrastructure      Dest = Tailend
+           Manager
 
                 Figure 3: Abbreviations Used in Figures 4-6
 

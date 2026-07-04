@@ -1426,25 +1426,25 @@ It documents the deployment and operational experience of the SRv6 SFC architect
 <figure id="figure-1">
         <div class="lang-drawing sourcecode" id="section-4-2.1">
 <pre>
-+------------+ +------------+          +------------+ +------------+
-|Video Source| |Video Source|          |Video Source| |Video Source|
-+-----+------+ +-----+------+          +-----+------+ +-----+------+
-      \              |                       |              /
-       \             |  SINET IPv6 Backbone  |             /
-      +-+------------+--+-----------------+--+------------+-+
-      |                 |                 |                 |
-+------------+    +------------+    +------------+         ...
-|  SINET DC  |    |  SINET DC  |    |  SINET DC  |
-+------------+    +------------+    +------------+
-      |                 |                 |
-+------------+    +------------+    +------------+
-| OpenStack  |    | OpenStack  |    | OpenStack  |
-+------------+    +------------+    +------------+
-      |                 |                 |
-+------------+    +------------+    +------------+
-|  Service   |    |  Service   |    |  Service   |
-|  Function  |    |  Function  |    |  Function  |
-+------------+    +------------+    +------------+
+ +------------+ +------------+          +------------+ +------------+
+ |Video Source| |Video Source|          |Video Source| |Video Source|
+ +-----+------+ +-----+------+          +-----+------+ +-----+------+
+       \              |                       |              /
+        \             |  SINET IPv6 Backbone  |             /
+       +-+------------+--+-----------------+--+------------+-+
+       |                 |                 |                 |
+ +------------+    +------------+    +------------+         ...
+ |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ | OpenStack  |    | OpenStack  |    | OpenStack  |
+ +------------+    +------------+    +------------+
+       |                 |                 |
+ +------------+    +------------+    +------------+
+ |  Service   |    |  Service   |    |  Service   |
+ |  Function  |    |  Function  |    |  Function  |
+ +------------+    +------------+    +------------+
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -1522,22 +1522,22 @@ Each plane is responsible for a distinct aspect of service deployment and operat
 <figure id="figure-2">
           <div class="lang-drawing sourcecode" id="section-5.1-4.1">
 <pre>
-                     +----------------------+
-                     |  Application Plane   |
-                     +------+------+--------+
-                            |      |
-                            |      |
-           +----------------+      +-----------------+
-           |                                         |
-+----------v-----------+                   +---------v---------+
-|    Control Plane     |                   | Management Plane  |
-+----------+-----------+                   +-------------------+
-           |                                         |
-           +----------------+      +-----------------+
-                            |      |
-                     +------v------v------+
-                     |  Forwarding Plane  |
-                     +--------------------+
+                      +----------------------+
+                      |  Application Plane   |
+                      +------+------+--------+
+                             |      |
+                             |      |
+            +----------------+      +-----------------+
+            |                                         |
+ +----------v-----------+                   +---------v---------+
+ |    Control Plane     |                   | Management Plane  |
+ +----------+-----------+                   +-------------------+
+            |                                         |
+            +----------------+      +-----------------+
+                             |      |
+                      +------v------v------+
+                      |  Forwarding Plane  |
+                      +--------------------+
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1624,12 +1624,12 @@ The workflow begins with an operator service request and concludes with traffic 
 <figure id="figure-3">
         <div class="lang-drawing sourcecode" id="section-6-4.1">
 <pre>
-Op   = Operator            SFM  = Service Function Manager
-App  = Application         VNF  = Virtualized Network Function
-VNFM = VNF Manager         Ctrl = Controller
-VIM  = Virtualized         Src  = Headend
-       Infrastructure      Dest = Tailend
-       Manager
+ Op   = Operator            SFM  = Service Function Manager
+ App  = Application         VNF  = Virtualized Network Function
+ VNFM = VNF Manager         Ctrl = Controller
+ VIM  = Virtualized         Src  = Headend
+        Infrastructure      Dest = Tailend
+        Manager
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
