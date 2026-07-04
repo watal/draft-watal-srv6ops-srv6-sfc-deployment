@@ -92,8 +92,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Figure 1 shows the physical deployment environment.
 
 ~~~ drawing
-                         SINET IPv6 Backbone
-       +-----------------+-----------------+-----------------+
+    +-----------------------+
+    |Video Source Sites (x4)|
+    +-----------+-----------+
+                |        SINET IPv6 Backbone
+       +--------+--------+-----------------+-----------------+
        |                 |                 |                 |
  +------------+    +------------+    +------------+         ...
  |  SINET DC  |    |  SINET DC  |    |  SINET DC  |
@@ -120,7 +123,7 @@ The backbone provides native IPv6 connectivity among geographically distributed 
 
 Multiple SINET data centers are connected to the backbone.
 
-Three geographically distributed data centers (Okinawa, Kanagawa, and Sapporo) were used to evaluate service chaining across a wide-area network.
+Three geographically distributed data centers (Sapporo, Kanagawa, and Okinawa) were used to evaluate service chaining across a wide-area network.
 
 Each data center provides computing resources with native IPv6 connectivity to the backbone.
 
@@ -128,7 +131,7 @@ Each data center provides computing resources with native IPv6 connectivity to t
 
 University-operated video source servers were used as traffic sources for the deployed service.
 
-These servers were located at Okinawa, Kanagawa, Chiba, and Ishikawa, with native IPv6 connectivity to the backbone.
+These servers were located at Kanagawa, Chiba, Ishikawa, and Okinawa, with native IPv6 connectivity to the backbone.
 
 ## Virtualized Network Function Infrastructure
 
@@ -201,7 +204,7 @@ A BGP daemon performs two functions:
 
 The management plane is responsible for deploying, configuring, and managing the lifecycle of SR-aware service functions.
 
-The management plane comprises the following three logically distinct functions:
+The management plane consists of the following three logically distinct functions:
 
 * VNF Manager (VNFM): defined in {{!RFC8568}}, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.
 
@@ -213,7 +216,8 @@ The management plane supports reconfiguration and removal of service functions t
 
 ## Application Plane
 
-Based on user input, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.
+The application plane consists of an operator-facing web-based management interface together with the service orchestration logic.
+Based on operator requests, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.
 
 The application plane MAY incorporate closed-loop automation functions that operate on telemetry feedback from the control and management planes.
 
@@ -388,8 +392,8 @@ The deployed system supports updates throughout the service lifecycle.
 
 Typical operations include:
 
-* modifying service chains
-* removing service chains
+* modifying service function chains
+* removing service function chains
 * redeploying failed service functions
 * removing service functions
 
@@ -409,20 +413,20 @@ The deployment used the environment described in Section 4.
 
 The deployed system implements the following components:
 
-* Application plane: a web-based management interface.
+* Application plane: a web-based management interface and service orchestration component.
 * Control plane: Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
 * Management plane: a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.
 * Forwarding plane: the existing backbone and distributed SR-aware service functions.
 
 ## Service Deployment
 
-Video streams from the video source sites described in Section 4.3 were dynamically steered through SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
+Video streams from the video source sites described in Section 4.3 were dynamically steered through SR-aware service functions deployed in the Sapporo, Kanagawa, and Okinawa data centers.
 
 The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.
 
-Service chains were created through the web-based management interface.
-The distributed service functions were instantiated.
-Their Service SID information was advertised via BGP-LS, and the resulting service chains were incorporated into forwarding without any manual configuration of backbone routers.
+Operators created service function chains through the web-based management interface.
+The management plane instantiated the distributed service functions, after which their Service SID information was advertised via BGP-LS.
+The resulting service function chains were incorporated into forwarding without any manual configuration of backbone routers.
 
 ## Operational Benefits
 
@@ -461,15 +465,16 @@ This experience led to the operational recommendations in Section 9.5, which des
 
 ## Latency-Aware Service Function Placement
 
-This section addresses the placement of SR-aware service functions.
-For control-plane component placement, see Section 9.2.
+This section addresses the placement of SR-aware service functions. For control-plane component placement, see Section 9.2.
 
 Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.
 
 For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
-In this deployment, VNF placement was determined manually.
-The application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate this process.
+In the deployed system, service function placement was determined manually based on operator knowledge of the network topology and latency characteristics.
+While the underlying architecture supports incremental scaling of service function nodes (Section 7.4), this manual placement decision process itself does not scale well as the number of deployment sites increases.
+
+Based on this experience, the application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate placement decisions.
 
 # Operational Considerations
 
