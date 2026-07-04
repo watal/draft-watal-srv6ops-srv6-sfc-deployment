@@ -345,8 +345,8 @@ Table of Contents
    *  VIM: defined in [RFC8568], responsible for controlling and
       managing the underlying NFVI compute, storage, and network
       resources, and for fulfilling the life-cycle requests issued by
-      the VNF Manager.  Service functions are instantiated on the NFVI
-      managed by the VIM, as illustrated in Figure 4.
+      the VNF Manager.  Service functions are instantiated on this NFVI,
+      as illustrated in Figure 4.
 
    *  Service Function Manager (SFM): defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], responsible
@@ -518,10 +518,10 @@ Table of Contents
    Topology information is continuously collected via BGP-LS
    independently of individual service requests.
 
-   After a deployed service function is configured with an End.AN
-   behavior and has completed all required initialization and health
-   verification procedures, it advertises its Service SID information
-   via BGP-LS.
+   Once the assigned Service SID (Section 6.3) has been configured with
+   the corresponding End.AN behavior and the service function has
+   completed all required initialization and health verification
+   procedures, it advertises its Service SID information via BGP-LS.
 
    Until this advertisement is received, the service function is not
    included in the TED and is therefore not considered during path
@@ -642,7 +642,9 @@ Table of Contents
 
    The deployed system demonstrated several operational benefits.
 
-   *  Existing backbone routers required no software modifications.
+   *  Existing backbone routers required no software modifications,
+      confirming the incremental-deployment design described in
+      Section 5.2.
 
    *  Service functions were deployed on demand using existing cloud
       infrastructure.
@@ -661,8 +663,7 @@ Table of Contents
 
    This deployment demonstrated that the architecture can scale
    incrementally by deploying additional SRv6-capable service function
-   nodes connected to the existing IPv6 backbone without changing the
-   overall control architecture.
+   nodes without changing the overall control architecture.
 
    Once the application, control, and management components are
    deployed, additional SR-aware service functions can be instantiated
@@ -728,12 +729,13 @@ Table of Contents
 
 9.1.  Service SID Allocation
 
-   As described in Section 6.3, Service SID allocation MUST ensure
-   uniqueness within the SR domain.  A centralized allocation mechanism
-   SHOULD be used, where the management plane coordinates with the
-   control plane (TED) to identify available SID space prior to
-   assignment, thereby preventing address collisions and simplifying
-   multi-site service deployment.
+   Building on the Service SID allocation described in Section 6.3,
+   allocation MUST ensure uniqueness within the SR domain.
+
+   A centralized allocation mechanism SHOULD be used, where the
+   management plane coordinates with the control plane (TED) to identify
+   available SID space prior to assignment, thereby preventing address
+   collisions and simplifying multi-site service deployment.
 
 9.2.  Controller Considerations
 
@@ -741,12 +743,14 @@ Table of Contents
    system performance and scalability due to frequent interactions
    between:
 
-   *  application plane and management plane
+   *  the control plane and the application plane, which issues service
+      requests and receives status updates
 
-   *  VNF Manager, Virtualized Infrastructure Manager (VIM), and Service
-      Function Manager (SFM) within the management plane
+   *  the control plane and the management plane, which coordinates
+      Service SID allocation and topology updates
 
-   *  control plane and SR Headend nodes
+   *  the control plane and SR Headend nodes, which receive SR Policy
+      and Flow Specification provisioning
 
    To reduce control-plane latency and operational overhead, controller
    placement SHOULD minimize latency between control components and
@@ -783,7 +787,7 @@ Table of Contents
    Failure recovery follows the mechanisms defined in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   In operational deployments, fast reroute at the forwarding plane may
+   In operational deployments, fast reroute at the forwarding plane can
    maintain connectivity, but service-level state consistency is not
    guaranteed during failover events.
 
