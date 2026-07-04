@@ -58,7 +58,7 @@ This document does not define any new protocols or protocol extensions.
 
 Instead, it describes the deployment and operational experience of the SRv6 SFC architecture on an academic network.
 
-On-demand instantiation of service function chains requires forwarding, control, management, and application functions to operate as a single coordinated system rather than in isolation.
+On-demand instantiation of service function chains requires forwarding, control, management, and application planes to operate as a single coordinated system rather than in isolation.
 
 This document reports on a deployment that integrates these functions on an academic backbone, and summarizes the resulting operational experience.
 
