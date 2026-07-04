@@ -1551,20 +1551,19 @@ Service functions implement the End.AN behavior to process packets and forward t
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-management-plane" class="section-name selfRef">Management Plane</a>
         </h3>
 <p id="section-5.4-1">The management plane is responsible for deploying, configuring, and managing the lifecycle of SR-aware service functions.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">Consistent with the roles defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, the management plane comprises the following two logically distinct functions:<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">The management plane comprises the following three logically distinct functions:<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.4-3.1">
-            <p id="section-5.4-3.1.1">VNF Manager (VNFM): responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.1.1">VNF Manager (VNFM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for the life-cycle management of service functions, including issuing instantiation, scaling, and termination requests.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.2">
-            <p id="section-5.4-3.2.1">VIM: responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.2.1">VIM: defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the life-cycle requests issued by the VNF Manager. Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 4.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.4-3.3">
+            <p id="section-5.4-3.3.1">Service Function Manager (SFM): defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.4-4">In addition, the management plane includes the Service Function Manager (SFM), defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
-<p id="section-5.4-5">The SFM is responsible for SRv6-specific service configuration after a service function instance becomes operational. This includes Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
-<p id="section-5.4-6">Service functions are instantiated on the NFVI managed by the VIM, as illustrated in Figure 4.
-SRv6-specific configuration by the SFM then follows, as illustrated in Figure 5.<a href="#section-5.4-6" class="pilcrow">¶</a></p>
-<p id="section-5.4-7">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-7" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="application-plane">
@@ -1596,8 +1595,8 @@ The workflow begins with an operator service request and concludes with traffic 
 Op   = Operator            SFM  = Service Function Manager
 App  = Application         VM   = VM/VNF
 VNFM = VNF Manager         Ctrl = Controller
-VIM  = Virtualized         HE   = Headend
-       Infrastructure      TE   = Tailend
+VIM  = Virtualized         Src  = Headend
+       Infrastructure      Dest = Tailend
        Manager
 </pre>
 </div>
@@ -1667,7 +1666,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <figure id="figure-6">
         <div class="lang-drawing sourcecode" id="section-6-10.1">
 <pre>
- App              Ctrl               HE                TE
+ App              Ctrl               Src              Dest
   |                 |                 |                 |
   |   Request SFC   |                 |                 |
   |----------------&gt;|                 |                 |
@@ -1766,8 +1765,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
         <h3 id="name-sr-policy-provisioning">
 <a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-sr-policy-provisioning" class="section-name selfRef">SR Policy Provisioning</a>
         </h3>
-<p id="section-6.6-1">After path computation, the computed SR Policy is provisioned to the SR source node acting as the PCC using PCEP.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
-<p id="section-6.6-2">The installed SR Policy specifies the SRv6 segment list representing the selected service function chain.<a href="#section-6.6-2" class="pilcrow">¶</a></p>
+<p id="section-6.6-1">As illustrated in Figure 6, the computed SR Policy is provisioned to the SR source node acting as the PCC, using PCEP.
+The SR Policy specifies the SRv6 segment list representing the selected service function chain.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="flow-classification">
@@ -1775,9 +1774,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
         <h3 id="name-flow-classification">
 <a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-flow-classification" class="section-name selfRef">Flow Classification</a>
         </h3>
-<p id="section-6.7-1">If traffic classification is requested, the control plane installs BGP Flow Specification rules on the SR source node.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
-<p id="section-6.7-2">Each BGP Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.<a href="#section-6.7-2" class="pilcrow">¶</a></p>
-<p id="section-6.7-3">This mechanism ensures that only the selected traffic flows traverse the deployed service function chain.<a href="#section-6.7-3" class="pilcrow">¶</a></p>
+<p id="section-6.7-1">If traffic classification is requested, BGP Flow Specification rules are installed, as shown in Figure 6, associating each traffic flow with its SR Policy by Color, to ensure that only the selected traffic flows traverse the deployed service function chain.
+Installation ordering relative to SR Policy provisioning is discussed in Section 9.3.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="traffic-steering">
@@ -1785,7 +1783,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
         <h3 id="name-traffic-steering">
 <a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-traffic-steering" class="section-name selfRef">Traffic Steering</a>
         </h3>
-<p id="section-6.8-1">Once both the SR Policy and the corresponding Flow Specification rules have been installed, the SR source node begins steering matching traffic through the selected sequence of service functions.<a href="#section-6.8-1" class="pilcrow">¶</a></p>
+<p id="section-6.8-1">Once the SR Policy and Flow Specification rules shown in Figure 6 are installed, the SR source node begins steering matching traffic through the selected service functions.<a href="#section-6.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="monitoring">
@@ -1877,7 +1875,7 @@ The distributed service functions were instantiated, their Service SID informati
             <p id="section-7.3-2.4.1">Operators primarily interacted through the application plane, reducing operational complexity.<a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.3-2.5">
-            <p id="section-7.3-2.5.1">Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.<a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
+            <p id="section-7.3-2.5.1">Newly deployed service functions became available for path computation once Service SID advertisement, as described in Section 6.4, was complete.<a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1891,7 +1889,7 @@ The distributed service functions were instantiated, their Service SID informati
 SRv6-capable service function nodes connected to the existing IPv6 backbone without changing the
 overall control architecture.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
 <p id="section-7.4-2">Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
-<p id="section-7.4-3">The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring manual updates to the controller configuration.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
+<p id="section-7.4-3">As described in Section 6.4, these service functions become available for path computation without requiring manual updates to the controller configuration.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1921,10 +1919,12 @@ As a result, diagnosing service failures required manual cross-referencing betwe
         <h3 id="name-latency-aware-service-funct">
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-latency-aware-service-funct" class="section-name selfRef">Latency-Aware Service Function Placement</a>
         </h3>
-<p id="section-8.2-1">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.2-2">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.2-3">In this deployment, VNF placement was determined manually.
-The application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.2-1">This section addresses the placement of service functions (VNFs) themselves.
+For control-plane component placement, see Section 9.2.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2-3">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.2-4">In this deployment, VNF placement was determined manually.
+The application plane SHOULD integrate latency measurement and topology-aware placement optimization to automate this process.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2007,9 +2007,8 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
             <p id="section-9.5-2.4.1">Virtual infrastructure resource utilization<a href="#section-9.5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-9.5-3">This SHOULD be supported by a unified telemetry framework across both network and cloud domains to ensure consistency.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
-<p id="section-9.5-4">Correlation between SR Policy state, flow classification, and service function health is essential for rapid fault detection and diagnosis.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
-<p id="section-9.5-5">In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.<a href="#section-9.5-5" class="pilcrow">¶</a></p>
+<p id="section-9.5-3">This SHOULD be supported by a unified telemetry framework spanning network and cloud domains, correlating the layers above to enable rapid fault detection and diagnosis.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
+<p id="section-9.5-4">For content-modifying services (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-sequencing">
