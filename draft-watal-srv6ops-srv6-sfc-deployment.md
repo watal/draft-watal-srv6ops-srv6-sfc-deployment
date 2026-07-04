@@ -438,7 +438,7 @@ The resulting service function chains were deployed in the forwarding plane with
 
 The deployed system demonstrated several operational benefits.
 
-* Existing backbone routers required no software modifications.
+* Existing backbone routers required no changes.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
