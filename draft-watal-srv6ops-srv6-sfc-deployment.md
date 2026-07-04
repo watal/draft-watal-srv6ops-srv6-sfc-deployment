@@ -647,8 +647,6 @@ Management interfaces SHOULD be protected using mutually authenticated secure tr
 
 Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
 
-The corresponding BGP Flow Specification rules SHOULD be installed only after the SR Policy has been successfully provisioned and is operational. Otherwise, traffic MAY be classified to an SR Policy that is not yet operational, resulting in transient traffic misclassification or blackholing.
-
 Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.
 
 Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.
