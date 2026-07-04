@@ -2102,17 +2102,18 @@ For large-scale deployments, a hierarchical controller and management model MAY 
 <p id="section-10-1">The security considerations in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>, <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>, and <span>[<a href="#RFC9256" class="cite xref">RFC9256</a>]</span> apply to this deployment, which relies on the SR domain trust model described in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>.
 Operators MUST ensure that SRv6 packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in <span>[<a href="#RFC8231" class="cite xref">RFC8231</a>]</span> and <span>[<a href="#RFC8281" class="cite xref">RFC8281</a>]</span>.
-Failure to use the specified security mechanisms allows an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
+Failure to use these mechanisms may allow an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
 Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-2" class="pilcrow">¶</a></p>
 <p id="section-10-3">Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
 The management plane SHOULD verify the identity and integrity of a service function instance before advertising its Service SID into the SR domain.
 If not, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-3" class="pilcrow">¶</a></p>
-<p id="section-10-4">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.
-Operators MUST ensure that only authorized consumers are configured to receive this information, and that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-4" class="pilcrow">¶</a></p>
-<p id="section-10-5">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-5" class="pilcrow">¶</a></p>
-<p id="section-10-6">Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
-Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-6" class="pilcrow">¶</a></p>
-<p id="section-10-7">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-7" class="pilcrow">¶</a></p>
+<p id="section-10-4">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.<a href="#section-10-4" class="pilcrow">¶</a></p>
+<p id="section-10-5">Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-5" class="pilcrow">¶</a></p>
+<p id="section-10-6">Operators SHOULD ensure that this information is distributed only to authorized consumers.<a href="#section-10-6" class="pilcrow">¶</a></p>
+<p id="section-10-7">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-7" class="pilcrow">¶</a></p>
+<p id="section-10-8">Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
+Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-8" class="pilcrow">¶</a></p>
+<p id="section-10-9">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
