@@ -1620,39 +1620,43 @@ VIM  = Virtualized         Src  = Headend
 <a href="#name-abbreviations-used-in-figur" class="selfRef">Abbreviations Used in Figures 4-6</a>
         </figcaption></figure>
 </div>
-<p id="section-6-5">Figure 4 shows service function instantiation.
-Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-5">In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.2 (the PCE and the BGP daemon) collectively.
+The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">Figure 4 shows service function instantiation.
+Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, the VNF Manager issues the life-cycle request and the VIM allocates and provisions the underlying NFVI resources.<a href="#section-6-6" class="pilcrow">¶</a></p>
 <span id="name-nf-instantiation"></span><div id="fig-wf-4">
 <figure id="figure-4">
-        <div class="lang-drawing sourcecode" id="section-6-6.1">
+        <div class="lang-drawing sourcecode" id="section-6-7.1">
 <pre>
- Op           App         VNFM          VIM          VM
-  |            |            |            |            |
-  |  Service   |            |            |            |
-  |  Request   |            |            |            |
-  |-----------&gt;|            |            |            |
-  |            |  Deploy    |            |            |
-  |            |    NF      |            |            |
-  |            |-----------&gt;|            |            |
-  |            |            |Instantiate |            |
-  |            |            |-----------&gt;|            |
-  |            |            |            |Instantiate |
-  |            |            |            |-----------&gt;|
-  |            |            |Instance OK |            |
-  |            |            |&lt;-----------|            |
-  |            |Instance OK |            |            |
-  |            |&lt;-----------|            |            |
-  |            |            |            |            |
+ Op           App         VNFM          VIM           VM
+  |            |            |            |             |
+  |  Service   |            |            |             |
+  |  Request   |            |            |             |
+  |-----------&gt;|            |            |             |
+  |            |  Deploy    |            |             |
+  |            |    NF      |            |             |
+  |            |-----------&gt;|            |             |
+  |            |            |Instantiate |             |
+  |            |            |-----------&gt;|             |
+  |            |            |            |Instantiate  |
+  |            |            |            |------------&gt;|
+  |            |            |            |Instantiated |
+  |            |            |            |&lt;------------|
+  |            |            |Instance OK |             |
+  |            |            |&lt;-----------|             |
+  |            |Instance OK |            |             |
+  |            |&lt;-----------|            |             |
+  |            |            |            |             |
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-nf-instantiation" class="selfRef">NF Instantiation</a>
         </figcaption></figure>
 </div>
-<p id="section-6-7">Figure 5 shows SRv6-specific service configuration after the service function becomes operational, followed by Service Segment advertisement.<a href="#section-6-7" class="pilcrow">¶</a></p>
+<p id="section-6-8">Figure 5 shows SRv6-specific service configuration after the service function becomes operational, followed by Service Segment advertisement.<a href="#section-6-8" class="pilcrow">¶</a></p>
 <span id="name-service-segment-configurati"></span><div id="fig-wf-5">
 <figure id="figure-5">
-        <div class="lang-drawing sourcecode" id="section-6-8.1">
+        <div class="lang-drawing sourcecode" id="section-6-9.1">
 <pre>
  App               SFM               VM               Ctrl
   |                 |                 |                 |
@@ -1677,10 +1681,10 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#name-service-segment-configurati" class="selfRef">Service Segment Configuration</a>
         </figcaption></figure>
 </div>
-<p id="section-6-9">Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, and traffic steering.<a href="#section-6-9" class="pilcrow">¶</a></p>
+<p id="section-6-10">Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, and traffic steering.<a href="#section-6-10" class="pilcrow">¶</a></p>
 <span id="name-sfc-activation-and-traffic-"></span><div id="fig-wf-6">
 <figure id="figure-6">
-        <div class="lang-drawing sourcecode" id="section-6-10.1">
+        <div class="lang-drawing sourcecode" id="section-6-11.1">
 <pre>
  App              Ctrl               Src              Dest
   |                 |                 |                 |
@@ -1932,10 +1936,11 @@ This section summarizes key observations obtained from real-world operation.<a h
         </h3>
 <p id="section-8.1-1">Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.
 In the deployed video processing service, it also required application-layer verification, such as comparing input and output video streams, to confirm that traffic was processed correctly.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">During the deployment, however, these types of operational information were monitored using separate tools, and no unified observability framework was available.
-As a result, diagnosing service failures required manual cross-referencing between SR Policy state, service function status, and application-layer observations, making troubleshooting time-consuming and operationally complex.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">This experience led to the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">Application-layer verification was performed by comparing streams at the video source sites in Chiba and Kanagawa with the corresponding output from the service function chain.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">During the deployment, however, these types of operational information were monitored using separate tools, and no unified observability framework was available.
+As a result, diagnosing service failures required manual cross-referencing between SR Policy state, service function status, and application-layer observations, making troubleshooting time-consuming and operationally complex.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+<p id="section-8.1-5">This experience led to the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.<a href="#section-8.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="latency-aware-service-function-placement">
@@ -1985,10 +1990,13 @@ While the underlying architecture supports incremental scaling of service functi
             <p id="section-9.2-2.3.1">the control plane and SR source nodes, which receive SR Policy and Flow Specification provisioning<a href="#section-9.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-9.2-3">To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
-<p id="section-9.2-4">In the described deployment, the application plane and associated management components were co-located at a single data center to reduce inter-domain communication latency.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
-<p id="section-9.2-5">A logically centralized controller architecture SHOULD be used to ensure consistent path computation and policy enforcement across the SR domain.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
-<p id="section-9.2-6">For large-scale deployments, a hierarchical controller model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
+<p id="section-9.2-3">Operator-to-application-plane interactions are comparatively infrequent (e.g., initial service requests and occasional lifecycle updates) and can tolerate greater physical separation.
+In contrast, interactions between the application plane and the management plane (e.g., service function deployment and configuration requests to the VNFM and SFM) and between the application plane and the control plane occur repeatedly throughout the service lifecycle.
+Co-locating these frequently-interacting components SHOULD be prioritized over co-locating components with only occasional interactions.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+<p id="section-9.2-4">To reduce control-plane latency and operational overhead, controller placement SHOULD minimize latency between control components and service endpoints while considering network topology constraints.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
+<p id="section-9.2-5">In the described deployment, the application plane, the VNFM, the SFM, and the control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize the latency of these frequent interactions.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
+<p id="section-9.2-6">A logically centralized controller architecture SHOULD be used to ensure consistent path computation and policy enforcement across the SR domain.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
+<p id="section-9.2-7">For large-scale deployments, a hierarchical controller model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="flow-classification-and-sr-policy-synchronization">
