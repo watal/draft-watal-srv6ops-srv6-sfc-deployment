@@ -400,21 +400,16 @@ The following subsections describe the deployed architecture, the deployed servi
 
 ## Architecture Deployment
 
-The deployment utilized the backbone described in Section 4.1 and the distributed OpenStack-based data centers described in Section 4.2.
+The deployment utilized the deployment environment described in Section 4.
 
-The deployed system was based on the four-plane architecture described in {{!I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployed system consists of the following planes:
 
-The application plane was implemented as a web-based management interface.
-
-The control plane was implemented using Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
-
-The management plane was implemented using a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.
-
-The forwarding plane consisted of the existing backbone and distributed SR-aware service functions.
+* Application plane: a web-based management interface system.
+* Control plane: Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
+* Management plane: a VNF Manager, OpenStack as the VIM, and Ansible as the SFM.
+* Forwarding plane: the existing backbone and distributed SR-aware service functions.
 
 ## Service Deployment
-
-The deployed system was evaluated using a remote video production service.
 
 Video streams captured at production sites in Okinawa, Kanagawa, Chiba, and Ishikawa were dynamically steered through a sequence of SR-aware service functions deployed in the Kanagawa and Sapporo data centers.
 
@@ -427,11 +422,11 @@ The distributed service functions were instantiated, their Service SID informati
 
 The deployed system demonstrated several operational benefits.
 
-* Existing backbone routers required no software modifications, confirming the incremental-deployment design described in Section 5.2.
+* Existing backbone routers required no software modifications.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
-* Newly deployed service functions became available for path computation once Service SID advertisement, as described in Section 6.4, was complete.
+* Newly deployed service functions became available for path computation once Service SID advertisement (Section 6.4) was complete.
 
 ## Scalability Considerations
 
