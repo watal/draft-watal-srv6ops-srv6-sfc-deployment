@@ -357,21 +357,17 @@ When a service request is received, the control plane computes an SR Policy sati
 
 ## SR Policy Provisioning
 
-After path computation, the computed SR Policy is provisioned to the SR source node acting as the PCC using PCEP.
-
-The installed SR Policy specifies the SRv6 segment list representing the selected service function chain.
+As illustrated in Figure 6, the computed SR Policy is provisioned to the SR source node acting as the PCC, using PCEP.
+The SR Policy specifies the SRv6 segment list representing the selected service function chain.
 
 ## Flow Classification
 
-If traffic classification is requested, the control plane installs BGP Flow Specification rules on the SR source node.
-
-Each BGP Flow Specification rule associates a traffic flow with the corresponding SR Policy by referencing its Color value.
-
-This mechanism ensures that only the selected traffic flows traverse the deployed service function chain.
+If traffic classification is requested, BGP Flow Specification rules are installed, as shown in Figure 6, associating each traffic flow with its SR Policy by Color, to ensure that only the selected traffic flows traverse the deployed service function chain.
+Installation ordering relative to SR Policy provisioning is discussed in Section 9.3.
 
 ## Traffic Steering
 
-Once both the SR Policy and the corresponding Flow Specification rules have been installed, the SR source node begins steering matching traffic through the selected sequence of service functions.
+Once the SR Policy and Flow Specification rules shown in Figure 6 are installed, the SR source node begins steering matching traffic through the selected service functions.
 
 ## Monitoring
 
@@ -435,7 +431,7 @@ The deployed system demonstrated several operational benefits.
 * Service functions were deployed on demand using existing cloud infrastructure.
 * SR Policies and Flow Specification rules were automatically generated.
 * Operators primarily interacted through the application plane, reducing operational complexity.
-* Newly deployed service functions became available for path computation after their Service SID information was advertised via BGP-LS.
+* Newly deployed service functions became available for path computation once Service SID advertisement, as described in Section 6.4, was complete.
 
 ## Scalability Considerations
 
@@ -445,7 +441,7 @@ overall control architecture.
 
 Once the application, control, and management components are deployed, additional SR-aware service functions can be instantiated or removed using the VIM's native scaling mechanisms.
 
-The instantiated service functions become available for path computation through the Service SID advertisement mechanism described in Section 6.4 without requiring manual updates to the controller configuration.
+As described in Section 6.4, these service functions become available for path computation without requiring manual updates to the controller configuration.
 
 # Lessons Learned
 
@@ -465,6 +461,9 @@ As a result, diagnosing service failures required manual cross-referencing betwe
 This experience motivated the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.
 
 ## Latency-Aware Service Function Placement
+
+This section addresses the placement of service functions (VNFs) themselves.
+For control-plane component placement, see Section 9.2.
 
 Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.
 
@@ -523,11 +522,9 @@ Based on the deployment experience described in Section 8.1, a multi-layer obser
 * Service function health and availability
 * Virtual infrastructure resource utilization
 
-This SHOULD be supported by a unified telemetry framework across both network and cloud domains to ensure consistency.
+This SHOULD be supported by a unified telemetry framework spanning network and cloud domains, correlating the layers above to enable rapid fault detection and diagnosis.
 
-Correlation between SR Policy state, flow classification, and service function health is essential for rapid fault detection and diagnosis.
-
-In service scenarios involving content modification (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.
+For content-modifying services (e.g., video processing), application-layer verification MAY also be required to compare input and output streams.
 
 ## Operational Sequencing
 
