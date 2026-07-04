@@ -392,9 +392,9 @@ Service updates are performed while maintaining consistency between the forwardi
 
 # Deployment Experience
 
-This section describes the deployment and operational experience of the SRv6 SFC architecture on the backbone.
+This section describes the deployment and operational experience of the SRv6 SFC architecture.
 
-The deployed system supported a remote video production service using the infrastructure described in Section 4.
+The deployed system supported a remote video production service.
 
 The following subsections describe the deployed architecture, the deployed service, and the resulting operational observations.
 
