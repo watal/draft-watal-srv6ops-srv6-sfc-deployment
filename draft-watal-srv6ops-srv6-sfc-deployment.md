@@ -539,21 +539,21 @@ A centralized allocation mechanism SHOULD be used, where the management plane co
 
 ## System Component Placement
 
-Because the deployment spans geographically distributed data centers, the placement of both service functions and control-, management-, and application-plane components has a significant impact on system performance and scalability.
+Because this deployment spans geographically distributed data centers, the placement of service functions and control, management, and application plane components has a significant impact on system performance and scalability.
 
-Service function placement affects both path latency and the distribution of traffic load across the SR domain.
-As discussed in Section 8.2, placement decisions SHOULD be based on measured inter-site latency between ingress points (e.g., video source sites), data centers, and egress points (e.g., the production system), rather than on static assumptions.
-Placement decisions SHOULD also take into account the resource availability of the underlying NFVI at each data center and the current load distribution among already-deployed service functions, to avoid concentrating traffic onto a subset of data centers.
-The VIM's native scaling mechanisms (Section 7.4) MAY be used to instantiate or remove service function instances in response to such placement decisions.
+Service function placement affects both path latency and traffic load distribution across the SR domain.
+As discussed in Section 8.2, placement SHOULD be based on measured inter-site latency between ingress points (e.g., video source sites), data centers, and egress points (e.g., the production system), rather than static assumptions.
+It SHOULD further consider NFVI resource availability at each data center and the current load distribution of already deployed service functions, to avoid overloading specific data centers.
+The VIM's native scaling mechanisms (Section 7.4) MAY be used to instantiate or remove service function instances in response to these decisions.
 
-Control-plane, management-plane, and application-plane components similarly benefit from careful placement, though the relevant consideration differs by the frequency of interaction.
-Interactions between the application plane and the control and management planes (e.g., service function deployment and configuration requests, path computation and SR Policy provisioning requests) occur repeatedly throughout the service lifecycle.
-In contrast, interactions between the operator and the application plane (e.g., service requests and status queries) are comparatively infrequent and can tolerate greater physical separation.
-Co-locating the application plane with the control and management planes SHOULD therefore take precedence over placing the application plane close to operators or video source sites.
+Placement of control, management, and application plane components also requires careful consideration, but the relevant constraint depends on interaction frequency.
+Interactions between the application plane and the control and management planes (e.g., service deployment, configuration, SR Policy provisioning, and path computation requests) occur repeatedly throughout the service lifecycle.
+In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent and can tolerate greater physical separation.
+Therefore, co-location of the application plane with the control and management planes SHOULD take precedence over proximity to operators or video source sites.
 
-In the described deployment, the application plane, the VNFM, the SFM, and the control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize the latency of these frequent interactions.
+In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.
 
-In this deployment, the VIM centrally managed NFVI resources across the participating data centers.
+The VIM centrally manages NFVI resources across the participating data centers.
 
 A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
 For large-scale deployments, a hierarchical controller and management model MAY be used to improve scalability while preserving global policy consistency.
@@ -608,7 +608,7 @@ The security considerations in {{RFC8402}}, {{RFC8986}}, and {{RFC9256}} apply t
 Operators MUST ensure that SRv6 packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries.
 
 This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in {{RFC8231}} and {{RFC8281}}.
-Failure to use the specified security mechanisms allows an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
+Failure to use these mechanisms may allow an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
 Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.
 
 Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
@@ -616,7 +616,10 @@ The management plane SHOULD verify the identity and integrity of a service funct
 If not, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.
 
 The export of topology and traffic engineering information via BGP-LS, as described in {{RFC9552}}, may expose commercially sensitive network information.
-Operators SHOULD ensure that authorized consumers are configured to receive this information, and that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.
+
+Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.
+
+Operators SHOULD ensure that this information is distributed only to authorized consumers.
 
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
