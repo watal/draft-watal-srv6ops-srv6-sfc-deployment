@@ -524,7 +524,7 @@ Table of Contents
    If one or more requested service functions are not currently
    available, new service functions are deployed.
 
-   Deployment can be triggered either by an explicit operator request or
+   Deployment may be triggered either by an explicit operator request or
    automatically based on operational policies, such as resource
    utilization or closed-loop service management.
 
@@ -764,7 +764,7 @@ Table of Contents
    Building on the Service SID allocation described in Section 6.3,
    Service SID uniqueness within the SR domain MUST be ensured.
    Uniqueness is ensured at two distinct levels, corresponding to the
-   Locator and Function portions of an SRv6 SID [RFC8986].
+   Locator and Function fields of an SRv6 SID [RFC8986].
 
    Reachability to the node hosting a service function is provided by
    the SRv6 Locator assigned to that node and advertised through normal
@@ -773,9 +773,9 @@ Table of Contents
    the Service SIDs corresponding to individual End.AN instances behind
    it.
 
-   Within a given Locator, however, the Function portion of the SID that
-   identifies a specific End.AN instance MUST be uniquely assigned so as
-   not to collide with other service functions sharing the same Locator.
+   Within a given Locator, however, the Function field identifying a
+   specific End.AN instance MUST be uniquely assigned so as not to
+   collide with other service functions sharing the same Locator.
    Because this Function value assignment is not visible to the routing
    and forwarding plane, it SHOULD be coordinated by the management
    plane (e.g., the SFM) prior to advertisement, and verified against
