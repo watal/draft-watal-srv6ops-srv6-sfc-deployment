@@ -1055,7 +1055,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Mishima &amp; Fukagawa</td>
-<td class="center">Expires 5 January 2027</td>
+<td class="center">Expires 6 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg {
 <dd class="internet-draft">draft-watal-srv6ops-srv6-sfc-deployment-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-04" class="published">4 July 2026</time>
+<time datetime="2026-07-05" class="published">5 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-05">5 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-06">6 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1365,7 +1365,7 @@ It documents the deployment and operational experience of the SRv6 SFC architect
             <p id="section-2.1-2.5.1">Path Computation Client (PCC) and Path Computation Element (PCE) are defined in <span>[<a href="#RFC4655" class="cite xref">RFC4655</a>]</span> and <span>[<a href="#RFC5440" class="cite xref">RFC5440</a>]</span>, respectively.<a href="#section-2.1-2.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.6">
-            <p id="section-2.1-2.6.1">PCEP extensions for SR and SR Policy are defined in <span>[<a href="#RFC8664" class="cite xref">RFC8664</a>]</span> and <span>[<a href="#RFC9256" class="cite xref">RFC9256</a>]</span>, with additional SR-related extensions specified in <span>[<a href="#RFC9862" class="cite xref">RFC9862</a>]</span>.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.6.1">PCEP extensions for SR are defined in <span>[<a href="#RFC8664" class="cite xref">RFC8664</a>]</span>, with SR Policy candidate path extensions further specified in <span>[<a href="#RFC9862" class="cite xref">RFC9862</a>]</span>.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-2.7">
             <p id="section-2.1-2.7.1">BGP-LS defined in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>.<a href="#section-2.1-2.7.1" class="pilcrow">¶</a></p>
@@ -1594,10 +1594,11 @@ Service functions implement the End.AN behavior to process packets and forward t
             <p id="section-5.4-3.2.1">VIM: defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNFM. Service functions are instantiated on this NFVI, as illustrated in Figure 4.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.3">
-            <p id="section-5.4-3.3.1">Service Function Manager (SFM): defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.3.1">SFM: defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.4-4">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once this configuration is complete.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-5">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="application-plane">
@@ -1786,13 +1787,13 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-topology-collection" class="section-name selfRef">Topology Collection</a>
         </h3>
 <p id="section-6.4-1">Topology information is continuously collected via BGP-LS independently of individual service requests.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, it advertises its Service SID information via the BGP-LS extension defined in <span>[<a href="#I-D.draft-ietf-idr-bgp-ls-sr-service-segments" class="cite xref">I-D.draft-ietf-idr-bgp-ls-sr-service-segments</a>]</span>, which is currently under standardization.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, the VNF itself, acting as a BGP-LS speaker, advertises its Service SID information via the BGP-LS extension defined in <span>[<a href="#I-D.draft-ietf-idr-bgp-ls-sr-service-segments" class="cite xref">I-D.draft-ietf-idr-bgp-ls-sr-service-segments</a>]</span>, which is currently under standardization.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the Traffic Engineering Database (TED) and is not considered during path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 <p id="section-6.4-4">The Service Function Manager (SFM) is responsible for monitoring the operational state of service function instances.
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
 <p id="section-6.4-5">Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
 Failure to withdraw stale Service SID information, or failure to reflect service function availability in a timely manner in the Traffic Engineering Database (TED), may result in incorrect path computation and traffic being steered to non-operational or invalid service functions.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
-<p id="section-6.4-6">The control plane updates the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
+<p id="section-6.4-6">The control plane acts as the authoritative consumer of BGP-LS updates and maintains the Traffic Engineering Database (TED) based on received advertisements and withdrawals.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-computation">
@@ -1818,7 +1819,7 @@ The SR Policy specifies the SRv6 segment list representing the selected service 
 <a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-flow-classification" class="section-name selfRef">Flow Classification</a>
         </h3>
 <p id="section-6.7-1">If traffic classification is requested, BGP Flow Specification rules are installed, as shown in Figure 6, associating each traffic flow with its SR Policy by Color, to ensure that only the selected traffic flows traverse the deployed service function chain.
-Installation ordering relative to SR Policy provisioning is discussed in Section 9.3.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
+Installation ordering relative to SR Policy provisioning is discussed in Section 9.5.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="traffic-steering">
@@ -1950,7 +1951,8 @@ Installation ordering relative to SR Policy provisioning is discussed in Section
       <h2 id="name-lessons-learned">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-lessons-learned" class="section-name selfRef">Lessons Learned</a>
       </h2>
-<p id="section-8-1">This section describes observed operational behaviors. It does not specify requirements or recommendations.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">This section describes observed operational behaviors.
+It does not specify requirements or recommendations.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">During the deployment of the SRv6 SFC system over the backbone, several operational issues and design insights were identified.
 This section summarizes key observations obtained from real-world operation.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <div id="service-verification-and-observability">
@@ -1958,13 +1960,9 @@ This section summarizes key observations obtained from real-world operation.<a h
         <h3 id="name-service-verification-and-ob">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-service-verification-and-ob" class="section-name selfRef">Service Verification and Observability</a>
         </h3>
-<p id="section-8.1-1">Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.
-In the deployed video processing service, it also required application-layer verification, such as comparing input and output video streams, to confirm that traffic was processed correctly.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">Application-layer verification was performed by comparing streams at the video source sites in Chiba and Kanagawa with the corresponding output from the service function chain.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">Furthermore, because service functions were distributed across multiple VIM domains, effective troubleshooting required correlating network-layer, cloud-layer, and application-layer observations across these domains.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">During the deployment, however, these types of operational information were monitored using separate tools, and no unified observability framework was available.
-As a result, diagnosing service failures required manual cross-referencing between SR Policy state, service function status, and application-layer observations, making troubleshooting time-consuming and operationally complex.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
-<p id="section-8.1-5">This experience led to the operational recommendations in Section 9.5, which describe a unified multi-layer observability framework.<a href="#section-8.1-5" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">In the deployed video processing service, it also required application-layer verification, comparing input and output video streams at the video source sites in Chiba and Kanagawa with the corresponding output from the service function chain, to confirm that traffic was processed correctly.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">This experience indicates that, for content-modifying services, application-layer verification is a necessary complement to network- and infrastructure-layer monitoring, and cannot be substituted by SR Policy or service function status alone.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="latency-aware-service-function-placement">
@@ -2001,11 +1999,10 @@ This can result in transient traffic misclassification or blackholing, especiall
 <a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-multi-domain-state-correlat" class="section-name selfRef">Multi-domain State Correlation Limitations</a>
         </h3>
 <p id="section-8.4-1">The deployed system spans multiple VIM domains distributed across geographically separated data centers.
-As a result, operational state is distributed across network, cloud, and application layers, each of which is observed using independent monitoring tools.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
-<p id="section-8.4-2">We observed that there was no unified mechanism to correlate SR Policy state, service function status, and application-layer service verification results across these domains.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
-<p id="section-8.4-3">Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation such as end-to-end service output comparison.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
-<p id="section-8.4-4">This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.<a href="#section-8.4-4" class="pilcrow">¶</a></p>
-<p id="section-8.4-5">A unified multi-layer observability framework, capable of correlating network, cloud, and application states using consistent identifiers, is essential for efficient operation of SRv6 SFC deployments at scale.<a href="#section-8.4-5" class="pilcrow">¶</a></p>
+As a result, operational state is distributed across network, cloud, and application layers, each observed using independent monitoring tools, with no unified mechanism to correlate SR Policy state, service function status, and application-layer verification results (Section 8.1) across these domains.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation.
+This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.4-3">A unified multi-layer observability framework, capable of correlating network, cloud, and application states using consistent identifiers, is essential for efficient operation of SRv6 SFC deployments at scale.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2027,7 +2024,7 @@ Uniqueness is ensured at two distinct levels, corresponding to the Locator and F
 Transit nodes along the path need only maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
 <p id="section-9.1-3">Within a given Locator, however, the Function field associated with a specific End.AN behavior MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.
 Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement, and verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
-<p id="section-9.1-4">A centralized allocation mechanism SHOULD be used, where the management plane coordinates with the control plane to identify available Function space prior to assignment, thereby preventing address collisions and simplifying multi-site service deployment.<a href="#section-9.1-4" class="pilcrow">¶</a></p>
+<p id="section-9.1-4">A centralized allocation mechanism SHOULD be used, where the SFM queries the current TED via the control plane to determine available Function space, and assigns Function values accordingly before advertisement, thereby preventing address collisions across data centers and simplifying multi-site service deployment.<a href="#section-9.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="system-component-placement">
@@ -2045,7 +2042,8 @@ Interactions between the application plane and the control and management planes
 In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent and can tolerate greater physical separation.
 Therefore, co-location of the application plane with the control and management planes SHOULD take precedence over proximity to operators or video source sites.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
 <p id="section-9.2-4">In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
-<p id="section-9.2-5">The VIM centrally manages NFVI resources across the participating data centers.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
+<p id="section-9.2-5">In this deployment, each data center operates an independent VIM instance (OpenStack) to manage its local NFVI resources, as described in Section 4.4.
+The VNFM interacts with these per-site VIM instances to issue lifecycle requests, thereby providing operators with a logically centralized management view across the distributed VIM instances.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
 <p id="section-9.2-6">A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
 For large-scale deployments, a hierarchical controller and management model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
 </section>
