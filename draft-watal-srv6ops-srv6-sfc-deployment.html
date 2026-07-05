@@ -1597,7 +1597,7 @@ Service functions implement the End.AN behavior to process packets and forward t
             <p id="section-5.4-3.3.1">SFM: defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.4-4">Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once this configuration is complete.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once the SFM-driven configuration described above is complete.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 <p id="section-5.4-5">The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1791,9 +1791,9 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 <p id="section-6.4-3">Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the Traffic Engineering Database (TED) and is not considered during path computation.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 <p id="section-6.4-4">The Service Function Manager (SFM) is responsible for monitoring the operational state of service function instances.
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
-<p id="section-6.4-5">Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
-Failure to withdraw stale Service SID information, or failure to reflect service function availability in a timely manner in the Traffic Engineering Database (TED), may result in incorrect path computation and traffic being steered to non-operational or invalid service functions.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
-<p id="section-6.4-6">The control plane maintains the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
+<p id="section-6.4-5">Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
+<p id="section-6.4-6">Failure to withdraw stale Service SID information may result in incorrect path computation. The same applies if service function availability is not reflected in the Traffic Engineering Database (TED) in a timely manner: traffic may be steered to non-operational or invalid service functions.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
+<p id="section-6.4-7">The control plane maintains the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.<a href="#section-6.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-computation">
@@ -1906,7 +1906,7 @@ Installation ordering relative to SR Policy provisioning is discussed in Section
 <p id="section-7.2-2">The service functions performed video switching, transcoding, and caption insertion before forwarding the processed streams to the production system.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 <p id="section-7.2-3">Operators created service function chains through the web-based management interface.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 <p id="section-7.2-4">The management plane instantiated the distributed service functions, after which Service SIDs were assigned.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.2-5">Service SID information was advertised via BGP-LS after service SID assignment.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.2-5">After service SID assignment, the service SID information was advertised via BGP-LS.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-benefits">
@@ -1974,9 +1974,9 @@ This section summarizes key observations obtained from real-world operation.<a h
 For control-, management-, and application-plane component placement, see Section 9.2.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.2-2">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2-3">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
-<p id="section-8.2-4">In the deployed system, service function placement was determined manually based on operator knowledge of the network topology and latency characteristics.
-While the underlying architecture supports incremental scaling of service function nodes (Section 7.4), this manual placement decision process itself does not scale well as the number of deployment sites increases.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
-<p id="section-8.2-5">This experience led to the operational recommendations in Section 9.2, which describe latency-aware and topology-aware approaches to service function placement.<a href="#section-8.2-5" class="pilcrow">¶</a></p>
+<p id="section-8.2-4">In the deployed system, service function placement was determined manually based on operator knowledge of the network topology and latency characteristics.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+<p id="section-8.2-5">While the underlying architecture supports adding service function nodes incrementally (Section 7.4), this manual placement decision process becomes increasingly difficult to manage as the number of deployment sites increases.<a href="#section-8.2-5" class="pilcrow">¶</a></p>
+<p id="section-8.2-6">This experience led to the operational recommendations in Section 9.2, which describe latency-aware and topology-aware approaches to service function placement.<a href="#section-8.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-orchestration-timing-and-consistency-issues">
@@ -1998,11 +1998,12 @@ This can result in transient traffic misclassification or blackholing, especiall
         <h3 id="name-multi-domain-state-correlat">
 <a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-multi-domain-state-correlat" class="section-name selfRef">Multi-domain State Correlation Limitations</a>
         </h3>
-<p id="section-8.4-1">The deployed system spans multiple VIM domains distributed across geographically separated data centers.
-As a result, operational state is distributed across network, cloud, and application layers, each observed using independent monitoring tools, with no unified mechanism to correlate SR Policy state, service function status, and application-layer verification results (Section 8.1) across these domains.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
-<p id="section-8.4-2">Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation.
-This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
-<p id="section-8.4-3">A unified multi-layer observability framework, capable of correlating network, cloud, and application states using consistent identifiers, is essential for efficient operation of SRv6 SFC deployments at scale.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
+<p id="section-8.4-1">The deployed system spans multiple VIM domains distributed across geographically separated data centers.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">As a result, operational state is distributed across network, cloud, and application layers, each observed using independent monitoring tools.
+There is no unified mechanism to correlate SR Policy state, service function status, and application-layer verification results (Section 8.1) across these domains.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.4-3">Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation.
+This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
+<p id="section-8.4-4">A unified multi-layer observability framework, capable of correlating network, cloud, and application states using consistent identifiers, is essential for efficient operation of SRv6 SFC deployments at scale.<a href="#section-8.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2021,10 +2022,11 @@ This lack of integrated observability increased the time required to diagnose se
 <p id="section-9.1-1">Building on the Service SID allocation described in Section 6.3, Service SID uniqueness within the SR domain MUST be ensured.
 Uniqueness is ensured at two distinct levels, corresponding to the Locator and Function fields of an SRv6 SID <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.1-2">Reachability to the node hosting a service function is provided by the SRv6 Locator assigned to that node and advertised through normal IGP/BGP routing.
-Transit nodes along the path need only maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1-3">Within a given Locator, however, the Function field associated with a specific End.AN behavior MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.
-Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement, and verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
-<p id="section-9.1-4">A centralized allocation mechanism SHOULD be used, where the SFM queries the current TED via the control plane to determine available Function space, and assigns Function values accordingly before advertisement, thereby preventing address collisions across data centers and simplifying multi-site service deployment.<a href="#section-9.1-4" class="pilcrow">¶</a></p>
+Transit nodes along the path only need to maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.1-3">Within a given Locator, however, the Function field associated with a specific End.AN behavior MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
+<p id="section-9.1-4">Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement.
+It SHOULD also be verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.<a href="#section-9.1-4" class="pilcrow">¶</a></p>
+<p id="section-9.1-5">A centralized allocation mechanism SHOULD be used, where the SFM queries the current TED via the control plane to determine available Function space, and assigns Function values accordingly before advertisement, thereby preventing address collisions across data centers and simplifying multi-site service deployment.<a href="#section-9.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="system-component-placement">
@@ -2038,14 +2040,14 @@ As discussed in Section 8.2, placement SHOULD be based on measured inter-site la
 It SHOULD further consider NFVI resource availability at each data center and the current load distribution of already deployed service functions, to avoid overloading specific data centers.
 The VIM's native scaling mechanisms (Section 7.4) MAY be used to instantiate or remove service function instances in response to these decisions.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.2-3">Placement of control, management, and application plane components also requires careful consideration, but the relevant constraint depends on interaction frequency.
-Interactions between the application plane and the control and management planes (e.g., service deployment, configuration, SR Policy provisioning, and path computation requests) occur repeatedly throughout the service lifecycle.
-In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent and can tolerate greater physical separation.
-Therefore, co-location of the application plane with the control and management planes SHOULD take precedence over proximity to operators or video source sites.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
-<p id="section-9.2-4">In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
-<p id="section-9.2-5">In this deployment, each data center operates an independent VIM instance (OpenStack) to manage its local NFVI resources, as described in Section 4.4.
-The VNFM interacts with these per-site VIM instances to issue lifecycle requests, thereby providing operators with a logically centralized management view across the distributed VIM instances.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
-<p id="section-9.2-6">A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
-For large-scale deployments, a hierarchical controller and management model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
+Interactions between the application plane and the control and management planes (e.g., service deployment, configuration, SR Policy provisioning, and path computation requests) occur repeatedly throughout the service lifecycle.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+<p id="section-9.2-4">In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent, so greater physical separation is acceptable.
+Therefore, co-location of the application plane with the control and management planes SHOULD be prioritized over proximity to operators or video source sites.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
+<p id="section-9.2-5">In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.<a href="#section-9.2-5" class="pilcrow">¶</a></p>
+<p id="section-9.2-6">In this deployment, each data center operates an independent VIM instance (OpenStack) to manage its local NFVI resources, as described in Section 4.4.
+The VNFM interacts with these per-site VIM instances to issue lifecycle requests, thereby providing operators with a logically centralized management view across the distributed VIM instances.<a href="#section-9.2-6" class="pilcrow">¶</a></p>
+<p id="section-9.2-7">A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
+For large-scale deployments, a hierarchical controller and management model MAY be used to improve scalability while preserving global policy consistency.<a href="#section-9.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="failure-recovery">
@@ -2124,16 +2126,16 @@ Operators MUST ensure that SRv6 packets originating outside the trusted SR domai
 <p id="section-10-2">This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in <span>[<a href="#RFC8231" class="cite xref">RFC8231</a>]</span> and <span>[<a href="#RFC8281" class="cite xref">RFC8281</a>]</span>.
 Failure to use these mechanisms may allow an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
 Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3">Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
-The management plane SHOULD verify the identity and integrity of a service function instance before advertising its Service SID into the SR domain.
-If not, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-3" class="pilcrow">¶</a></p>
-<p id="section-10-4">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.<a href="#section-10-4" class="pilcrow">¶</a></p>
-<p id="section-10-5">Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-5" class="pilcrow">¶</a></p>
-<p id="section-10-6">Operators SHOULD ensure that BGP-LS topology and Service SID information is distributed only to authorized consumers.<a href="#section-10-6" class="pilcrow">¶</a></p>
-<p id="section-10-7">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-7" class="pilcrow">¶</a></p>
-<p id="section-10-8">Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.<a href="#section-10-8" class="pilcrow">¶</a></p>
-<p id="section-10-9">Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-9" class="pilcrow">¶</a></p>
-<p id="section-10-10">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-10" class="pilcrow">¶</a></p>
+<p id="section-10-3">Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-4">The management plane SHOULD verify the identity and integrity of a service function instance before advertising its Service SID into the SR domain.
+If this verification is not performed, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.<a href="#section-10-4" class="pilcrow">¶</a></p>
+<p id="section-10-5">The export of topology and traffic engineering information via BGP-LS, as described in <span>[<a href="#RFC9552" class="cite xref">RFC9552</a>]</span>, may expose commercially sensitive network information.<a href="#section-10-5" class="pilcrow">¶</a></p>
+<p id="section-10-6">Operators MUST ensure that topology and Service SID information advertised via BGP-LS is protected against unauthorized modification or injection.<a href="#section-10-6" class="pilcrow">¶</a></p>
+<p id="section-10-7">Operators SHOULD ensure that BGP-LS topology and Service SID information is distributed only to authorized consumers.<a href="#section-10-7" class="pilcrow">¶</a></p>
+<p id="section-10-8">Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.<a href="#section-10-8" class="pilcrow">¶</a></p>
+<p id="section-10-9">Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.<a href="#section-10-9" class="pilcrow">¶</a></p>
+<p id="section-10-10">Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.<a href="#section-10-10" class="pilcrow">¶</a></p>
+<p id="section-10-11">Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.<a href="#section-10-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
