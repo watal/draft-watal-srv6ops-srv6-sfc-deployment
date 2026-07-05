@@ -239,7 +239,7 @@ The management plane consists of the following three logically distinct function
 
 * VIM: defined in {{RFC8568}}, responsible for controlling and managing the underlying NFVI compute, storage, and network resources, and for fulfilling the lifecycle requests issued by the VNFM. Service functions are instantiated on this NFVI, as illustrated in Figure 4.
 
-* SFM: defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
+* Service Function Manager (SFM): defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
 Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once the SFM-driven configuration described above is complete.
 
@@ -391,16 +391,16 @@ Topology information is continuously collected via BGP-LS independently of indiv
 
 Once the service function has completed initialization and health verification, and the Service SID has been configured with the corresponding End.AN behavior, the VNF itself, acting as a BGP-LS speaker, advertises its Service SID information via the BGP-LS extension defined in {{I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
 
-Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the Traffic Engineering Database (TED) and is not considered during path computation.
+Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the TED and is not considered during path computation.
 
 The SFM is responsible for monitoring the operational state of service function instances.
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.
 
 Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
 
-Failure to withdraw stale Service SID information may result in incorrect path computation. The same applies if service function availability is not reflected in the Traffic Engineering Database (TED) in a timely manner: traffic may be steered to non-operational or invalid service functions.
+Failure to withdraw stale Service SID information may result in incorrect path computation. The same applies if service function availability is not reflected in the TED in a timely manner: traffic may be steered to non-operational or invalid service functions.
 
-The control plane maintains the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.
+The control plane maintains the TED based on received BGP-LS advertisements and withdrawals.
 
 ## Path Computation
 
@@ -523,7 +523,7 @@ This experience led to the operational recommendations in Section 9.2, which des
 
 Correct service operation depends on the relative timing among service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.
 
-Service SID advertisement may occur before control-plane state (e.g., BGP-LS updates and Traffic Engineering Database (TED) synchronization) has fully converged. In such cases, service functions may become eligible for path computation before downstream SR Policy provisioning is completed.
+Service SID advertisement may occur before control-plane state (e.g., BGP-LS updates and TED synchronization) has fully converged. In such cases, service functions may become eligible for path computation before downstream SR Policy provisioning is completed.
 
 Similarly, Flow Specification rules may be installed before the corresponding SR Policy becomes operational. This can result in transient traffic misclassification or blackholing, particularly when an existing SR Policy is modified or replaced.
 
