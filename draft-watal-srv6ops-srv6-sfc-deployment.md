@@ -383,7 +383,7 @@ Deployment may be triggered either by an explicit operator request or automatica
 
 ## Service SID Allocation
 
-After service function deployment and service function initialization, Service SID allocation is performed by the management plane before BGP-LS advertisement, as described in Section 9.1.
+After service function deployment and initialization, Service SID allocation is performed by the management plane before BGP-LS advertisement, as described in Section 9.1.
 
 ## Topology Collection
 
@@ -393,7 +393,7 @@ Once the service function has completed initialization and health verification, 
 
 Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the Traffic Engineering Database (TED) and is not considered during path computation.
 
-The Service Function Manager (SFM) is responsible for monitoring the operational state of service function instances.
+The SFM is responsible for monitoring the operational state of service function instances.
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.
 
 Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
@@ -468,10 +468,7 @@ The service functions performed video switching, transcoding, and caption insert
 
 Operators created service function chains through the web-based management interface.
 
-The management plane instantiated the distributed service functions, after which Service SIDs were assigned.
-
-After service SID assignment, the service SID information was advertised via BGP-LS.
-
+The management plane instantiated the distributed service functions, after which Service SIDs were assigned and the corresponding information was advertised via BGP-LS.
 
 ## Operational Benefits
 
@@ -524,17 +521,15 @@ This experience led to the operational recommendations in Section 9.2, which des
 
 ## Service Orchestration Timing and Consistency Issues
 
-During the deployment, we observed that correct service operation depends on the relative timing between service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.
+Correct service operation depends on the relative timing among service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.
 
-In particular, Service SID advertisement may occur before the control-plane state (e.g., BGP-LS update and TED synchronization) has fully converged.
-In such cases, service functions may become eligible for path computation while downstream SR Policy provisioning is still in progress.
+Service SID advertisement may occur before control-plane state (e.g., BGP-LS updates and Traffic Engineering Database (TED) synchronization) has fully converged. In such cases, service functions may become eligible for path computation before downstream SR Policy provisioning is completed.
 
-We also observed that Flow Specification rules may be installed before the corresponding SR Policy becomes operational.
-This can result in transient traffic misclassification or blackholing, especially during initial service activation or service updates.
+Similarly, Flow Specification rules may be installed before the corresponding SR Policy becomes operational. This can result in transient traffic misclassification or blackholing, particularly when an existing SR Policy is modified or replaced.
 
-Furthermore, synchronization delays between the management plane (VNFM and SFM), control plane (PCE and BGP-LS), and forwarding plane can lead to temporary inconsistencies in service availability information.
+Synchronization delays between the management plane (VNFM and SFM), control plane (PCE and BGP-LS), and forwarding plane may further introduce temporary inconsistencies in service availability information.
 
-As a result, orchestration systems SHOULD ensure that Flow Specification installation is performed only after SR Policy provisioning has completed and is verified as operational, and that Service SID advertisements reflect confirmed service readiness.
+These issues motivated the operational sequencing recommendations described in Section 9.5.
 
 ## Multi-domain State Correlation Limitations
 
@@ -559,7 +554,6 @@ Uniqueness is ensured at two distinct levels, corresponding to the Locator and F
 
 Reachability to the node hosting a service function is provided by the SRv6 Locator assigned to that node and advertised through normal IGP/BGP routing.
 Transit nodes along the path only need to maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.
-
 Within a given Locator, however, the Function field associated with a specific End.AN behavior MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.
 
 Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement.
@@ -582,9 +576,10 @@ Interactions between the application plane and the control and management planes
 In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent, so greater physical separation is acceptable.
 Therefore, co-location of the application plane with the control and management planes SHOULD be prioritized over proximity to operators or video source sites.
 
-In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.
+In the described deployment, the application plane, VNFM, SFM, and the control plane (Pola PCE and GoBGP) were co-located at the Kanagawa data center to minimize inter-component latency.
 
-In this deployment, each data center operates an independent VIM instance (OpenStack) to manage its local NFVI resources, as described in Section 4.4.
+However, each data center operates an independent VIM instance (OpenStack) to manage its local NFVI resources, as described in Section 4.4.
+
 The VNFM interacts with these per-site VIM instances to issue lifecycle requests, thereby providing operators with a logically centralized management view across the distributed VIM instances.
 
 A logically centralized controller and management architecture SHOULD be used to ensure consistent path computation, service configuration, and policy enforcement across the SR domain.
@@ -594,9 +589,9 @@ For large-scale deployments, a hierarchical controller and management model MAY 
 
 Failure recovery follows the mechanisms defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-In operational deployments, fast reroute at the forwarding plane can maintain connectivity, but service-level state consistency is not guaranteed during failover events.
+In operational deployments, fast reroute at the forwarding plane can maintain connectivity, but service-level state consistency is not guaranteed during failover events. During failover, traffic may be redirected to a different service function instance that does not share the same processing state.
 
-Therefore, service functions MUST be designed to handle potential state inconsistencies (e.g., buffering, re-synchronization, or idempotent processing).
+Therefore, service functions MUST be designed to tolerate such state inconsistencies, for example through buffering, state re-synchronization, idempotent processing, or other application-specific recovery mechanisms.
 
 ## Observability
 
@@ -622,9 +617,13 @@ Automated orchestration SHOULD ensure correct sequencing of:
 5. SR Policy provisioning
 6. Flow Specification installation
 
-Out-of-order execution MAY result in transient traffic disruption.
+In addition, operators SHOULD apply the following practices to avoid impacting existing traffic during deployment or updates.
 
-Operators SHOULD implement consistency checks and readiness verification before enabling traffic steering.
+New services SHOULD be assigned distinct SR Policy colors whenever possible, so that Flow Specification rules for those services do not affect existing traffic during deployment.
+
+When an existing SR Policy is modified or replaced, Flow Specification rules SHOULD be updated only after the replacement SR Policy has been successfully provisioned and verified as operational.
+
+Operators SHOULD verify service readiness and SR Policy operability before enabling or updating Flow Specification rules for traffic steering.
 
 # Security Considerations
 
@@ -648,11 +647,9 @@ Operators SHOULD ensure that BGP-LS topology and Service SID information is dist
 
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
-Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection, using appropriate authentication, authorization, and integrity protection.
+Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection using appropriate authentication, authorization, and integrity protection mechanisms.
 
-Incorrect association between traffic classification rules, Color values, and SR Policies may result in unintended traffic steering.
-
-Compromise of these components may result in incorrect traffic steering, service misbehavior, or service disruption.
+Unauthorized modification or compromise of traffic classification rules, Color values, or SR Policies may result in unintended traffic steering, service misbehavior, or service disruption.
 
 # IANA Considerations
 
