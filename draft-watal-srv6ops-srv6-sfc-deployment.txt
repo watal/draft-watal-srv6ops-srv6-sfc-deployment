@@ -748,7 +748,7 @@ Table of Contents
    see Section 9.2.
 
    Because data centers are geographically distributed, inter-site
-   latency has a significant impact on service performance.
+   latency has a measurable impact on service performance.
 
    For latency-sensitive applications such as real-time video
    processing, cumulative path latency across multiple sites is an
@@ -855,8 +855,8 @@ Table of Contents
 
    Because this deployment spans geographically distributed data
    centers, the placement of service functions and control, management,
-   and application plane components has a significant impact on system
-   performance and scalability.
+   and application plane components has an impact on system performance
+   and scalability.
 
    Service function placement affects both path latency and traffic load
    distribution across the SR domain.  As discussed in Section 8.2,

@@ -1971,7 +1971,7 @@ This section summarizes key observations obtained from real-world operation.<a h
         </h3>
 <p id="section-8.2-1">This section addresses the placement of SR-aware service functions.
 For control-, management-, and application-plane component placement, see Section 9.2.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.2-2">Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Because data centers are geographically distributed, inter-site latency has a measurable impact on service performance.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2-3">For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
 <p id="section-8.2-4">In the deployed system, service function placement was determined manually based on operator knowledge of the network topology and latency characteristics.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 <p id="section-8.2-5">While the underlying architecture supports adding service function nodes incrementally (Section 7.4), this manual placement decision process becomes increasingly difficult to manage as the number of deployment sites increases.<a href="#section-8.2-5" class="pilcrow">¶</a></p>
@@ -2031,7 +2031,7 @@ It SHOULD also be verified against the current TED maintained by the control pla
         <h3 id="name-system-component-placement">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-system-component-placement" class="section-name selfRef">System Component Placement</a>
         </h3>
-<p id="section-9.2-1">Because this deployment spans geographically distributed data centers, the placement of service functions and control, management, and application plane components has a significant impact on system performance and scalability.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">Because this deployment spans geographically distributed data centers, the placement of service functions and control, management, and application plane components has an impact on system performance and scalability.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <p id="section-9.2-2">Service function placement affects both path latency and traffic load distribution across the SR domain.
 As discussed in Section 8.2, placement SHOULD be based on measured inter-site latency between ingress points (e.g., video source sites), data centers, and egress points (e.g., the production system), rather than static assumptions.
 It SHOULD further consider NFVI resource availability at each data center and the current load distribution of already deployed service functions, to avoid overloading specific data centers.
