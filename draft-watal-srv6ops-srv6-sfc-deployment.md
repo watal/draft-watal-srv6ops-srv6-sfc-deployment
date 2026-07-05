@@ -630,8 +630,8 @@ Operators SHOULD verify service readiness and SR Policy operability before enabl
 The security considerations in {{RFC8402}}, {{RFC8986}}, and {{RFC9256}} apply to this deployment, which relies on the SR domain trust model described in {{RFC8402}}.
 Operators MUST ensure that SRv6 packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries.
 
-This deployment provisions SR Policies to SR source nodes directly via PCEP without the use of a hop-by-hop signaling protocol such as RSVP-TE, consistent with the PCE-initiated LSP model described in {{RFC8231}} and {{RFC8281}}.
-Failure to use these mechanisms may allow an attacker to inject or modify PCEP messages and to provision unauthorized SR Policies.
+This deployment provisions SR Policies to SR source nodes directly via PCEP, consistent with the PCE-initiated LSP model described in {{RFC8231}} and {{RFC8281}}.
+Without adequate protection, an attacker could inject or modify PCEP messages to provision unauthorized SR Policies.
 Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.
 
 Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
