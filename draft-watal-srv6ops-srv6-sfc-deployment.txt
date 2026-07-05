@@ -571,9 +571,8 @@ Table of Contents
    incorrect path computation and traffic being steered to non-
    operational or invalid service functions.
 
-   The control plane acts as the authoritative consumer of BGP-LS
-   updates and maintains the Traffic Engineering Database (TED) based on
-   received advertisements and withdrawals.
+   The control plane maintains the Traffic Engineering Database (TED)
+   based on received BGP-LS advertisements and withdrawals.
 
 6.5.  Path Computation
 
@@ -740,8 +739,8 @@ Table of Contents
 
    This experience indicates that, for content-modifying services,
    application-layer verification is a necessary complement to network-
-   and infrastructure-layer monitoring, and cannot be substituted by SR
-   Policy or service function status alone.
+   and infrastructure-layer monitoring, and cannot be replaced by
+   monitoring SR Policy or service function status alone.
 
 8.2.  Latency-Aware Service Function Placement
 

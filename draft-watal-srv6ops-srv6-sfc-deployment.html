@@ -1793,7 +1793,7 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
 <p id="section-6.4-5">Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
 Failure to withdraw stale Service SID information, or failure to reflect service function availability in a timely manner in the Traffic Engineering Database (TED), may result in incorrect path computation and traffic being steered to non-operational or invalid service functions.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
-<p id="section-6.4-6">The control plane acts as the authoritative consumer of BGP-LS updates and maintains the Traffic Engineering Database (TED) based on received advertisements and withdrawals.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
+<p id="section-6.4-6">The control plane maintains the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-computation">
@@ -1962,7 +1962,7 @@ This section summarizes key observations obtained from real-world operation.<a h
         </h3>
 <p id="section-8.1-1">Verifying end-to-end service correctness required more than monitoring SR Policy status or the operational state of service functions.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.1-2">In the deployed video processing service, it also required application-layer verification, comparing input and output video streams at the video source sites in Chiba and Kanagawa with the corresponding output from the service function chain, to confirm that traffic was processed correctly.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">This experience indicates that, for content-modifying services, application-layer verification is a necessary complement to network- and infrastructure-layer monitoring, and cannot be substituted by SR Policy or service function status alone.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">This experience indicates that, for content-modifying services, application-layer verification is a necessary complement to network- and infrastructure-layer monitoring, and cannot be replaced by monitoring SR Policy or service function status alone.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="latency-aware-service-function-placement">
