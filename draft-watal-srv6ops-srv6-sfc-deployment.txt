@@ -362,7 +362,7 @@ Table of Contents
       VNFM.  Service functions are instantiated on this NFVI, as
       illustrated in Figure 4.
 
-   *  SFM: defined in
+   *  Service Function Manager (SFM): defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], responsible
       for SRv6-specific service configuration after a service function
       instance becomes operational, including Service SID assignment and
@@ -553,9 +553,8 @@ Table of Contents
    which is currently under standardization.
 
    Until this advertisement is received, or if the advertisement is
-   withdrawn, the service function is not included in the Traffic
-   Engineering Database (TED) and is not considered during path
-   computation.
+   withdrawn, the service function is not included in the TED and is not
+   considered during path computation.
 
    The SFM is responsible for monitoring the operational state of
    service function instances.  When a service function becomes
@@ -568,12 +567,11 @@ Table of Contents
 
    Failure to withdraw stale Service SID information may result in
    incorrect path computation.  The same applies if service function
-   availability is not reflected in the Traffic Engineering Database
-   (TED) in a timely manner: traffic may be steered to non-operational
-   or invalid service functions.
+   availability is not reflected in the TED in a timely manner: traffic
+   may be steered to non-operational or invalid service functions.
 
-   The control plane maintains the Traffic Engineering Database (TED)
-   based on received BGP-LS advertisements and withdrawals.
+   The control plane maintains the TED based on received BGP-LS
+   advertisements and withdrawals.
 
 6.5.  Path Computation
 
@@ -774,10 +772,9 @@ Table of Contents
    provisioning, and Flow Specification installation.
 
    Service SID advertisement may occur before control-plane state (e.g.,
-   BGP-LS updates and Traffic Engineering Database (TED)
-   synchronization) has fully converged.  In such cases, service
-   functions may become eligible for path computation before downstream
-   SR Policy provisioning is completed.
+   BGP-LS updates and TED synchronization) has fully converged.  In such
+   cases, service functions may become eligible for path computation
+   before downstream SR Policy provisioning is completed.
 
    Similarly, Flow Specification rules may be installed before the
    corresponding SR Policy becomes operational.  This can result in
@@ -978,13 +975,12 @@ Table of Contents
    traffic at domain boundaries.
 
    This deployment provisions SR Policies to SR source nodes directly
-   via PCEP without the use of a hop-by-hop signaling protocol such as
-   RSVP-TE, consistent with the PCE-initiated LSP model described in
-   [RFC8231] and [RFC8281].  Failure to use these mechanisms may allow
-   an attacker to inject or modify PCEP messages and to provision
-   unauthorized SR Policies.  Operators MUST ensure that PCEP sessions
-   used for SR Policy provisioning are protected using appropriate
-   authentication, authorization, and integrity protection mechanisms.
+   via PCEP, consistent with the PCE-initiated LSP model described in
+   [RFC8231] and [RFC8281].  Without adequate protection, an attacker
+   could inject or modify PCEP messages to provision unauthorized SR
+   Policies.  Operators MUST ensure that PCEP sessions used for SR
+   Policy provisioning are protected using appropriate authentication,
+   authorization, and integrity protection mechanisms.
 
    Because service functions are instantiated dynamically and become
    eligible for path computation after Service SID advertisement (see
