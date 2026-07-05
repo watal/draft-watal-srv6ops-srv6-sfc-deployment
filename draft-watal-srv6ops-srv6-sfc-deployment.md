@@ -647,7 +647,7 @@ Operators SHOULD ensure that BGP-LS topology and Service SID information is dist
 
 Management interfaces SHOULD be protected using mutually authenticated secure transport protocols.
 
-Traffic classification rules and Color values used to associate them with SR Policies MUST be protected against unauthorized modification or injection using appropriate authentication, authorization, and integrity protection mechanisms.
+Operators MUST ensure that traffic classification rules and Color values used to associate them with SR Policies are protected against unauthorized modification or injection using appropriate authentication, authorization, and integrity protection mechanisms.
 
 Unauthorized modification or compromise of traffic classification rules, Color values, or SR Policies may result in unintended traffic steering, service misbehavior, or service disruption.
 
