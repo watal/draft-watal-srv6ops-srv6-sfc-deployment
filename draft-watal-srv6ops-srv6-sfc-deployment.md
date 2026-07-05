@@ -241,7 +241,7 @@ The management plane consists of the following three logically distinct function
 
 * SFM: defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for SRv6-specific service configuration after a service function instance becomes operational, including Service SID assignment and endpoint behavior configuration, as illustrated in Figure 5.
 
-Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once this configuration is complete.
+Each service function instance operates its own BGP-LS speaker (e.g., implemented as an embedded agent or sidecar process) and advertises its configured Service SID directly to the control plane once the SFM-driven configuration described above is complete.
 
 The management plane supports reconfiguration and removal of service functions throughout their operational lifecycle.
 
@@ -397,7 +397,8 @@ The Service Function Manager (SFM) is responsible for monitoring the operational
 When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM MUST withdraw the corresponding Service SID advertisement via BGP-LS.
 
 Service SID advertisements SHOULD be withdrawn when the corresponding service function becomes unavailable or is no longer eligible for path computation.
-Failure to withdraw stale Service SID information, or failure to reflect service function availability in a timely manner in the Traffic Engineering Database (TED), may result in incorrect path computation and traffic being steered to non-operational or invalid service functions.
+
+Failure to withdraw stale Service SID information may result in incorrect path computation. The same applies if service function availability is not reflected in the Traffic Engineering Database (TED) in a timely manner: traffic may be steered to non-operational or invalid service functions.
 
 The control plane maintains the Traffic Engineering Database (TED) based on received BGP-LS advertisements and withdrawals.
 
@@ -469,7 +470,7 @@ Operators created service function chains through the web-based management inter
 
 The management plane instantiated the distributed service functions, after which Service SIDs were assigned.
 
-Service SID information was advertised via BGP-LS after service SID assignment.
+After service SID assignment, the service SID information was advertised via BGP-LS.
 
 
 ## Operational Benefits
@@ -516,7 +517,8 @@ Because data centers are geographically distributed, inter-site latency has a si
 For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
 In the deployed system, service function placement was determined manually based on operator knowledge of the network topology and latency characteristics.
-While the underlying architecture supports incremental scaling of service function nodes (Section 7.4), this manual placement decision process itself does not scale well as the number of deployment sites increases.
+
+While the underlying architecture supports adding service function nodes incrementally (Section 7.4), this manual placement decision process becomes increasingly difficult to manage as the number of deployment sites increases.
 
 This experience led to the operational recommendations in Section 9.2, which describe latency-aware and topology-aware approaches to service function placement.
 
@@ -537,7 +539,9 @@ As a result, orchestration systems SHOULD ensure that Flow Specification install
 ## Multi-domain State Correlation Limitations
 
 The deployed system spans multiple VIM domains distributed across geographically separated data centers.
-As a result, operational state is distributed across network, cloud, and application layers, each observed using independent monitoring tools, with no unified mechanism to correlate SR Policy state, service function status, and application-layer verification results (Section 8.1) across these domains.
+
+As a result, operational state is distributed across network, cloud, and application layers, each observed using independent monitoring tools.
+There is no unified mechanism to correlate SR Policy state, service function status, and application-layer verification results (Section 8.1) across these domains.
 
 Consequently, troubleshooting required manual correlation of information from multiple sources, including control-plane telemetry, NFVI-level monitoring, and application-level validation.
 This lack of integrated observability increased the time required to diagnose service degradation and failure scenarios, particularly when issues spanned multiple layers of the architecture.
@@ -554,10 +558,12 @@ Building on the Service SID allocation described in Section 6.3, Service SID uni
 Uniqueness is ensured at two distinct levels, corresponding to the Locator and Function fields of an SRv6 SID {{RFC8986}}.
 
 Reachability to the node hosting a service function is provided by the SRv6 Locator assigned to that node and advertised through normal IGP/BGP routing.
-Transit nodes along the path need only maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.
+Transit nodes along the path only need to maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.
 
 Within a given Locator, however, the Function field associated with a specific End.AN behavior MUST be uniquely assigned so as not to collide with other service functions sharing the same Locator.
-Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement, and verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.
+
+Because this Function value assignment is not visible to the routing and forwarding plane, it SHOULD be coordinated by the management plane (e.g., the SFM) prior to advertisement.
+It SHOULD also be verified against the current TED maintained by the control plane via BGP-LS, to prevent collisions across data centers and service functions.
 
 A centralized allocation mechanism SHOULD be used, where the SFM queries the current TED via the control plane to determine available Function space, and assigns Function values accordingly before advertisement, thereby preventing address collisions across data centers and simplifying multi-site service deployment.
 
@@ -572,8 +578,9 @@ The VIM's native scaling mechanisms (Section 7.4) MAY be used to instantiate or 
 
 Placement of control, management, and application plane components also requires careful consideration, but the relevant constraint depends on interaction frequency.
 Interactions between the application plane and the control and management planes (e.g., service deployment, configuration, SR Policy provisioning, and path computation requests) occur repeatedly throughout the service lifecycle.
-In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent and can tolerate greater physical separation.
-Therefore, co-location of the application plane with the control and management planes SHOULD take precedence over proximity to operators or video source sites.
+
+In contrast, interactions between operators and the application plane (e.g., service requests and status queries) are less frequent, so greater physical separation is acceptable.
+Therefore, co-location of the application plane with the control and management planes SHOULD be prioritized over proximity to operators or video source sites.
 
 In the described deployment, the application plane, VNFM, SFM, and control plane (Pola PCE and GoBGP) were co-located at a single data center (Sagamihara) to minimize latency of these frequent interactions.
 
@@ -629,8 +636,9 @@ Failure to use these mechanisms may allow an attacker to inject or modify PCEP m
 Operators MUST ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.
 
 Because service functions are instantiated dynamically and become eligible for path computation after Service SID advertisement (see Section 6.4), operators SHOULD ensure that Service SID information is advertised only for authenticated and authorized service functions.
+
 The management plane SHOULD verify the identity and integrity of a service function instance before advertising its Service SID into the SR domain.
-If not, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.
+If this verification is not performed, a rogue or compromised service function could be selected during path computation, resulting in traffic being steered to an unauthorized function.
 
 The export of topology and traffic engineering information via BGP-LS, as described in {{RFC9552}}, may expose commercially sensitive network information.
 
