@@ -509,7 +509,7 @@ This experience indicates that, for content-modifying services, application-laye
 This section addresses the placement of SR-aware service functions.
 For control-, management-, and application-plane component placement, see Section 9.2.
 
-Because data centers are geographically distributed, inter-site latency has a significant impact on service performance.
+Because data centers are geographically distributed, inter-site latency has a measurable impact on service performance.
 
 For latency-sensitive applications such as real-time video processing, cumulative path latency across multiple sites is an important consideration for service function placement.
 
@@ -563,7 +563,7 @@ A centralized allocation mechanism SHOULD be used, where the SFM queries the cur
 
 ## System Component Placement
 
-Because this deployment spans geographically distributed data centers, the placement of service functions and control, management, and application plane components has a significant impact on system performance and scalability.
+Because this deployment spans geographically distributed data centers, the placement of service functions and control, management, and application plane components has an impact on system performance and scalability.
 
 Service function placement affects both path latency and traffic load distribution across the SR domain.
 As discussed in Section 8.2, placement SHOULD be based on measured inter-site latency between ingress points (e.g., video source sites), data centers, and egress points (e.g., the production system), rather than static assumptions.
