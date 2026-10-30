@@ -15,7 +15,7 @@ Abstract
 
    This document describes the deployment and operational experience of
    the SRv6 Service Function Chaining (SFC) architecture defined in
-   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions] over an academic
+   [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions] on an academic
    IPv6 backbone network.
 
    The deployed system integrates SRv6 forwarding, service function
@@ -131,8 +131,8 @@ Table of Contents
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
    This document reports the deployment and operational experience of
-   that architecture over an academic IPv6 backbone network.  It does
-   not define any new protocols or protocol extensions.
+   that architecture on an academic IPv6 backbone network.  It does not
+   define any new protocols or protocol extensions.
 
    On-demand provisioning of service function chains requires
    coordination among the forwarding, control, management, and
@@ -190,7 +190,7 @@ Table of Contents
 
 3.  Deployment Objectives
 
-   *  Demonstrate the SRv6 SFC architecture over an operational IPv6
+   *  Demonstrate the SRv6 SFC architecture on an operational IPv6
       backbone in a geographically distributed, multi-site environment.
 
    *  Demonstrate incremental deployment without modifying existing
@@ -683,10 +683,9 @@ Table of Contents
    This section describes observed operational behaviors.  It does not
    specify requirements or recommendations.
 
-   During the deployment of the SRv6 SFC system over the backbone,
-   several operational issues and design insights were identified.  This
-   section summarizes key observations obtained from real-world
-   operation.
+   During the deployment of the SRv6 SFC system on the backbone, several
+   operational issues and design insights were identified.  This section
+   summarizes key observations obtained from real-world operation.
 
 8.1.  Service Verification and Observability
 
@@ -845,7 +844,7 @@ Table of Contents
 
    The security considerations in [RFC8402], [RFC8986], and [RFC9256]
    apply to this deployment, which relies on the SR domain trust model
-   described in [RFC8402].  Operators SHOULD ensure that SRv6 packets
+   described in [RFC8402].  Operators MUST ensure that SRv6 packets
    originating outside the trusted SR domain are not processed as SRv6
    traffic at domain boundaries.
 

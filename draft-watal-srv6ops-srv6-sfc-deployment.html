@@ -8,7 +8,7 @@
 <meta content="Wataru Mishima" name="author">
 <meta content="Yuta Fukagawa" name="author">
 <meta content="
-       This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in   over an academic IPv6 backbone network. 
+       This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in   on an academic IPv6 backbone network. 
        The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and traffic classification to enable on-demand provisioning of SFC services through a web-based management interface. 
        This document presents the deployment architecture, operational workflow, and lessons learned, providing practical guidance for operators deploying SRv6 SFC services. 
     " name="description">
@@ -1087,7 +1087,7 @@ svg {
 <h1 id="title">SRv6 Service Function Chaining Deployment</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> over an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> on an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and traffic classification to enable on-demand provisioning of SFC services through a web-based management interface.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3">This document presents the deployment architecture, operational workflow, and lessons learned, providing practical guidance for operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
@@ -1319,7 +1319,7 @@ svg {
 <p id="section-1-1">Segment Routing over IPv6 (SRv6) <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span> enables packet steering through a set of instructions called a segment list.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Service Function Chaining (SFC) <span>[<a href="#RFC7665" class="cite xref">RFC7665</a>]</span> can be implemented using SRv6 to steer traffic through SR-aware service functions.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The architecture of SRv6 SFC with SR-aware functions is described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">This document reports the deployment and operational experience of that architecture over an academic IPv6 backbone network. It does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document reports the deployment and operational experience of that architecture on an academic IPv6 backbone network. It does not define any new protocols or protocol extensions.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">On-demand provisioning of service function chains requires coordination among the forwarding, control, management, and application planes. This document describes how these planes were integrated in a multi-site deployment and discusses the operational considerations identified through that experience.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1391,7 +1391,7 @@ svg {
       </h2>
 <ul class="normal">
 <li class="normal" id="section-3-1.1">
-          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture over an operational IPv6 backbone in a geographically distributed, multi-site environment.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture on an operational IPv6 backbone in a geographically distributed, multi-site environment.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-1.2">
           <p id="section-3-1.2.1">Demonstrate incremental deployment without modifying existing transit backbone routers.<a href="#section-3-1.2.1" class="pilcrow">¶</a></p>
@@ -1917,7 +1917,7 @@ Installation ordering relative to SR Policy provisioning is discussed in Section
       </h2>
 <p id="section-8-1">This section describes observed operational behaviors.
 It does not specify requirements or recommendations.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">During the deployment of the SRv6 SFC system over the backbone, several operational issues and design insights were identified.
+<p id="section-8-2">During the deployment of the SRv6 SFC system on the backbone, several operational issues and design insights were identified.
 This section summarizes key observations obtained from real-world operation.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <div id="service-verification-and-observability">
 <section id="section-8.1">
@@ -2032,7 +2032,7 @@ The applicability of such capabilities to SRv6 SFC deployments requires further 
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-10-1">The security considerations in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>, <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>, and <span>[<a href="#RFC9256" class="cite xref">RFC9256</a>]</span> apply to this deployment, which relies on the SR domain trust model described in <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>.
-Operators SHOULD ensure that SRv6 packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries.<a href="#section-10-1" class="pilcrow">¶</a></p>
+Operators MUST ensure that SRv6 packets originating outside the trusted SR domain are not processed as SRv6 traffic at domain boundaries.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">This deployment provisions SR Policies to SR source nodes directly via PCEP, consistent with the PCE-initiated LSP model described in <span>[<a href="#RFC8231" class="cite xref">RFC8231</a>]</span> and <span>[<a href="#RFC8281" class="cite xref">RFC8281</a>]</span>.
 Without adequate protection, an attacker could inject or modify PCEP messages to provision unauthorized SR Policies.
 Operators SHOULD ensure that PCEP sessions used for SR Policy provisioning are protected using appropriate authentication, authorization, and integrity protection mechanisms.<a href="#section-10-2" class="pilcrow">¶</a></p>
