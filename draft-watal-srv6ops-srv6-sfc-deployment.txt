@@ -19,7 +19,7 @@ Abstract
    IPv6 backbone network.
 
    The deployed system integrates SRv6 forwarding, service function
-   management, topology collection, path computation, and traffic
+   management, topology collection, path computation, and flow
    classification to enable on-demand provisioning of SFC services
    through a web-based management interface.
 
@@ -330,8 +330,7 @@ Table of Contents
    *  collecting topology information via BGP-LS, including Service SID
       advertisements
 
-   *  distributing traffic classification rules via BGP Flow
-      Specification
+   *  distributing flow classification rules via BGP Flow Specification
 
 5.4.  Management Plane
 
@@ -496,7 +495,7 @@ Table of Contents
 
    *  headend and tailend nodes
 
-   *  optional traffic classification rules
+   *  optional flow classification rules
 
    *  the required sequence of service functions
 
@@ -557,9 +556,9 @@ Table of Contents
 
 6.6.  Flow Classification
 
-   If traffic classification is requested, BGP Flow Specification rules
-   are installed, as shown in Figure 6, associating each traffic flow
-   with its SR Policy by Color, to ensure that only the selected traffic
+   If flow classification is requested, BGP Flow Specification rules are
+   installed, as shown in Figure 6, associating each traffic flow with
+   its SR Policy by Color, to ensure that only the selected traffic
    flows traverse the deployed service function chain.  Installation
    ordering relative to SR Policy provisioning is discussed in
    Section 9.4.
@@ -833,7 +832,7 @@ Table of Contents
    Flow Specification rules are installed to steer traffic through the
    service chain.
 
-   When an existing SR Policy is modified or replaced, traffic
+   When an existing SR Policy is modified or replaced, flow
    classification rules SHOULD be updated only after the replacement
    policy has been successfully provisioned and verified.
 
@@ -878,13 +877,13 @@ Table of Contents
    Management interfaces SHOULD be protected using mutually
    authenticated secure transport protocols.
 
-   Operators SHOULD ensure that traffic classification rules and Color
+   Operators SHOULD ensure that flow classification rules and Color
    values used to associate them with SR Policies are protected against
    unauthorized modification or injection using appropriate
    authentication, authorization, and integrity protection mechanisms.
 
-   Unauthorized modification or compromise of traffic classification
-   rules, Color values, or SR Policies may result in unintended traffic
+   Unauthorized modification or compromise of flow classification rules,
+   Color values, or SR Policies may result in unintended traffic
    steering, service misbehavior, or service disruption.
 
 11.  IANA Considerations
