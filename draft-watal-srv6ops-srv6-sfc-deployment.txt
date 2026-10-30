@@ -20,12 +20,12 @@ Abstract
 
    The deployed system integrates SRv6 forwarding, service function
    management, topology collection, path computation, and flow
-   classification to enable on-demand provisioning of SFC services
-   through a web-based management interface.
+   classification to enable on-demand provisioning of SFC services via a
+   web-based management interface.
 
-   This document presents the deployment architecture, operational
-   workflow, and lessons learned, providing practical guidance for
-   operators deploying SRv6 SFC services.
+   This document summarizes the deployment architecture, operational
+   workflow ,experience, and lessons learned, and provides practical
+   guidance for operators deploying SRv6 SFC services.
 
 Discussion Venues
 
