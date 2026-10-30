@@ -24,8 +24,8 @@ Abstract
    web-based management interface.
 
    This document summarizes the deployment architecture, operational
-   workflow ,experience, and lessons learned, and provides practical
-   guidance for operators deploying SRv6 SFC services.
+   workflow, experience, and lessons learned, and provides guidance for
+   operators deploying SRv6 SFC services.
 
 Discussion Venues
 
