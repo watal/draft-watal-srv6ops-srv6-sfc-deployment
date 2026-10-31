@@ -138,7 +138,7 @@ Table of Contents
    coordination among the forwarding, control, management, and
    application planes.  This document describes how these planes were
    integrated in a multi-site deployment and discusses the operational
-   considerations identified through that experience.
+   considerations.
 
 2.  Terminology
 
@@ -190,7 +190,7 @@ Table of Contents
 
 3.  Deployment Objectives
 
-   *  Demonstrate the SRv6 SFC architecture on an operational IPv6
+   *  Demonstrate the SRv6 SFC architecture using an operational IPv6
       backbone in a geographically distributed, multi-site environment.
 
    *  Demonstrate incremental deployment without modifying existing
@@ -198,9 +198,6 @@ Table of Contents
 
    *  Evaluate the operational feasibility of on-demand SFC
       provisioning.
-
-   *  Evaluate end-to-end service operation across forwarding, control,
-      management, and application planes.
 
 4.  Deployment Environment
 
@@ -250,9 +247,8 @@ Table of Contents
 4.4.  NFV Infrastructure and Virtualized Infrastructure Manager
 
    Each data center provides NFV Infrastructure (NFVI) based on
-   OpenStack to host SR-aware service functions.  Each site operates an
-   independent OpenStack instance as its Virtualized Infrastructure
-   Manager (VIM).
+   OpenStack to host SR-aware service functions.  Each site operates
+   OpenStack instance as its Virtualized Infrastructure Manager (VIM).
 
 5.  Deployment Architecture
 
@@ -307,15 +303,13 @@ Table of Contents
 
    The forwarding plane consists of the existing IPv6 backbone and SR-
    aware service functions deployed at geographically distributed data
-   centers.
+   centers.  The backbone's transit routers require no SRv6-specific
+   modifications.
 
    Traffic is steered through a sequence of service functions using SRv6
    segment lists.  Each SR-aware service function implements the End.AN
    behavior to process packets and forward them to the next segment in
    the service chain.
-
-   The deployment uses the existing backbone routers without requiring
-   SRv6-specific modifications to the transit routers.
 
 5.3.  Control Plane
 
