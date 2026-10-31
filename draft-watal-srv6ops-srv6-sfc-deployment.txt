@@ -131,7 +131,7 @@ Table of Contents
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
    This document describes the deployment and operational experience of
-   that architecture on an academic IPv6 backbone network.  It does not
+   the architecture on an academic IPv6 backbone network.  It does not
    define any new protocols or protocol extensions.
 
    On-demand provisioning of service function chains requires
