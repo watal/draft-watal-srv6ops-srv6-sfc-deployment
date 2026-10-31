@@ -5,7 +5,7 @@
 srv6ops                                                       W. Mishima
 Internet-Draft                                               Y. Fukagawa
 Intended status: Informational          Kanagawa Institute of Technology
-Expires: 3 May 2027                                      30 October 2026
+Expires: 4 May 2027                                      31 October 2026
 
 
                SRv6 Service Function Chaining Deployment
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 May 2027.
+   This Internet-Draft will expire on 4 May 2027.
 
 Copyright Notice
 
@@ -130,7 +130,7 @@ Table of Contents
    The architecture of SRv6 SFC with SR-aware functions is described in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   This document reports the deployment and operational experience of
+   This document describes the deployment and operational experience of
    that architecture on an academic IPv6 backbone network.  It does not
    define any new protocols or protocol extensions.
 
