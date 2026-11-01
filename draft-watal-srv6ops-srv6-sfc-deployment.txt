@@ -244,10 +244,9 @@ Table of Contents
 
 4.4.  NFV Infrastructure and Virtualized Infrastructure Manager
 
-   Each data center provides NFV Infrastructure (NFVI) based on
-   OpenStack to host SR-aware service functions.  Each site operates an
-   independent OpenStack instance as its Virtualized Infrastructure
-   Manager (VIM).
+   Each data center provides NFV Infrastructure (NFVI) to host SR-aware
+   service functions and operates an independent OpenStack-based
+   Virtualized Infrastructure Manager (VIM).
 
 5.  Deployment Architecture
 
@@ -338,9 +337,8 @@ Table of Contents
 
    *  Virtualized Infrastructure Manager (VIM): defined in [RFC8568],
       responsible for managing NFVI compute, storage, and network
-      resources.  Each data center has an independent VIM instance,
-      while a single VNFM manages all VIM instances across the data
-      centers.
+      resources.  Each data center has an independent VIM, while a
+      single VNFM manages the VIMs across all data centers.
 
    *  Service Function Manager (SFM): defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], responsible

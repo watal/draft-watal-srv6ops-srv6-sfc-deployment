@@ -1468,8 +1468,7 @@ It describes the deployment environment, system architecture, and operational wo
         <h3 id="name-nfv-infrastructure-and-virt">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-nfv-infrastructure-and-virt" class="section-name selfRef">NFV Infrastructure and Virtualized Infrastructure Manager</a>
         </h3>
-<p id="section-4.4-1">Each data center provides NFV Infrastructure (NFVI) based on OpenStack to host SR-aware service functions.
-Each site operates an independent OpenStack instance as its Virtualized Infrastructure Manager (VIM).<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-1">Each data center provides NFV Infrastructure (NFVI) to host SR-aware service functions and operates an independent OpenStack-based Virtualized Infrastructure Manager (VIM).<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1572,7 +1571,7 @@ Each SR-aware service function implements the End.AN behavior to process packets
             <p id="section-5.4-3.1.1">Virtualized Network Function Manager (VNFM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for managing the lifecycle of service functions, including instantiation, scaling, and termination.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.2">
-            <p id="section-5.4-3.2.1">Virtualized Infrastructure Manager (VIM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for managing NFVI compute, storage, and network resources. Each data center has an independent VIM instance, while a single VNFM manages all VIM instances across the data centers.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.2.1">Virtualized Infrastructure Manager (VIM): defined in <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>, responsible for managing NFVI compute, storage, and network resources. Each data center has an independent VIM, while a single VNFM manages the VIMs across all data centers.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.3">
             <p id="section-5.4-3.3.1">Service Function Manager (SFM): defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, responsible for configuring SRv6-specific service parameters, including Service SID allocation and endpoint behavior, after a service function becomes operational (Figure 5). The allocation procedure is described in Section 9.1.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
