@@ -23,9 +23,9 @@ Abstract
    classification to enable on-demand provisioning of SFC services via a
    web-based management interface.
 
-   This document summarizes the deployment architecture, operational
-   workflow, experience, and lessons learned, and provides guidance for
-   operators deploying SRv6 SFC services.
+   This document summarizes the deployment architecture and operational
+   workflow, reports on deployment experience and lessons learned, and
+   provides guidance for operators deploying SRv6 SFC services.
 
 Discussion Venues
 
@@ -190,7 +190,7 @@ Table of Contents
 
 3.  Deployment Objectives
 
-   *  Demonstrate the SRv6 SFC architecture over an operational IPv6
+   *  Demonstrate the SRv6 SFC architecture on an operational IPv6
       backbone spanning geographically distributed sites.
 
    *  Demonstrate incremental deployment without modifying existing
@@ -237,7 +237,7 @@ Table of Contents
 
    Three geographically distributed data centers in Hokkaido, Kanagawa,
    and Okinawa were selected to evaluate service chaining over a wide-
-   area network.  Each data center provides NFV Infrastructure (NFVI).
+   area network.
 
 4.3.  Video Source Sites
 
@@ -247,8 +247,9 @@ Table of Contents
 4.4.  NFV Infrastructure and Virtualized Infrastructure Manager
 
    Each data center provides NFV Infrastructure (NFVI) based on
-   OpenStack to host SR-aware service functions.  Each site operates
-   OpenStack instance as its Virtualized Infrastructure Manager (VIM).
+   OpenStack to host SR-aware service functions.  Each site operates an
+   independent OpenStack instance as its Virtualized Infrastructure
+   Manager (VIM).
 
 5.  Deployment Architecture
 
@@ -321,10 +322,10 @@ Table of Contents
 
    A BGP daemon performs two functions:
 
-   *  collecting topology information via BGP-LS, including Service SID
-      advertisements
+   *  Collecting topology information via BGP-LS, including Service SID
+      advertisements.
 
-   *  distributing flow classification rules via BGP Flow Specification
+   *  Distributing flow classification rules via BGP Flow Specification.
 
 5.4.  Management Plane
 

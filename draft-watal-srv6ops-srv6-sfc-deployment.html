@@ -10,7 +10,7 @@
 <meta content="
        This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in   on an academic IPv6 backbone network. 
        The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable on-demand provisioning of SFC services via a web-based management interface. 
-       This document summarizes the deployment architecture, operational workflow, experience, and lessons learned, and provides guidance for operators deploying SRv6 SFC services. 
+       This document summarizes the deployment architecture and operational workflow, reports on deployment experience and lessons learned, and provides guidance for operators deploying SRv6 SFC services. 
     " name="description">
 <meta content="xml2rfc 3.34.1" name="generator">
 <meta content="SRv6" name="keyword">
@@ -1089,7 +1089,7 @@ svg {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> on an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable on-demand provisioning of SFC services via a web-based management interface.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3">This document summarizes the deployment architecture, operational workflow, experience, and lessons learned, and provides guidance for operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">This document summarizes the deployment architecture and operational workflow, reports on deployment experience and lessons learned, and provides guidance for operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1393,7 +1393,7 @@ The deployment illustrates how these planes were integrated across multiple site
       </h2>
 <ul class="normal">
 <li class="normal" id="section-3-1.1">
-          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture over an operational IPv6 backbone spanning geographically distributed sites.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture on an operational IPv6 backbone spanning geographically distributed sites.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-1.2">
           <p id="section-3-1.2.1">Demonstrate incremental deployment without modifying existing transit backbone routers.<a href="#section-3-1.2.1" class="pilcrow">¶</a></p>
@@ -1453,8 +1453,7 @@ The deployment illustrates how these planes were integrated across multiple site
         <h3 id="name-data-centers">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-data-centers" class="section-name selfRef">Data Centers</a>
         </h3>
-<p id="section-4.2-1">Three geographically distributed data centers in Hokkaido, Kanagawa, and Okinawa were selected to evaluate service chaining over a wide-area network.
-Each data center provides NFV Infrastructure (NFVI).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">Three geographically distributed data centers in Hokkaido, Kanagawa, and Okinawa were selected to evaluate service chaining over a wide-area network.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="video-source-sites">
@@ -1471,7 +1470,7 @@ Each data center provides NFV Infrastructure (NFVI).<a href="#section-4.2-1" cla
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-nfv-infrastructure-and-virt" class="section-name selfRef">NFV Infrastructure and Virtualized Infrastructure Manager</a>
         </h3>
 <p id="section-4.4-1">Each data center provides NFV Infrastructure (NFVI) based on OpenStack to host SR-aware service functions.
-Each site operates OpenStack instance as its Virtualized Infrastructure Manager (VIM).<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+Each site operates an independent OpenStack instance as its Virtualized Infrastructure Manager (VIM).<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1554,10 +1553,10 @@ Each SR-aware service function implements the End.AN behavior to process packets
 <p id="section-5.3-3">A BGP daemon performs two functions:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-4.1">
-            <p id="section-5.3-4.1.1">collecting topology information via BGP-LS, including Service SID advertisements<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-4.1.1">Collecting topology information via BGP-LS, including Service SID advertisements.<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-4.2">
-            <p id="section-5.3-4.2.1">distributing flow classification rules via BGP Flow Specification<a href="#section-5.3-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-4.2.1">Distributing flow classification rules via BGP Flow Specification.<a href="#section-5.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
