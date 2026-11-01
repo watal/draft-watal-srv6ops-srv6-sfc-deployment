@@ -130,15 +130,13 @@ Table of Contents
    The architecture of SRv6 SFC with SR-aware functions is described in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
-   This document provides deployment and operational experience with
+   This document reports on the deployment and operational experience of
    this architecture on an academic IPv6 backbone network.  It does not
-   define any new protocols or protocol extensions.
-
-   On-demand provisioning of service function chains requires
-   coordination among the forwarding, control, management, and
-   application planes.  The deployment illustrates how these planes were
-   integrated across multiple sites and discusses the associated
-   operational considerations.
+   define any new protocols or protocol extensions.  It describes the
+   deployment environment, system architecture, and operational
+   workflow, and discusses the operational benefits, challenges, lessons
+   learned, and considerations for operators deploying SRv6 SFC
+   services.
 
 2.  Terminology
 
