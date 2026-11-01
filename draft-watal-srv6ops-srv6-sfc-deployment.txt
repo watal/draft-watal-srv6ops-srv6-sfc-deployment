@@ -172,7 +172,7 @@ Table of Contents
       [RFC8568].
 
    *  Service Segment described in
-      [I-D.draft-ietf-spring-sr-service-programming].
+      [I-D.draft-ietf-spring-srv6-service-programming].
 
    *  SRv6 SFC architecture, including the Service Function Manager
       (SFM) and End.AN, described in
@@ -884,6 +884,14 @@ Table of Contents
 12.  References
 
 12.1.  Normative References
+
+   [I-D.draft-ietf-spring-srv6-service-programming]
+              Abdelsalam, Ed, A., Filsfils, C., Bernier, D., Li, C., and
+              B. Decraene, "SRv6 Service Programming", Work in Progress,
+              Internet-Draft, draft-ietf-spring-srv6-service-
+              programming-00, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-spring-
+              srv6-service-programming>.
 
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions]
               Mishima, W. and Y. Fukagawa, "SRv6 SFC Architecture with
