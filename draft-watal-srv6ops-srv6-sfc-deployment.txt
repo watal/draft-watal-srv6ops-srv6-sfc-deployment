@@ -109,8 +109,7 @@ Table of Contents
      7.4.  Scalability Considerations
    8.  Lessons Learned
      8.1.  Service Verification and Observability
-     8.2.  Multi-domain State Correlation Limitations
-     8.3.  Service Orchestration Timing and Consistency Issues
+     8.2.  Service Orchestration Timing and Consistency Issues
    9.  Operational Considerations
      9.1.  Service SID Allocation
      9.2.  Failure Recovery
@@ -713,21 +712,7 @@ Table of Contents
    result.  This experience demonstrated the value of per-function
    application-layer verification (see Section 9.3).
 
-8.2.  Multi-domain State Correlation Limitations
-
-   The deployed system spans multiple VIM domains across geographically
-   distributed data centers.
-
-   Operational state was monitored independently across the network,
-   infrastructure, and application layers.  No unified mechanism was
-   available to correlate SR Policy state, service function status, and
-   application-layer verification results.
-
-   As a result, troubleshooting required manual correlation of
-   information from multiple sources, increasing the effort needed to
-   identify the cause of service failures.
-
-8.3.  Service Orchestration Timing and Consistency Issues
+8.2.  Service Orchestration Timing and Consistency Issues
 
    Correct service operation depends on the ordering and timing of
    service function readiness, Service SID advertisement, SR Policy

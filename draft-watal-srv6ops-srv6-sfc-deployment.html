@@ -1264,10 +1264,7 @@ svg {
                 <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-service-verification-and-ob" class="internal xref">Service Verification and Observability</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-multi-domain-state-correlat" class="internal xref">Multi-domain State Correlation Limitations</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-service-orchestration-timin" class="internal xref">Service Orchestration Timing and Consistency Issues</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-service-orchestration-timin" class="internal xref">Service Orchestration Timing and Consistency Issues</a></p>
 </li>
             </ul>
 </li>
@@ -1940,28 +1937,17 @@ It focuses on service verification, state correlation, and orchestration timing 
 This experience demonstrated the value of per-function application-layer verification (see Section 9.3).<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="multi-domain-state-correlation-limitations">
-<section id="section-8.2">
-        <h3 id="name-multi-domain-state-correlat">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-multi-domain-state-correlat" class="section-name selfRef">Multi-domain State Correlation Limitations</a>
-        </h3>
-<p id="section-8.2-1">The deployed system spans multiple VIM domains across geographically distributed data centers.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.2-2">Operational state was monitored independently across the network, infrastructure, and application layers.
-No unified mechanism was available to correlate SR Policy state, service function status, and application-layer verification results.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.2-3">As a result, troubleshooting required manual correlation of information from multiple sources, increasing the effort needed to identify the cause of service failures.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="service-orchestration-timing-and-consistency-issues">
-<section id="section-8.3">
+<section id="section-8.2">
         <h3 id="name-service-orchestration-timin">
-<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-service-orchestration-timin" class="section-name selfRef">Service Orchestration Timing and Consistency Issues</a>
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-service-orchestration-timin" class="section-name selfRef">Service Orchestration Timing and Consistency Issues</a>
         </h3>
-<p id="section-8.3-1">Correct service operation depends on the ordering and timing of service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3-2">Delays in BGP-LS propagation and TED synchronization may cause discrepancies between the actual service function state and the state used for path computation.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.3-3">Installing Flow Specification rules before the corresponding SR Policy becomes operational may leave the intended traffic-steering state unavailable.
-As specified in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, a PCC does not activate the associated traffic-steering state until the SR Policy is available.<a href="#section-8.3-3" class="pilcrow">¶</a></p>
-<p id="section-8.3-4">Therefore, provisioning and verifying the SR Policy before distributing the corresponding Flow Specification rules is RECOMMENDED to reduce transient inconsistencies and simplify operational verification.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
-<p id="section-8.3-5">These observations motivate the operational sequencing recommendations described in Section 9.4.<a href="#section-8.3-5" class="pilcrow">¶</a></p>
+<p id="section-8.2-1">Correct service operation depends on the ordering and timing of service function readiness, Service SID advertisement, SR Policy provisioning, and Flow Specification installation.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Delays in BGP-LS propagation and TED synchronization may cause discrepancies between the actual service function state and the state used for path computation.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2-3">Installing Flow Specification rules before the corresponding SR Policy becomes operational may leave the intended traffic-steering state unavailable.
+As specified in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>, a PCC does not activate the associated traffic-steering state until the SR Policy is available.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.2-4">Therefore, provisioning and verifying the SR Policy before distributing the corresponding Flow Specification rules is RECOMMENDED to reduce transient inconsistencies and simplify operational verification.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+<p id="section-8.2-5">These observations motivate the operational sequencing recommendations described in Section 9.4.<a href="#section-8.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
