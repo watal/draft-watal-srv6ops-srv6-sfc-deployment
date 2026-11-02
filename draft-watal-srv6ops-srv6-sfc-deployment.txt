@@ -14,7 +14,7 @@ Expires: 6 May 2027                                      2 November 2026
 Abstract
 
    This document describes the deployment and operational experience of
-   the SRv6 Service Function Chaining (SFC) architecture defined in
+   the SRv6 Service Function Chaining (SFC) architecture described in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions] on an academic
    IPv6 backbone network.
 
@@ -258,7 +258,7 @@ Table of Contents
 
 5.  Deployment Architecture
 
-   The deployment follows the SRv6 SFC architecture defined in
+   The deployment follows the SRv6 SFC architecture described in
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
    The deployed system is organized into four logical planes: the
@@ -456,7 +456,8 @@ Table of Contents
      |                 |                 |    Advertise    |
      |                 |                 |   Service SID   |
      |                 |                 |---------------->|
-     |                 |Configuration OK |                 | Update TED
+     |                 |                 |                 | Update TED
+     |                 |Configuration OK |                 |
      |                 |<----------------|                 |
      |Configuration OK |                 |                 |
      |<----------------|                 |                 |

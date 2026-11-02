@@ -8,7 +8,7 @@
 <meta content="Wataru Mishima" name="author">
 <meta content="Yuta Fukagawa" name="author">
 <meta content="
-       This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in   on an academic IPv6 backbone network. 
+       This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture described in   on an academic IPv6 backbone network. 
        The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable on-demand provisioning of SFC services via a web-based management interface. 
        This document summarizes the deployment architecture and operational workflow, reports on deployment experience and lessons learned, and provides guidance for operators deploying SRv6 SFC services. 
     " name="description">
@@ -1087,7 +1087,7 @@ svg {
 <h1 id="title">SRv6 Service Function Chaining Deployment</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> on an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span> on an academic IPv6 backbone network.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable on-demand provisioning of SFC services via a web-based management interface.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3">This document summarizes the deployment architecture and operational workflow, reports on deployment experience and lessons learned, and provides guidance for operators deploying SRv6 SFC services.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
@@ -1485,7 +1485,7 @@ It describes the deployment environment, system architecture, and operational wo
       <h2 id="name-deployment-architecture">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-deployment-architecture" class="section-name selfRef">Deployment Architecture</a>
       </h2>
-<p id="section-5-1">The deployment follows the SRv6 SFC architecture defined in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">The deployment follows the SRv6 SFC architecture described in <span>[<a href="#I-D.draft-watal-spring-srv6-sfc-sr-aware-functions" class="cite xref">I-D.draft-watal-spring-srv6-sfc-sr-aware-functions</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">The following subsections describe the role of each plane and its realization in the deployed system.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <div id="overall-architecture">
@@ -1680,7 +1680,8 @@ Consistent with <span>[<a href="#RFC8568" class="cite xref">RFC8568</a>]</span>,
   |                 |                 |    Advertise    |
   |                 |                 |   Service SID   |
   |                 |                 |----------------&gt;|
-  |                 |Configuration OK |                 | Update TED
+  |                 |                 |                 | Update TED
+  |                 |Configuration OK |                 |
   |                 |&lt;----------------|                 |
   |Configuration OK |                 |                 |
   |&lt;----------------|                 |                 |
