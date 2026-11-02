@@ -164,8 +164,10 @@ Table of Contents
    *  The Path Computation Element Communication Protocol (PCEP) is
       defined in [RFC5440].
 
-   *  PCEP extensions for SR are defined in [RFC8664], with SR Policy
-      candidate path extensions further specified in [RFC9862].
+   *  PCEP extensions for IPv6 Segment Routing are defined in [RFC9603].
+
+   *  PCEP extensions for SR Policy candidate paths are defined in
+      [RFC9862].
 
    *  BGP-LS is defined in [RFC9552].
 
@@ -552,10 +554,12 @@ Table of Contents
 
 6.5.  SR Policy Provisioning
 
-   As illustrated in Figure 6, the computed SR Policy is provisioned to
-   the SR source node acting as the PCC, using PCEP [RFC9603].  The SR
-   Policy specifies the SRv6 segment list representing the selected
-   service function chain.
+   As illustrated in Figure 6, the computed SR Policy candidate path is
+   provisioned to the SR source node acting as the PCC, using PCEP
+   [RFC9603] [RFC9862].  The candidate path specifies the SRv6 segment
+   list representing the selected service function chain.  The SR Policy
+   specifies the SRv6 segment list representing the selected service
+   function chain.
 
 6.6.  Flow Classification
 
@@ -693,8 +697,8 @@ Table of Contents
 8.  Lessons Learned
 
    This section presents operational observations and design insights
-   gained from the deployment.  It focuses on service verification,
-   state correlation, and orchestration timing and consistency.
+   gained from the deployment.  It focuses on service verification and
+   orchestration timing and consistency.
 
 8.1.  Service Verification and Observability
 
