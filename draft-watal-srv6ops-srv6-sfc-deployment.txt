@@ -155,7 +155,10 @@ Table of Contents
       [RFC7665].
 
    *  Path Computation Client (PCC) and Path Computation Element (PCE)
-      are defined in [RFC4655] and [RFC5440], respectively.
+      are defined in [RFC4655].
+
+   *  The Path Computation Element Communication Protocol (PCEP) is
+      defined in [RFC5440].
 
    *  PCEP extensions for SR are defined in [RFC8664], with SR Policy
       candidate path extensions further specified in [RFC9862].
