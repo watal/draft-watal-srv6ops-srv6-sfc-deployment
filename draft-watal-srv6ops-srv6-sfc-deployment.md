@@ -18,6 +18,13 @@ stand_alone: yes
 smart_quotes: no
 pi: [toc, sortrefs, symrefs]
 
+venue:
+  group: srv6ops
+  type: Working Group
+  mail: srv6ops@ietf.org
+  arch: https://mailarchive.ietf.org/arch/browse/srv6ops/
+  github: watal/draft-watal-srv6ops-srv6-sfc-deployment
+
 author:
  -
     ins: W. Mishima
