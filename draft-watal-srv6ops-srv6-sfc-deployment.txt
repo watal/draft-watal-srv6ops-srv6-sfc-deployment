@@ -516,12 +516,12 @@ Table of Contents
    Topology information is continuously collected via BGP-LS,
    independently of individual service requests.
 
-   After a service function instance is operational, the management
-   plane configures its Service SID and End.AN behavior.  The Service
-   SID is advertised via the BGP-LS extension defined in
-   [I-D.draft-ietf-idr-bgp-ls-sr-service-segments] only after the
-   service function instance has been verified as ready to process
-   traffic.
+   After a service function instance becomes operational, the management
+   plane configures its Service SID and End.AN behavior.  Once the
+   configuration has been applied, the instance advertises its Service
+   SID via the BGP-LS extension defined in
+   [I-D.draft-ietf-idr-bgp-ls-sr-service-segments].  The instance
+   subsequently reports the configuration result to the SFM.
 
    A service function is included in the TED only after its
    advertisement is received and is excluded when the advertisement is
@@ -530,12 +530,6 @@ Table of Contents
    unavailable or is no longer eligible for traffic steering, the SFM
    SHOULD initiate withdrawal of the corresponding Service SID
    advertisement without delay.
-
-   A service function is included in the TED only after its
-   advertisement is received and is excluded when the advertisement is
-   withdrawn.  The SFM monitors service function availability and SHOULD
-   withdraw the affected Service SID advertisement when an instance
-   becomes unavailable or ineligible for traffic steering.
 
    For an Anycast Service SID, the affected node SHOULD withdraw only
    its own advertisement.  The shared SID SHOULD remain available while
