@@ -275,7 +275,7 @@ Table of Contents
    *  The application plane provides the operator interface.
 
    *  The control plane performs topology collection, path computation,
-      and SR Policy provisioning.
+      SR Policy provisioning, and flow classification.
 
    *  The management plane deploys and configures service functions.
 
@@ -403,7 +403,7 @@ Table of Contents
 
     Op   = Operator            SFM  = Service Function Manager
     App  = Application         VNF  = Virtualized Network Function
-    VNFM = VNF Manager         Ctrl = Controller
+    VNFM = VNF Manager         Ctrl = Control Plane
     VIM  = Virtualized         Src  = Headend
            Infrastructure      Dest = Endpoint
            Manager
@@ -526,7 +526,7 @@ Table of Contents
    After a service function instance becomes operational, the management
    plane configures its Service SID and End.AN behavior.  Once the
    configuration has been applied, the instance advertises its Service
-   SID via the BGP-LS extension defined in
+   SID via the BGP-LS extension described in
    [I-D.draft-ietf-idr-bgp-ls-sr-service-segments].  The instance also
    reports the configuration result to the SFM.
 
