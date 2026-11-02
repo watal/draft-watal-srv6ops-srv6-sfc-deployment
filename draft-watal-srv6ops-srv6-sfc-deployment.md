@@ -50,8 +50,9 @@ normative:
   RFC8568:
   RFC8986:
   RFC9256:
+  RFC9603:
   I-D.draft-watal-spring-srv6-sfc-sr-aware-functions:
-    target: https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-05
+    target: https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-06
     title: SRv6 SFC Architecture with SR-aware Functions
     author:
       -
@@ -60,9 +61,9 @@ normative:
       -
         ins: Y. Fukagawa
         name: Yuta Fukagawa
-    date: 2026-07-04
+    date: 2026-11-02
     seriesinfo:
-      Internet-Draft: draft-watal-spring-srv6-sfc-sr-aware-functions-05
+      Internet-Draft: draft-watal-spring-srv6-sfc-sr-aware-functions-06
 
 informative:
   RFC7426:
@@ -98,7 +99,7 @@ informative:
 
 --- abstract
 
-This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
+This document describes the deployment and operational experience of the SRv6 Service Function Chaining (SFC) architecture described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}} on an academic IPv6 backbone network.
 
 The deployed system integrates SRv6 forwarding, service function management, topology collection, path computation, and flow classification to enable on-demand provisioning of SFC services via a web-based management interface.
 
@@ -121,21 +122,22 @@ It describes the deployment environment, system architecture, and operational wo
 # Terminology
 
 ## Terminology Defined in Related RFCs and Internet-Drafts
+
 The following terms are used in this document as defined in the related RFCs and Internet-Drafts:
 
-- SR and Segment Identifier (SID) defined in {{RFC8402}}.
-- SRv6 defined in {{RFC8986}}.
-- Headend, Color, and SR Policy defined in {{RFC9256}}.
-- SFC, Service Function, and Service Function Chain defined in {{RFC7665}}.
+- SR and Segment Identifier (SID) are defined in {{RFC8402}}.
+- SRv6 is defined in {{RFC8986}}.
+- Headend, Color, and SR Policy are defined in {{RFC9256}}.
+- SFC, Service Function, and Service Function Chain are defined in {{RFC7665}}.
 - Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{RFC4655}}.
 - The Path Computation Element Communication Protocol (PCEP) is defined in {{RFC5440}}.
 - PCEP extensions for SR are defined in {{RFC8664}}, with SR Policy candidate path extensions further specified in {{RFC9862}}.
-- BGP-LS defined in {{RFC9552}}.
-- BGP Flow Specification defined in {{RFC8955}} and {{RFC8956}}.
-- Forwarding Plane, Control Plane, Management Plane, Application Plane defined in {{RFC7426}}.
-- NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) defined in {{RFC8568}}.
-- Service Segment described in {{I-D.draft-ietf-spring-srv6-service-programming}}.
-- SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+- BGP-LS is defined in {{RFC9552}}.
+- BGP Flow Specification is defined in {{RFC8955}} and {{RFC8956}}.
+- Forwarding Plane, Control Plane, Management Plane, and Application Plane are defined in {{RFC7426}}.
+- NFV Infrastructure (NFVI), Virtualized Infrastructure Manager (VIM), and Virtualized Network Function Manager (VNFM) are defined in {{RFC8568}}.
+- Service Segment is described in {{I-D.draft-ietf-spring-srv6-service-programming}}.
+- The SRv6 SFC architecture, including the Service Function Manager (SFM) and End.AN, is described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 ## Requirements Language
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all capitals, as shown here.
@@ -143,7 +145,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 # Deployment Objectives
 
 - Demonstrate the SRv6 SFC architecture on an operational IPv6 backbone spanning geographically distributed sites.
-- Demonstrate incremental deployment without modifying existing transit backbone routers.
+- Demonstrate the feasibility of incremental deployment without modifying existing transit backbone routers.
 - Evaluate the operational feasibility of on-demand SFC provisioning.
 
 # Deployment Environment
@@ -193,7 +195,7 @@ Each data center provides NFV Infrastructure (NFVI) to host SR-aware service fun
 
 # Deployment Architecture
 
-The deployment follows the SRv6 SFC architecture defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The deployment follows the SRv6 SFC architecture described in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
 The deployed system is organized into four logical planes: the forwarding plane, control plane, management plane, and application plane.
 
@@ -204,11 +206,11 @@ The following subsections describe the role of each plane and its realization in
 Figure 2 illustrates the logical architecture of the deployed system.
 
 - The application plane provides the operator interface.
-- The control plane performs topology collection, path computation, and SR Policy provisioning.
+- The control plane performs topology collection, path computation, SR Policy provisioning, and flow classification.
 - The management plane deploys and configures service functions.
 - The forwarding plane forwards traffic through SR-aware service functions.
 
-This architecture enables dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
+The deployed system enables dynamic deployment and operation of SRv6 service function chains while preserving the existing forwarding infrastructure.
 
 ~~~ drawing
                       +----------------------+
@@ -236,18 +238,22 @@ The forwarding plane consists of the existing IPv6 backbone and SR-aware service
 The backbone's transit routers require no SRv6-specific modifications.
 
 Traffic is steered through a sequence of service functions using SRv6 segment lists.
-Each SR-aware service function implements the End.AN behavior to process packets and forward them to the next segment in the service chain.
+Each SR-aware service function is associated with an End.AN SID to process packets and forward them to the next segment in the service chain.
 
 ## Control Plane
 
-The control plane is responsible for topology collection, path computation, and SR Policy provisioning.
+The control plane is responsible for topology collection, path computation, SR Policy provisioning, and flow classification.
 
-A Path Computation Element (PCE) uses a Traffic Engineering Database (TED) for topology and resource information.
+It consists of a Path Computation Element (PCE), a Classification Rule Controller, and a BGP daemon.
 
-A BGP daemon performs two functions:
+The PCE uses a Traffic Engineering Database (TED) containing topology and resource information to compute paths and provision SR Policies.
+
+The Classification Rule Controller generates BGP Flow Specification rules based on flow classification requirements received from the application plane.
+
+The BGP daemon provides the following functions:
 
 - Collecting topology information via BGP-LS, including Service SID advertisements.
-- Distributing flow classification rules via BGP Flow Specification.
+- Distributing BGP Flow Specification rules generated by the Classification Rule Controller to the SR source nodes.
 
 ## Management Plane
 
@@ -256,12 +262,14 @@ The management plane is responsible for deploying, configuring, and managing the
 It consists of three logically distinct functions:
 
 - Virtualized Network Function Manager (VNFM): defined in {{RFC8568}}, responsible for managing the lifecycle of service functions, including instantiation, scaling, and termination.
-- Virtualized Infrastructure Manager (VIM): defined in {{RFC8568}}, responsible for managing NFVI compute, storage, and network resources. Each data center has an independent VIM, while a single VNFM manages the VIMs across all data centers.
-- Service Function Manager (SFM): defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for configuring SRv6-specific service parameters, including Service SID allocation and endpoint behavior, after a service function becomes operational (Figure 5). The allocation procedure is described in Section 9.1.
+- Virtualized Infrastructure Manager (VIM): defined in {{RFC8568}}, responsible for managing NFVI compute, storage, and network resources. Each data center has an independent VIM. A single VNFM manages the lifecycle of service functions across all data centers, interacting with the corresponding VIMs.
+- Service Function Manager (SFM): defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, responsible for configuring SRv6-specific service parameters, including Service SID allocation and End.AN behavior, after the service function instance becomes operational (Figure 5). The allocation procedure is described in Section 9.1.
 
-Each service function instance operates its own BGP-LS speaker (e.g., an embedded agent or sidecar process) and advertises its configured Service SID to the control plane after the SFM completes its configuration.
+Each service function instance operates its own BGP-LS speaker (e.g., an embedded agent or sidecar process).
+After receiving the Service SID and End.AN configuration from the SFM, the instance advertises its Service SID to the control plane.
+The instance also reports the configuration result to the SFM.
 
-The management plane also supports service function reconfiguration and removal throughout their operational lifecycle.
+The management plane also supports service function reconfiguration and removal throughout the operational lifecycle of each service function.
 
 ## Application Plane
 
@@ -269,8 +277,7 @@ The application plane consists of an operator-facing web-based management interf
 Based on operator requests, the application plane translates service requirements into intent-based service requests and coordinates the control and management planes to realize them as deployment operations.
 
 The application plane could be extended with closed-loop automation functions that use telemetry feedback from the control and management planes.
-Such functions could refine service policies and optimize service intents based on observed service and network conditions.
-They would operate at a higher level of abstraction and remain logically separate from the control and management planes.
+These functions would operate at a higher level of abstraction and remain logically separate from the control and management planes.
 
 # Operational Workflow
 
@@ -284,18 +291,18 @@ The following abbreviations are used:
 ~~~ drawing
  Op   = Operator            SFM  = Service Function Manager
  App  = Application         VNF  = Virtualized Network Function
- VNFM = VNF Manager         Ctrl = Controller
+ VNFM = VNF Manager         Ctrl = Control Plane
  VIM  = Virtualized         Src  = Headend
-        Infrastructure      Dest = Tailend
+        Infrastructure      Dest = Endpoint
         Manager
 ~~~
 {: #fig-wf-legend title="Abbreviations Used in Figures 4-6"}
 
-In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.3 (the PCE and the BGP daemon) collectively.
-The specific component responsible for each message is identified by the corresponding function (e.g., topology/segment advertisement is handled by the BGP daemon, while path computation and SR Policy provisioning are handled by the PCE).
+In Figures 5 and 6, Ctrl represents the control-plane components described in Section 5.3 collectively.
+The BGP daemon handles BGP-LS topology collection and BGP Flow Specification distribution, while the PCE handles path computation and SR Policy provisioning.
 
 Figure 4 shows service function instantiation.
-Consistent with {{RFC8568}}, the VNFM issues the lifecycle request and the VIM allocates and provisions the underlying NFVI resources.
+Consistent with {{RFC8568}}, the VNFM issues the lifecycle request, and the VIM allocates and provisions the underlying NFVI resources.
 
 ~~~ drawing
  Op           App         VNFM          VIM           VNF
@@ -334,7 +341,8 @@ Figure 5 shows SRv6-specific service configuration after the service function be
   |                 |                 |    Advertise    |
   |                 |                 |   Service SID   |
   |                 |                 |---------------->|
-  |                 |Configuration OK |                 | Update TED
+  |                 |                 |                 | Update TED
+  |                 |Configuration OK |                 |
   |                 |<----------------|                 |
   |Configuration OK |                 |                 |
   |<----------------|                 |                 |
@@ -342,7 +350,7 @@ Figure 5 shows SRv6-specific service configuration after the service function be
 ~~~
 {: #fig-wf-5 title="Service SID Configuration and Advertisement"}
 
-Figure 6 shows SFC activation, consisting of path computation, SR Policy provisioning, Flow Specification installation, and traffic steering.
+Figure 6 shows SFC activation, including path computation and SR Policy provisioning, followed by optional Flow Specification installation and traffic steering.
 
 ~~~ drawing
  App              Ctrl               Src              Dest
@@ -360,8 +368,8 @@ Figure 6 shows SFC activation, consisting of path computation, SR Policy provisi
   |                 |<----------------|                 |
   |   SR Policy OK  |                 |                 |
   |<----------------|                 |                 |
-  |     Install     |                 |                 |
-  |    Flow Rule    |                 |                 |
+  |  Request Flow   |                 |                 |
+  | Classification  |                 |                 |
   |---------------->|                 |                 |
   |                 |    FlowSpec     |                 |
   |                 |---------------->|                 |
@@ -379,7 +387,7 @@ The operational workflow begins when an operator submits a service request throu
 
 A service request typically includes:
 
-- headend and tailend nodes
+- headend and endpoint nodes
 - optional flow classification rules
 - the required sequence of service functions
 
@@ -392,20 +400,20 @@ Deployment is triggered by an explicit operator request.
 
 ## Topology Collection
 
-Topology information is continuously collected via BGP-LS independently of individual service requests.
+Topology information is continuously collected via BGP-LS, independently of individual service requests.
 
-After a service function has been instantiated, initialized, and verified as operational, the management plane configures its Service SID and the corresponding End.AN behavior.
+After a service function instance becomes operational, the management plane configures its Service SID and End.AN behavior.
+Once the configuration has been applied, the instance advertises its Service SID via the BGP-LS extension described in {{I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}.
+The instance also reports the configuration result to the SFM.
 
-The service function then advertises its Service SID information via the BGP-LS extension defined in {{I-D.draft-ietf-idr-bgp-ls-sr-service-segments}}, which is currently under standardization.
+A service function is included in the TED only after its advertisement is received and is excluded when the advertisement is withdrawn.
+The SFM monitors service function availability and eligibility for traffic steering.
+When an instance becomes unavailable or is no longer eligible for traffic steering, the SFM SHOULD initiate withdrawal of the corresponding Service SID advertisement without delay.
 
-Until this advertisement is received, or if the advertisement is withdrawn, the service function is not included in the TED and is not considered during path computation.
+For an Anycast Service SID, the affected node SHOULD withdraw only its own advertisement.
+The shared SID SHOULD remain available while at least one eligible instance advertises it.
 
-The SFM is responsible for monitoring the operational state of service function instances.
-When a service function becomes unavailable or is no longer eligible for traffic steering, the SFM SHOULD withdraw the corresponding Service SID advertisement via BGP-LS.
-
-Failure to withdraw stale Service SID information may result in incorrect path computation. The same applies if service function availability is not reflected in the TED in a timely manner: traffic may be steered to non-operational or invalid service functions.
-
-The control plane maintains the TED based on received BGP-LS advertisements and withdrawals.
+Stale or delayed Service SID updates may cause incorrect path computation and steer traffic to unavailable or invalid service functions.
 
 ## Path Computation
 
@@ -413,17 +421,22 @@ When a service request is received, the control plane computes an SR Policy sati
 
 ## SR Policy Provisioning
 
-As illustrated in Figure 6, the computed SR Policy is provisioned to the SR source node acting as the PCC, using PCEP.
+As illustrated in Figure 6, the computed SR Policy is provisioned to the SR source node acting as the PCC, using PCEP {{RFC9603}}.
 The SR Policy specifies the SRv6 segment list representing the selected service function chain.
 
 ## Flow Classification
 
-If flow classification is requested, BGP Flow Specification rules are installed, as shown in Figure 6, associating each traffic flow with its SR Policy by Color, to ensure that only the selected traffic flows traverse the deployed service function chain.
-Installation ordering relative to SR Policy provisioning is discussed in Section 9.4.
+If flow classification is requested, the application plane submits the classification requirements to the Classification Rule Controller in the control plane.
+
+The Classification Rule Controller generates the corresponding BGP Flow Specification rules, which are distributed to the SR source node by the BGP daemon.
+
+The rules associate matching traffic with the intended SR Policy by Color and Endpoint, as shown in Figure 6.
 
 ## Traffic Steering
 
-Once the SR Policy and Flow Specification rules shown in Figure 6 are installed, the SR source node begins steering matching traffic through the selected service functions.
+Once the SR Policy is operational, the SR source node can steer traffic through the selected service functions.
+When flow classification is requested, traffic steering begins after the corresponding Flow Specification rules are installed.
+Only traffic matching the installed rules is steered through the service function chain.
 
 ## Monitoring
 
@@ -439,22 +452,23 @@ The deployed system supports updates throughout the service lifecycle.
 
 Typical operations include:
 
-* modifying service function chains
-* removing service function chains
-* redeploying failed service functions
-* removing service functions
+- modifying or removing service function chains
+- redeploying failed service functions
+- removing service functions
+
+When a service function becomes unavailable, the affected Service Function Node MUST stop processing packets using its Service SID, as specified in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
+The SFM SHOULD withdraw the corresponding Service SID advertisement as described in Section 6.3.
 
 Service updates require coordination among the forwarding, control, management, and application planes to maintain operational consistency.
-
 The ordering and verification of update operations are discussed in Section 9.4.
 
 # Deployment Experience
 
 This section describes the deployment and operational experience of the SRv6 SFC architecture.
+The system was deployed to support remote video production.
 
-The deployed system supported a remote video production service.
-
-The following subsections describe the deployed architecture, the deployed service, and the resulting operational observations.
+The following subsections describe its architecture, the service it supported, and the operational behaviors and design insights observed during the deployment.
+This section does not specify requirements or recommendations.
 
 ## Deployed System Architecture
 
@@ -463,62 +477,57 @@ The deployment used the environment described in Section 4.
 The deployed system implements the following components:
 
 - Application plane: a web-based management interface and service orchestration component.
-- Control plane: Pola PCE for path computation and SR Policy provisioning, together with GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
+- Control plane: Pola PCE for path computation and SR Policy provisioning, a Classification Rule Controller for generating flow classification rules, and GoBGP for BGP-LS topology collection and BGP Flow Specification distribution.
 - Management plane: a VNFM, OpenStack as the VIM, and Ansible as the SFM.
 - Forwarding plane: the existing backbone and distributed SR-aware service functions.
 
 ## Service Deployment
 
-Video streams from the video source sites described in Section 4.3 were dynamically steered through SR-aware service functions deployed in the Hokkaido, Kanagawa, and Okinawa data centers.
+Video streams from the source sites described in Section 4.3 were dynamically steered through SR-aware service functions deployed in the Hokkaido, Kanagawa, and Okinawa data centers.
 
 The service functions performed video switching, transcoding, color correction, and caption insertion before forwarding the processed streams to the production system.
 
 Operators created service function chains through the web-based management interface.
 
-The management plane instantiated the distributed service functions, after which Service SIDs were assigned and the corresponding information was advertised via BGP-LS.
+The management plane instantiated the distributed service functions, after which Service SIDs were assigned to the instances and the corresponding information was advertised via BGP-LS.
 
 ## Operational Benefits
 
 The deployed system demonstrated several operational benefits.
 
-* No modifications to the existing backbone infrastructure were required for deployment or operation.
-* Service functions were deployed on demand using the existing NFV infrastructure.
-* SR Policies and Flow Specification rules were automatically generated.
-* Operators manage services through an intent-based interface, without requiring awareness of low-level network details, thereby reducing operational complexity.
+- No modifications to the existing backbone infrastructure were required for deployment or operation.
+- Service functions were deployed on demand using the existing NFV infrastructure.
+- SR Policies and Flow Specification rules were automatically generated.
+- Operators manage services through an intent-based interface without configuring low-level network details.
 
 ## Scalability Considerations
 
 This deployment demonstrated that additional SR-aware service functions can be introduced without changing the overall control architecture.
 
-Once instantiated, configured, and advertised via BGP-LS, these service functions become available for path computation without requiring manual updates to the controller configuration.
+Once instantiated, configured, and advertised via BGP-LS, these service functions become available for path computation without requiring manual updates to the PCE's service-function configuration.
 
 # Lessons Learned
 
-This section describes observed operational behaviors.
-It does not specify requirements or recommendations.
-
-During the deployment of the SRv6 SFC system on the backbone, several operational issues and design insights were identified.
-This section summarizes key observations obtained from real-world operation.
+This section presents operational observations and design insights gained from the deployment.
+It focuses on service verification, state correlation, and orchestration timing and consistency.
 
 ## Service Verification and Observability
 
 Verifying end-to-end service correctness requires more than monitoring SR Policy status or the operational state of service functions.
 
-For the deployed video processing service, network-layer monitoring alone was insufficient to verify the correctness of the processing results. Application-layer verification was needed to compare input and output video streams.
+For the deployed video processing service, network-layer monitoring alone could not verify processing correctness; application-layer comparison of input and output video streams was needed.
 
-For service chains consisting of multiple content-modifying service functions, checking only the original source and final destination was insufficient to identify which service function caused an incorrect processing result.
-
-This experience demonstrated the need for application-layer verification as a complement to network- and infrastructure-layer monitoring.
+For service chains containing multiple content-modifying service functions, checking only the original source and final destination was insufficient to identify which function caused an incorrect result.
+This experience demonstrated the value of per-function application-layer verification (see Section 9.3).
 
 ## Multi-domain State Correlation Limitations
 
-The deployed system spans multiple VIM domains distributed across geographically separated data centers.
+The deployed system spans multiple VIM domains across geographically distributed data centers.
 
-Operational state is distributed across network, infrastructure, and application layers, each monitored using independent tools. Consequently, no unified mechanism was available to correlate SR Policy state, service function status, and application-layer verification results.
+Operational state was monitored independently across the network, infrastructure, and application layers.
+No unified mechanism was available to correlate SR Policy state, service function status, and application-layer verification results.
 
-Troubleshooting therefore required manual correlation of information from multiple sources.
-
-This lack of unified state correlation increased the effort required to identify the source of service failures across the network, infrastructure, and application domains.
+As a result, troubleshooting required manual correlation of information from multiple sources, increasing the effort needed to identify the cause of service failures.
 
 ## Service Orchestration Timing and Consistency Issues
 
@@ -526,7 +535,10 @@ Correct service operation depends on the ordering and timing of service function
 
 Delays in BGP-LS propagation and TED synchronization may cause discrepancies between the actual service function state and the state used for path computation.
 
-Similarly, installing Flow Specification rules before the corresponding SR Policy becomes operational may result in transient traffic misclassification or blackholing.
+Installing Flow Specification rules before the corresponding SR Policy becomes operational may leave the intended traffic-steering state unavailable.
+As specified in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}, a PCC does not activate the associated traffic-steering state until the SR Policy is available.
+
+Therefore, provisioning and verifying the SR Policy before distributing the corresponding Flow Specification rules is RECOMMENDED to reduce transient inconsistencies and simplify operational verification.
 
 These observations motivate the operational sequencing recommendations described in Section 9.4.
 
@@ -536,9 +548,10 @@ SRv6 SFC deployments require coordination among the control, management, and app
 
 ## Service SID Allocation
 
-Service SID allocation MUST ensure that distinct service functions within the same Locator do not inadvertently use the same Function value.
+Service SID allocation MUST ensure that distinct service functions within the same SRv6 Locator do not inadvertently use the same Function value.
 
-When multiple service function instances are intentionally configured to share an Anycast Service SID, the shared SID MUST be treated as a single logical service endpoint. Such sharing MUST be explicitly coordinated to ensure that all instances provide compatible service behavior.
+When multiple service function instances are intentionally configured to share an Anycast Service SID, the shared SID MUST be treated as a single logical service endpoint.
+Such sharing MUST be explicitly coordinated to ensure that all instances provide compatible service behavior.
 
 Reachability to the node hosting a service function is provided by the SRv6 Locator assigned to that node and advertised through normal IGP/BGP routing.
 Transit nodes along the path only need to maintain reachability to this Locator; they are not required to be aware of the Service SIDs corresponding to individual service functions providing the End.AN behavior.
@@ -551,11 +564,12 @@ This approach reduces the risk of collisions with already allocated Service SIDs
 
 Failure recovery follows the mechanisms defined in {{I-D.draft-watal-spring-srv6-sfc-sr-aware-functions}}.
 
-In operational deployments, fast reroute at the forwarding plane can maintain network connectivity, but it does not necessarily guarantee service-level state consistency.
-
+Fast reroute at the forwarding plane can maintain network connectivity, but does not necessarily preserve service-level state.
 During failover, traffic may be redirected to a different service function instance that does not share the processing state of the original instance.
 
-Service-level recovery may require application-specific mechanisms to handle state inconsistencies when traffic is redirected to a different service function instance. The appropriate mechanisms depend on the service function and its processing model.
+For stateful service functions using Anycast SIDs, operators need to consider session affinity and service-state consistency across instances.
+The required mechanisms depend on the service function and its processing model.
+Where failover is expected to preserve session or processing state, the deployment MUST provide appropriate mechanisms.
 
 ## Observability
 
@@ -567,16 +581,15 @@ Effective observability for SRv6 SFC involves monitoring multiple aspects of the
 - Virtual infrastructure resource utilization
 - Application-level service processing results
 
-The deployment did not provide a unified telemetry system spanning the network, NFV, and application domains. Correlating operational state across these domains therefore required manual investigation. A unified telemetry system could help correlate events and support fault detection and diagnosis.
-
-For content-modifying services, application-layer verification SHOULD include mechanisms to compare the input and output of individual service functions.
+For content-modifying services, application-layer verification of individual service functions SHOULD compare each function's input and output (see Section 8.1).
 
 Packet mirroring capabilities at SRv6 endpoints may provide additional information for service-level monitoring and troubleshooting.
 The applicability of such capabilities to SRv6 SFC deployments requires further investigation.
 
 ## Operational Sequencing
 
-Automated orchestration SHOULD ensure that service functions are instantiated, configured, and verified as ready before their Service SIDs are advertised via BGP-LS.
+Automated orchestration SHOULD ensure that service functions are instantiated and configured before their Service SIDs are advertised via BGP-LS.
+The SFM SHOULD monitor and record the configuration results reported by service function instances.
 
 The corresponding SR Policy SHOULD be provisioned and verified before Flow Specification rules are installed to steer traffic through the service chain.
 
