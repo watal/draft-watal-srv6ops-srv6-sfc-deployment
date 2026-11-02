@@ -554,9 +554,9 @@ Table of Contents
 6.5.  SR Policy Provisioning
 
    As illustrated in Figure 6, the computed SR Policy is provisioned to
-   the SR source node acting as the PCC, using PCEP.  The SR Policy
-   specifies the SRv6 segment list representing the selected service
-   function chain.
+   the SR source node acting as the PCC, using PCEP [RFC9603].  The SR
+   Policy specifies the SRv6 segment list representing the selected
+   service function chain.
 
 6.6.  Flow Classification
 
