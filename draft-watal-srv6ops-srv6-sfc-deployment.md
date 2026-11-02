@@ -51,6 +51,8 @@ normative:
   RFC8986:
   RFC9256:
   RFC9603:
+  RFC9862:
+  I-D.draft-ietf-idr-ts-flowspec-srv6-policy:
   I-D.draft-watal-spring-srv6-sfc-sr-aware-functions:
     target: https://datatracker.ietf.org/doc/html/draft-watal-spring-srv6-sfc-sr-aware-functions-06
     title: SRv6 SFC Architecture with SR-aware Functions
@@ -72,7 +74,6 @@ informative:
   RFC8955:
   RFC8956:
   RFC9552:
-  RFC9862:
   I-D.draft-ietf-spring-srv6-service-programming:
     target: https://datatracker.ietf.org/doc/html/draft-ietf-spring-srv6-service-programming
     title: SRv6 Service Programming
@@ -131,7 +132,8 @@ The following terms are used in this document as defined in the related RFCs and
 - SFC, Service Function, and Service Function Chain are defined in {{RFC7665}}.
 - Path Computation Client (PCC) and Path Computation Element (PCE) are defined in {{RFC4655}}.
 - The Path Computation Element Communication Protocol (PCEP) is defined in {{RFC5440}}.
-- PCEP extensions for SR are defined in {{RFC8664}}, with SR Policy candidate path extensions further specified in {{RFC9862}}.
+- PCEP extensions for IPv6 Segment Routing are defined in {{RFC9603}}.
+- PCEP extensions for SR Policy candidate paths are defined in {{RFC9862}}.
 - BGP-LS is defined in {{RFC9552}}.
 - BGP Flow Specification is defined in {{RFC8955}} and {{RFC8956}}.
 - Forwarding Plane, Control Plane, Management Plane, and Application Plane are defined in {{RFC7426}}.
@@ -144,7 +146,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Deployment Objectives
 
-- Demonstrate the SRv6 SFC architecture on an operational IPv6 backbone spanning geographically distributed sites.
+- Demonstrate the SRv6 SFC architecture on an academic IPv6 backbone spanning geographically distributed sites.
 - Demonstrate the feasibility of incremental deployment without modifying existing transit backbone routers.
 - Evaluate the operational feasibility of on-demand SFC provisioning.
 
@@ -421,8 +423,8 @@ When a service request is received, the control plane computes an SR Policy sati
 
 ## SR Policy Provisioning
 
-As illustrated in Figure 6, the computed SR Policy is provisioned to the SR source node acting as the PCC, using PCEP {{RFC9603}}.
-The SR Policy specifies the SRv6 segment list representing the selected service function chain.
+As illustrated in Figure 6, the computed SR Policy candidate path is provisioned to the SR source node acting as the PCC, using PCEP {{RFC9603}} {{RFC9862}}.
+The candidate path contains the SRv6 segment list representing the selected service function chain.
 
 ## Flow Classification
 
@@ -430,7 +432,7 @@ If flow classification is requested, the application plane submits the classific
 
 The Classification Rule Controller generates the corresponding BGP Flow Specification rules, which are distributed to the SR source node by the BGP daemon.
 
-The rules associate matching traffic with the intended SR Policy by Color and Endpoint, as shown in Figure 6.
+The rules associate matching traffic with an SR Policy identified by the (Color, Endpoint) tuple, following the procedures specified in {{I-D.draft-ietf-idr-ts-flowspec-srv6-policy}}.
 
 ## Traffic Steering
 
@@ -509,7 +511,7 @@ Once instantiated, configured, and advertised via BGP-LS, these service function
 # Lessons Learned
 
 This section presents operational observations and design insights gained from the deployment.
-It focuses on service verification, state correlation, and orchestration timing and consistency.
+It focuses on service verification and orchestration timing and consistency.
 
 ## Service Verification and Observability
 
@@ -519,15 +521,6 @@ For the deployed video processing service, network-layer monitoring alone could 
 
 For service chains containing multiple content-modifying service functions, checking only the original source and final destination was insufficient to identify which function caused an incorrect result.
 This experience demonstrated the value of per-function application-layer verification (see Section 9.3).
-
-## Multi-domain State Correlation Limitations
-
-The deployed system spans multiple VIM domains across geographically distributed data centers.
-
-Operational state was monitored independently across the network, infrastructure, and application layers.
-No unified mechanism was available to correlate SR Policy state, service function status, and application-layer verification results.
-
-As a result, troubleshooting required manual correlation of information from multiple sources, increasing the effort needed to identify the cause of service failures.
 
 ## Service Orchestration Timing and Consistency Issues
 
