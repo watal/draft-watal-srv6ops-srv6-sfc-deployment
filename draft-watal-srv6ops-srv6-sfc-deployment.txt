@@ -888,6 +888,14 @@ Table of Contents
 
 12.1.  Normative References
 
+   [I-D.draft-ietf-idr-ts-flowspec-srv6-policy]
+              Wenying, J., Liu, Y., Zhuang, S., Mishra, G. S., and S.
+              Chen, "Traffic Steering using BGP FlowSpec with SR
+              Policy", Work in Progress, Internet-Draft, draft-ietf-idr-
+              ts-flowspec-srv6-policy-20, 30 October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-idr-ts-
+              flowspec-srv6-policy-20>.
+
    [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions]
               Mishima, W. and Y. Fukagawa, "SRv6 SFC Architecture with
               SR-aware Functions", Work in Progress, Internet-Draft,
@@ -971,14 +979,6 @@ Table of Contents
               02, 5 November 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-
               ls-sr-service-segments-02>.
-
-   [I-D.draft-ietf-idr-ts-flowspec-srv6-policy]
-              Wenying, J., Liu, Y., Zhuang, S., Mishra, G. S., and S.
-              Chen, "Traffic Steering using BGP FlowSpec with SR
-              Policy", Work in Progress, Internet-Draft, draft-ietf-idr-
-              ts-flowspec-srv6-policy-20, 30 October 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-idr-ts-
-              flowspec-srv6-policy-20>.
 
    [I-D.draft-ietf-spring-srv6-service-programming]
               Abdelsalam, Ed, A., Filsfils, C., Bernier, D., Li, C., and
