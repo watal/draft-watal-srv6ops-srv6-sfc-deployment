@@ -360,7 +360,7 @@ Table of Contents
    *  Service Function Manager (SFM): defined in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions], responsible
       for configuring SRv6-specific service parameters, including
-      Service SID allocation and endpoint behavior, after the service
+      Service SID allocation and End.AN behavior, after the service
       function instance becomes operational (Figure 5).  The allocation
       procedure is described in Section 9.1.
 
