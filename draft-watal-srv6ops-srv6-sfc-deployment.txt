@@ -152,11 +152,11 @@ Table of Contents
 
    *  SR and Segment Identifier (SID) are defined in [RFC8402].
 
-   *  SRv6 defined in [RFC8986].
+   *  SRv6 is defined in [RFC8986].
 
-   *  Headend, Color, and SR Policy defined in [RFC9256].
+   *  Headend, Color, and SR Policy are defined in [RFC9256].
 
-   *  SFC, Service Function, and Service Function Chain defined in
+   *  SFC, Service Function, and Service Function Chain are defined in
       [RFC7665].
 
    *  Path Computation Client (PCC) and Path Computation Element (PCE)
@@ -170,20 +170,20 @@ Table of Contents
 
    *  BGP-LS is defined in [RFC9552].
 
-   *  BGP Flow Specification defined in [RFC8955] and [RFC8956].
+   *  BGP Flow Specification is defined in [RFC8955] and [RFC8956].
 
    *  Forwarding Plane, Control Plane, Management Plane, and Application
       Plane are defined in [RFC7426].
 
    *  NFV Infrastructure (NFVI), Virtualized Infrastructure Manager
-      (VIM), and Virtualized Network Function Manager (VNFM) defined in
-      [RFC8568].
+      (VIM), and Virtualized Network Function Manager (VNFM) are defined
+      in [RFC8568].
 
-   *  Service Segment described in
+   *  Service Segment is described in
       [I-D.draft-ietf-spring-srv6-service-programming].
 
-   *  SRv6 SFC architecture, including the Service Function Manager
-      (SFM) and End.AN, described in
+   *  The SRv6 SFC architecture, including the Service Function Manager
+      (SFM) and End.AN, is described in
       [I-D.draft-watal-spring-srv6-sfc-sr-aware-functions].
 
 2.2.  Requirements Language
