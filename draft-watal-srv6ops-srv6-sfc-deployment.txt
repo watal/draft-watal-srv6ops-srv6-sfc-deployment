@@ -385,10 +385,9 @@ Table of Contents
 
    The application plane could be extended with closed-loop automation
    functions that use telemetry feedback from the control and management
-   planes.  Such functions could refine service policies and optimize
-   service intents based on observed service and network conditions.
-   They would operate at a higher level of abstraction and remain
-   logically separate from the control and management planes.
+   planes.  These functions would operate at a higher level of
+   abstraction and remain logically separate from the control and
+   management planes.
 
 6.  Operational Workflow
 
