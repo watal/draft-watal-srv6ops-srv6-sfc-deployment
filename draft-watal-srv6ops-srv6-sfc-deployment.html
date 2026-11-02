@@ -1399,7 +1399,7 @@ It describes the deployment environment, system architecture, and operational wo
       </h2>
 <ul class="normal">
 <li class="normal" id="section-3-1.1">
-          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture on an operational IPv6 backbone spanning geographically distributed sites.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-1.1.1">Demonstrate the SRv6 SFC architecture on an academic IPv6 backbone spanning geographically distributed sites.<a href="#section-3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-1.2">
           <p id="section-3-1.2.1">Demonstrate the feasibility of incremental deployment without modifying existing transit backbone routers.<a href="#section-3-1.2.1" class="pilcrow">¶</a></p>
@@ -1798,7 +1798,7 @@ The SR Policy specifies the SRv6 segment list representing the selected service 
         </h3>
 <p id="section-6.6-1">If flow classification is requested, the application plane submits the classification requirements to the Classification Rule Controller in the control plane.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
 <p id="section-6.6-2">The Classification Rule Controller generates the corresponding BGP Flow Specification rules, which are distributed to the SR source node by the BGP daemon.<a href="#section-6.6-2" class="pilcrow">¶</a></p>
-<p id="section-6.6-3">The rules associate matching traffic with the intended SR Policy by Color and Endpoint, as shown in Figure 6.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
+<p id="section-6.6-3">The rules associate matching traffic with an SR Policy identified by the (Color, Endpoint) tuple, following the procedures specified in <span>[<a href="#I-D.draft-ietf-idr-ts-flowspec-srv6-policy" class="cite xref">I-D.draft-ietf-idr-ts-flowspec-srv6-policy</a>]</span>.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="traffic-steering">
@@ -2115,8 +2115,12 @@ If this verification is not performed, a rogue or compromised service function c
 <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Talaulikar, K., Ed.</span>, <span class="refAuthor">Voyer, D.</span>, <span class="refAuthor">Bogdanov, A.</span>, and <span class="refAuthor">P. Mattes</span>, <span class="refTitle">"Segment Routing Policy Architecture"</span>, <span class="seriesInfo">RFC 9256</span>, <span class="seriesInfo">DOI 10.17487/RFC9256</span>, <time datetime="2022-07" class="refDate">July 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9256">https://www.rfc-editor.org/rfc/rfc9256</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9603">[RFC9603]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Li, C., Ed.</span>, <span class="refAuthor">Kaladharan, P.</span>, <span class="refAuthor">Sivabalan, S.</span>, <span class="refAuthor">Koldychev, M.</span>, and <span class="refAuthor">Y. Zhu</span>, <span class="refTitle">"Path Computation Element Communication Protocol (PCEP) Extensions for IPv6 Segment Routing"</span>, <span class="seriesInfo">RFC 9603</span>, <span class="seriesInfo">DOI 10.17487/RFC9603</span>, <time datetime="2024-07" class="refDate">July 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9603">https://www.rfc-editor.org/rfc/rfc9603</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9862">[RFC9862]</dt>
+      <dd>
+<span class="refAuthor">Koldychev, M.</span>, <span class="refAuthor">Sivabalan, S.</span>, <span class="refAuthor">Sidor, S.</span>, <span class="refAuthor">Barth, C.</span>, <span class="refAuthor">Peng, S.</span>, and <span class="refAuthor">H. Bidgoli</span>, <span class="refTitle">"Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing (SR) Policy Candidate Paths"</span>, <span class="seriesInfo">RFC 9862</span>, <span class="seriesInfo">DOI 10.17487/RFC9862</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9862">https://www.rfc-editor.org/rfc/rfc9862</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2130,6 +2134,10 @@ If this verification is not performed, a rogue or compromised service function c
 <dt id="I-D.draft-ietf-idr-bgp-ls-sr-service-segments">[I-D.draft-ietf-idr-bgp-ls-sr-service-segments]</dt>
         <dd>
 <span class="refAuthor">Dawra, G.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Talaulikar, K.</span>, <span class="refAuthor">Clad, F.</span>, <span class="refAuthor">Bernier, D.</span>, <span class="refAuthor">Uttaro, J.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Elmalky, H.</span>, <span class="refAuthor">Xu, X.</span>, <span class="refAuthor">Guichard, J.</span>, and <span class="refAuthor">C. Li</span>, <span class="refTitle">"BGP-LS Advertisement of Segment Routing Service Segments"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-idr-bgp-ls-sr-service-segments-02</span>, <time datetime="2022-11-05" class="refDate">5 November 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-ls-sr-service-segments-02">https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-ls-sr-service-segments-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-idr-ts-flowspec-srv6-policy">[I-D.draft-ietf-idr-ts-flowspec-srv6-policy]</dt>
+        <dd>
+<span class="refAuthor">Wenying, J.</span>, <span class="refAuthor">Liu, Y.</span>, <span class="refAuthor">Zhuang, S.</span>, <span class="refAuthor">Mishra, G. S.</span>, and <span class="refAuthor">S. Chen</span>, <span class="refTitle">"Traffic Steering using BGP FlowSpec with SR Policy"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-idr-ts-flowspec-srv6-policy-20</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-idr-ts-flowspec-srv6-policy-20">https://datatracker.ietf.org/doc/html/draft-ietf-idr-ts-flowspec-srv6-policy-20</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-spring-srv6-service-programming">[I-D.draft-ietf-spring-srv6-service-programming]</dt>
         <dd>
@@ -2156,12 +2164,8 @@ If this verification is not performed, a rogue or compromised service function c
 <span class="refAuthor">Loibl, C., Ed.</span>, <span class="refAuthor">Raszuk, R., Ed.</span>, and <span class="refAuthor">S. Hares, Ed.</span>, <span class="refTitle">"Dissemination of Flow Specification Rules for IPv6"</span>, <span class="seriesInfo">RFC 8956</span>, <span class="seriesInfo">DOI 10.17487/RFC8956</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8956">https://www.rfc-editor.org/rfc/rfc8956</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9552">[RFC9552]</dt>
-        <dd>
-<span class="refAuthor">Talaulikar, K., Ed.</span>, <span class="refTitle">"Distribution of Link-State and Traffic Engineering Information Using BGP"</span>, <span class="seriesInfo">RFC 9552</span>, <span class="seriesInfo">DOI 10.17487/RFC9552</span>, <time datetime="2023-12" class="refDate">December 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9552">https://www.rfc-editor.org/rfc/rfc9552</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9862">[RFC9862]</dt>
       <dd>
-<span class="refAuthor">Koldychev, M.</span>, <span class="refAuthor">Sivabalan, S.</span>, <span class="refAuthor">Sidor, S.</span>, <span class="refAuthor">Barth, C.</span>, <span class="refAuthor">Peng, S.</span>, and <span class="refAuthor">H. Bidgoli</span>, <span class="refTitle">"Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing (SR) Policy Candidate Paths"</span>, <span class="seriesInfo">RFC 9862</span>, <span class="seriesInfo">DOI 10.17487/RFC9862</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9862">https://www.rfc-editor.org/rfc/rfc9862</a>&gt;</span>. </dd>
+<span class="refAuthor">Talaulikar, K., Ed.</span>, <span class="refTitle">"Distribution of Link-State and Traffic Engineering Information Using BGP"</span>, <span class="seriesInfo">RFC 9552</span>, <span class="seriesInfo">DOI 10.17487/RFC9552</span>, <time datetime="2023-12" class="refDate">December 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9552">https://www.rfc-editor.org/rfc/rfc9552</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

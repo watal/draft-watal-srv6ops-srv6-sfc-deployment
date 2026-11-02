@@ -197,8 +197,8 @@ Table of Contents
 
 3.  Deployment Objectives
 
-   *  Demonstrate the SRv6 SFC architecture on an operational IPv6
-      backbone spanning geographically distributed sites.
+   *  Demonstrate the SRv6 SFC architecture on an academic IPv6 backbone
+      spanning geographically distributed sites.
 
    *  Demonstrate the feasibility of incremental deployment without
       modifying existing transit backbone routers.
@@ -571,8 +571,9 @@ Table of Contents
    Flow Specification rules, which are distributed to the SR source node
    by the BGP daemon.
 
-   The rules associate matching traffic with the intended SR Policy by
-   Color and Endpoint, as shown in Figure 6.
+   The rules associate matching traffic with an SR Policy identified by
+   the (Color, Endpoint) tuple, following the procedures specified in
+   [I-D.draft-ietf-idr-ts-flowspec-srv6-policy].
 
 6.7.  Traffic Steering
 
@@ -954,6 +955,13 @@ Table of Contents
               RFC 9603, DOI 10.17487/RFC9603, July 2024,
               <https://www.rfc-editor.org/rfc/rfc9603>.
 
+   [RFC9862]  Koldychev, M., Sivabalan, S., Sidor, S., Barth, C., Peng,
+              S., and H. Bidgoli, "Path Computation Element
+              Communication Protocol (PCEP) Extensions for Segment
+              Routing (SR) Policy Candidate Paths", RFC 9862,
+              DOI 10.17487/RFC9862, October 2025,
+              <https://www.rfc-editor.org/rfc/rfc9862>.
+
 12.2.  Informative References
 
    [I-D.draft-ietf-idr-bgp-ls-sr-service-segments]
@@ -965,6 +973,14 @@ Table of Contents
               02, 5 November 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-
               ls-sr-service-segments-02>.
+
+   [I-D.draft-ietf-idr-ts-flowspec-srv6-policy]
+              Wenying, J., Liu, Y., Zhuang, S., Mishra, G. S., and S.
+              Chen, "Traffic Steering using BGP FlowSpec with SR
+              Policy", Work in Progress, Internet-Draft, draft-ietf-idr-
+              ts-flowspec-srv6-policy-20, 30 October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-idr-ts-
+              flowspec-srv6-policy-20>.
 
    [I-D.draft-ietf-spring-srv6-service-programming]
               Abdelsalam, Ed, A., Filsfils, C., Bernier, D., Li, C., and
@@ -1005,13 +1021,6 @@ Table of Contents
               Traffic Engineering Information Using BGP", RFC 9552,
               DOI 10.17487/RFC9552, December 2023,
               <https://www.rfc-editor.org/rfc/rfc9552>.
-
-   [RFC9862]  Koldychev, M., Sivabalan, S., Sidor, S., Barth, C., Peng,
-              S., and H. Bidgoli, "Path Computation Element
-              Communication Protocol (PCEP) Extensions for Segment
-              Routing (SR) Policy Candidate Paths", RFC 9862,
-              DOI 10.17487/RFC9862, October 2025,
-              <https://www.rfc-editor.org/rfc/rfc9862>.
 
 Acknowledgments
 
