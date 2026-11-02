@@ -556,10 +556,8 @@ Table of Contents
 
    As illustrated in Figure 6, the computed SR Policy candidate path is
    provisioned to the SR source node acting as the PCC, using PCEP
-   [RFC9603] [RFC9862].  The candidate path specifies the SRv6 segment
-   list representing the selected service function chain.  The SR Policy
-   specifies the SRv6 segment list representing the selected service
-   function chain.
+   [RFC9603] [RFC9862].  The candidate path contains the SRv6 segment
+   list representing the selected service function chain.
 
 6.6.  Flow Classification
 
