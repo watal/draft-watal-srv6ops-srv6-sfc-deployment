@@ -122,7 +122,7 @@ Table of Contents
 1.  Introduction
 
    Segment Routing over IPv6 (SRv6) [RFC8986] enables packet steering
-   through a set of instructions called a segment list.
+   through an ordered list of instructions called a segment list.
 
    Service Function Chaining (SFC) [RFC7665] can be implemented using
    SRv6 to steer traffic through a sequence of service functions.
